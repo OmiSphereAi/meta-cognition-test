@@ -3,102 +3,138 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MCIF — Meta-Cognition Intelligence Framework (Web)</title>
+  <title>MCIF — Meta-Cognition Intelligence Framework</title>
   <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="MCIF — an interactive meta-cognition test. Local-first, privacy-preserving, industry-grade UI."/>
 </head>
 <body>
-  <main class="container">
-    <header>
-      <h1>MCIF — Meta-Cognition Intelligence Framework</h1>
-      <p class="tagline">A mirror for how you think. Local-first, privacy-friendly, GitHub Pages ready.</p>
-    </header>
-
-    <section id="consent" class="card">
-      <h2>Before we begin</h2>
-      <p>
-        This is a reflective tool, not a clinical diagnosis. Your responses stay in your browser
-        unless you export them. Do you consent to proceed?
-      </p>
-      <div class="row">
-        <button id="btn-consent-yes" class="btn primary">Yes — Start</button>
-        <button id="btn-consent-no" class="btn">Not now</button>
-      </div>
-    </section>
-
-    <section id="setup" class="card hidden">
-      <h2>Choose mode</h2>
-      <div id="modes" class="modes"></div>
-      <div class="small muted">Estimated time will appear after you choose a mode.</div>
-    </section>
-
-    <section id="calibration" class="card hidden">
-      <h2>Warm-up (Calibration)</h2>
-      <p>Two quick warm-ups so the system can adapt to your style.</p>
-      <div id="calibration-prompts"></div>
-      <div class="row">
-        <button id="btn-calibration-next" class="btn primary">Next</button>
-      </div>
-    </section>
-
-    <section id="question-panel" class="card hidden">
-      <div id="progress" class="progress">Question <span id="q-index">0</span>/<span id="q-total">0</span></div>
-      <h2 id="question-domain"></h2>
-      <p id="question-prompt" class="prompt"></p>
-      <textarea id="response-text" placeholder="Type your answer here..." rows="6"></textarea>
-
-      <div class="self-rate">
-        <label>Optional: Self-rate your response (use sliders if you want the AI to bootstrap scoring)</label>
-        <div class="sliders">
-          <label>Depth <input type="range" id="rate-depth" min="1" max="5" value="3"></label>
-          <label>Originality <input type="range" id="rate-originality" min="1" max="5" value="3"></label>
-          <label>Clarity <input type="range" id="rate-clarity" min="1" max="5" value="3"></label>
-          <label>Self-Awareness <input type="range" id="rate-selfawareness" min="1" max="5" value="3"></label>
-          <label>Adaptability <input type="range" id="rate-adaptability" min="1" max="5" value="3"></label>
+  <div id="app" class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">⚛</div>
+        <div>
+          <h1>MCIF</h1>
+          <div class="sub">Meta-Cognition Intelligence Framework</div>
         </div>
       </div>
+      <nav class="nav">
+        <button id="btn-reset" class="btn ghost" title="Reset progress">Reset</button>
+        <a class="muted small" href="#" id="help-link">Help</a>
+      </nav>
+    </header>
 
-      <div class="row">
-        <button id="btn-skip" class="btn">Skip</button>
-        <button id="btn-submit" class="btn primary">Submit Answer</button>
-      </div>
-      <div id="adaptive-hint" class="hint muted"></div>
-    </section>
+    <main class="stage">
+      <section id="intro" class="card">
+        <h2>Welcome — a mirror for how you think</h2>
+        <p class="lead">MCIF is a reflective, client-side tool designed to measure and help develop your meta-cognitive intelligence. Your data stays in your browser unless you download it.</p>
 
-    <section id="micro-reflection" class="card hidden">
-      <h2>Micro Reflection</h2>
-      <p id="micro-prompt"></p>
-      <textarea id="micro-response" rows="4" placeholder="How would you re-describe it now?"></textarea>
-      <div class="row">
-        <button id="btn-micro-submit" class="btn primary">Submit Reflection</button>
-      </div>
-    </section>
+        <div class="consent card-lite">
+          <label class="checkbox">
+            <input id="consent-checkbox" type="checkbox" />
+            <span>I understand this is a reflective tool, not a clinical diagnosis, and I consent to proceed.</span>
+          </label>
+        </div>
 
-    <section id="completion" class="card hidden">
-      <h2>Finished — Generate Report</h2>
-      <p id="completion-text"></p>
-      <div class="row">
-        <button id="btn-generate" class="btn primary">Generate dashboard & transcript</button>
-        <button id="btn-start-over" class="btn">Start over</button>
-      </div>
-    </section>
+        <div id="mode-chooser" class="modes">
+          <!-- Modes appended by JS -->
+        </div>
 
-    <section id="report" class="card hidden">
-      <h2>Your Dashboard</h2>
-      <pre id="dashboard-json" class="json-block"></pre>
-      <div class="row">
-        <button id="btn-download-dashboard" class="btn primary">Download dashboard.json</button>
-        <button id="btn-download-transcript" class="btn">Download transcript.json</button>
-      </div>
-      <div class="row">
-        <button id="btn-run-microtest" class="btn">Run 2-min micro-test</button>
-      </div>
-    </section>
+        <div class="row">
+          <button id="btn-start" class="btn primary" disabled>Start</button>
+          <button id="btn-load" class="btn">Resume Saved</button>
+        </div>
+      </section>
 
-    <footer class="muted">
-      <small>MCIF v5 — Local-first demo. Put <code>MCIF_5_MasterSchema.json</code> in repo root. Built for GitHub Pages.</small>
+      <section id="calibration" class="card hidden">
+        <h2>Warm-up</h2>
+        <p class="muted small">Two short prompts to calibrate pacing and style.</p>
+        <div id="cal-prompts"></div>
+        <div class="row">
+          <button id="btn-cal-next" class="btn primary">Continue</button>
+        </div>
+      </section>
+
+      <section id="question-area" class="card hidden">
+        <div class="hdr">
+          <div>
+            <div class="muted small">Mode: <span id="ui-mode"></span></div>
+            <div class="muted small">Tier: <span id="ui-tier"></span></div>
+          </div>
+          <div class="progress-wrap">
+            <div id="progress-bar" class="progress-bar"><div id="progress-fill"></div></div>
+            <div class="muted tiny">Question <span id="q-index">0</span> / <span id="q-total">0</span></div>
+          </div>
+        </div>
+
+        <div id="question-card" class="qcard">
+          <div class="domain-badge" id="q-domain"></div>
+          <div id="q-prompt" class="prompt">Question prompt</div>
+          <textarea id="q-response" placeholder="Type your thoughtful answer here..." rows="6" autofocus></textarea>
+
+          <div class="selfrates">
+            <div class="muted tiny">Self-rate your response (1 = low → 5 = high)</div>
+            <div class="grid-sliders">
+              <label>Depth <input id="rate-depth" type="range" min="1" max="5" step="1" value="3"></label>
+              <label>Originality <input id="rate-originality" type="range" min="1" max="5" step="1" value="3"></label>
+              <label>Clarity <input id="rate-clarity" type="range" min="1" max="5" step="1" value="3"></label>
+              <label>Self-Awareness <input id="rate-selfawareness" type="range" min="1" max="5" step="1" value="3"></label>
+              <label>Adaptability <input id="rate-adaptability" type="range" min="1" max="5" step="1" value="3"></label>
+            </div>
+          </div>
+
+          <div class="row">
+            <button id="btn-skip" class="btn ghost">Skip</button>
+            <button id="btn-submit-answer" class="btn primary">Submit</button>
+          </div>
+
+          <div id="hint" class="hint muted hidden"></div>
+        </div>
+      </section>
+
+      <section id="micro-reflection" class="card hidden">
+        <h2>Micro reflection</h2>
+        <p id="micro-instruct" class="muted small"></p>
+        <textarea id="micro-input" rows="4" placeholder="Rewrite or refine one earlier answer (1–3 sentences)"></textarea>
+        <div class="row">
+          <button id="btn-micro-submit" class="btn primary">Submit reflection</button>
+        </div>
+      </section>
+
+      <section id="complete" class="card hidden">
+        <h2>Session complete</h2>
+        <p class="muted">Generate your personalized report below. You can download the dashboard and full transcript.</p>
+        <div class="row">
+          <button id="btn-generate" class="btn primary">Generate report</button>
+          <button id="btn-continue" class="btn">Review answers</button>
+        </div>
+      </section>
+
+      <section id="report" class="card hidden">
+        <h2>Your Dashboard</h2>
+        <div class="report-grid">
+          <div class="report-left">
+            <canvas id="radar" width="460" height="360" aria-label="Domain radar chart"></canvas>
+            <div class="row" style="margin-top:10px">
+              <button id="download-dashboard" class="btn primary">Download dashboard.json</button>
+              <button id="download-transcript" class="btn">Download transcript.json</button>
+            </div>
+          </div>
+          <div class="report-right">
+            <pre id="dashboard-json" class="json-view"></pre>
+          </div>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <button id="btn-start-new" class="btn">Start new session</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot muted small">
+      <div>MCIF v6 — Local-first • Your data stays in your browser</div>
+      <div>Built for clarity and sustained focus.</div>
     </footer>
-  </main>
+  </div>
 
-  <script src="script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
