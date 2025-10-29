@@ -1,202 +1,143 @@
-// === MCIF 5 Lucid Flow App ===
-// By: Andrew Carr (Visionary Test System)
-// Dependencies: MCIF_5_MasterSchema.json in same folder
+document.addEventListener("DOMContentLoaded", () => {
+  const startBtn = document.getElementById("start-btn");
+  const appDiv = document.getElementById("app");
+  const introDiv = document.getElementById("intro");
+  const freqControl = document.getElementById("frequency-control");
 
-// ==== Global Elements ====
-const startBtn = document.getElementById('start-btn');
-const appContainer = document.getElementById('app');
-const audioControl = document.getElementById('frequency-control');
+  let schemaData = null;
+  let currentPhaseIndex = 0;
+  let totalScore = 0;
+  let currentPhase = null;
+  let audioCtx = null;
+  let osc = null;
 
-let schema = null;
-let currentQuestionIndex = 0;
-let userResponses = {};
-let audioContext, oscillator;
-
-// ==== Load Schema ====
-async function loadSchema() {
-  try {
-    const res = await fetch('./MCIF_5_MasterSchema.json');
-    schema = await res.json();
-    console.log('Schema loaded successfully.');
-  } catch (err) {
-    console.error('Error loading schema:', err);
-    alert('Could not load MCIF_5_MasterSchema.json. Please make sure it’s in the same folder.');
-  }
-}
-
-// ==== Audio (Frequency Background) ====
-function startFrequency(freq) {
-  stopFrequency(); // stop any existing sound
-  if (!freq) return;
-  audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  oscillator = audioContext.createOscillator();
-  oscillator.type = 'sine';
-  oscillator.frequency.value = freq;
-  oscillator.connect(audioContext.destination);
-  oscillator.start();
-}
-
-function stopFrequency() {
-  if (oscillator) {
-    oscillator.stop();
-    oscillator.disconnect();
-    oscillator = null;
-  }
-  if (audioContext) {
-    audioContext.close();
-    audioContext = null;
-  }
-}
-
-// ==== UI Setup ====
-function fadeIn(element) {
-  element.style.opacity = 0;
-  element.style.display = 'block';
-  let opacity = 0;
-  const interval = setInterval(() => {
-    opacity += 0.05;
-    element.style.opacity = opacity;
-    if (opacity >= 1) clearInterval(interval);
-  }, 30);
-}
-
-function showQuestion() {
-  const questionData = schema.questions[currentQuestionIndex];
-  if (!questionData) return showResults();
-
-  appContainer.innerHTML = '';
-
-  const questionBox = document.createElement('div');
-  questionBox.classList.add('question-box', 'lucid-glow');
-
-  const question = document.createElement('h2');
-  question.textContent = questionData.text;
-  questionBox.appendChild(question);
-
-  let inputEl;
-  switch (questionData.type) {
-    case 'text':
-      inputEl = document.createElement('textarea');
-      inputEl.placeholder = 'Type your thoughts here...';
-      break;
-    case 'multiple-choice':
-      inputEl = document.createElement('div');
-      questionData.options.forEach(option => {
-        const btn = document.createElement('button');
-        btn.classList.add('option-btn');
-        btn.textContent = option;
-        btn.onclick = () => handleAnswer(option);
-        inputEl.appendChild(btn);
-      });
-      break;
-    case 'slider':
-      inputEl = document.createElement('input');
-      inputEl.type = 'range';
-      inputEl.min = questionData.min || 0;
-      inputEl.max = questionData.max || 100;
-      inputEl.value = (questionData.min + questionData.max) / 2 || 50;
-      inputEl.classList.add('slider');
-      const sliderLabel = document.createElement('p');
-      sliderLabel.textContent = `Value: ${inputEl.value}`;
-      inputEl.oninput = e => (sliderLabel.textContent = `Value: ${e.target.value}`);
-      questionBox.appendChild(sliderLabel);
-      break;
-  }
-
-  if (inputEl && questionData.type !== 'multiple-choice') {
-    questionBox.appendChild(inputEl);
-    const nextBtn = document.createElement('button');
-    nextBtn.textContent = 'Next →';
-    nextBtn.classList.add('next-btn');
-    nextBtn.onclick = () => handleAnswer(inputEl.value);
-    questionBox.appendChild(nextBtn);
-  }
-
-  appContainer.appendChild(questionBox);
-  fadeIn(questionBox);
-}
-
-function handleAnswer(answer) {
-  userResponses[schema.questions[currentQuestionIndex].id] = answer;
-  currentQuestionIndex++;
-  showQuestion();
-}
-
-function showResults() {
-  appContainer.innerHTML = '';
-
-  const resultBox = document.createElement('div');
-  resultBox.classList.add('result-box', 'lucid-glow');
-
-  const heading = document.createElement('h2');
-  heading.textContent = 'Your Mind Assessment Results';
-  resultBox.appendChild(heading);
-
-  const summary = document.createElement('p');
-  summary.textContent =
-    'This profile reflects a synthesis of your introspective patterns, tendencies, and core psychological strengths.';
-  resultBox.appendChild(summary);
-
-  const ul = document.createElement('ul');
-  Object.entries(userResponses).forEach(([id, val]) => {
-    const li = document.createElement('li');
-    li.innerHTML = `<strong>${id}</strong>: ${val}`;
-    ul.appendChild(li);
+  // 🎵 Frequency buttons
+  const frequencies = [432, 528, 852, 963];
+  frequencies.forEach(freq => {
+    const btn = document.createElement("button");
+    btn.className = "freq-btn";
+    btn.textContent = `${freq} Hz`;
+    btn.onclick = () => toggleFrequency(freq);
+    freqControl.appendChild(btn);
   });
-  resultBox.appendChild(ul);
-
-  const restartBtn = document.createElement('button');
-  restartBtn.textContent = 'Restart Test';
-  restartBtn.classList.add('restart-btn');
-  restartBtn.onclick = () => {
-    userResponses = {};
-    currentQuestionIndex = 0;
-    showQuestion();
-  };
-
-  resultBox.appendChild(restartBtn);
-  appContainer.appendChild(resultBox);
-  fadeIn(resultBox);
-}
-
-// ==== Frequency Control ====
-function setupFrequencyUI() {
-  if (!audioControl) return;
-  const freqs = [
-    { label: '432 Hz (Healing)', value: 432 },
-    { label: '528 Hz (DNA Repair)', value: 528 },
-    { label: '852 Hz (Awakening)', value: 852 },
-    { label: '963 Hz (Divine)', value: 963 }
-  ];
-
-  freqs.forEach(f => {
-    const btn = document.createElement('button');
-    btn.classList.add('freq-btn');
-    btn.textContent = f.label;
-    btn.onclick = () => startFrequency(f.value);
-    audioControl.appendChild(btn);
-  });
-
-  const stopBtn = document.createElement('button');
-  stopBtn.textContent = 'Stop Frequency';
-  stopBtn.classList.add('freq-stop');
+  const stopBtn = document.createElement("button");
+  stopBtn.className = "freq-stop";
+  stopBtn.textContent = "Stop";
   stopBtn.onclick = stopFrequency;
-  audioControl.appendChild(stopBtn);
-}
+  freqControl.appendChild(stopBtn);
 
-// ==== Init ====
-startBtn.onclick = async () => {
-  startBtn.style.display = 'none';
-  await loadSchema();
-  showQuestion();
-  setupFrequencyUI();
-};
+  function toggleFrequency(freq) {
+    stopFrequency();
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    osc = audioCtx.createOscillator();
+    osc.frequency.value = freq;
+    const gainNode = audioCtx.createGain();
+    gainNode.gain.value = 0.05;
+    osc.connect(gainNode).connect(audioCtx.destination);
+    osc.start();
+  }
 
-// ==== Lucid Flow Styling (Dynamic) ====
-document.body.style.background =
-  'linear-gradient(135deg, rgba(15,15,40,0.95), rgba(40,10,60,0.95))';
-document.body.style.fontFamily = 'Inter, system-ui, sans-serif';
-document.body.style.color = '#e8e8ff';
-document.body.style.overflow = 'hidden';
-document.body.style.transition = 'background 1s ease';
+  function stopFrequency() {
+    if (osc) {
+      osc.stop();
+      osc.disconnect();
+      osc = null;
+    }
+  }
+
+  // 🔹 Load JSON Schema
+  async function loadSchema() {
+    try {
+      const res = await fetch("MCIF_5_MasterSchema.json");
+      if (!res.ok) throw new Error("JSON not found");
+      schemaData = await res.json();
+      console.log("Schema loaded successfully:", schemaData);
+    } catch (err) {
+      console.error("Error loading schema:", err);
+      alert("Error loading MCIF schema. Check file name or location.");
+    }
+  }
+
+  // 🔹 Start Button Listener
+  if (startBtn) {
+    startBtn.addEventListener("click", async () => {
+      introDiv.style.display = "none";
+      appDiv.innerHTML = "<p>Loading MCIF Test...</p>";
+      await loadSchema();
+      if (schemaData) {
+        startTest();
+      }
+    });
+  } else {
+    console.error("❌ Start button not found on DOM load");
+  }
+
+  // 🔹 Test Flow
+  function startTest() {
+    currentPhaseIndex = 0;
+    totalScore = 0;
+    showPhase();
+  }
+
+  function showPhase() {
+    if (!schemaData || !schemaData.phases) {
+      appDiv.innerHTML = "<p>Error: Schema data missing phases.</p>";
+      return;
+    }
+
+    currentPhase = schemaData.phases[currentPhaseIndex];
+    appDiv.innerHTML = `
+      <div class="question-box lucid-glow">
+        <h2>${currentPhase.name}</h2>
+        <p>${currentPhase.prompt}</p>
+        <textarea id="user-answer" placeholder="Type your answer here..."></textarea><br>
+        <button id="next-btn" class="next-btn">Next</button>
+      </div>
+    `;
+
+    document.getElementById("next-btn").addEventListener("click", nextPhase);
+  }
+
+  function nextPhase() {
+    const answer = document.getElementById("user-answer").value.trim();
+    if (answer.length < 10) {
+      alert("Please expand your answer for more accurate feedback.");
+      return;
+    }
+
+    // Simple scoring heuristic
+    const score = Math.min(100, answer.length / 3);
+    totalScore += score;
+
+    currentPhaseIndex++;
+    if (currentPhaseIndex < schemaData.phases.length) {
+      showPhase();
+    } else {
+      showResults();
+    }
+  }
+
+  function showResults() {
+    const tier =
+      totalScore < 350 ? "Explorer" :
+      totalScore < 525 ? "Architect" : "Visionary";
+
+    appDiv.innerHTML = `
+      <div class="result-box lucid-glow">
+        <h2>MCIF-5 Results</h2>
+        <p><strong>Total Score:</strong> ${totalScore.toFixed(1)} / 700</p>
+        <p><strong>Tier:</strong> ${tier}</p>
+        <button class="restart-btn" id="restart-btn">Restart</button>
+      </div>
+    `;
+
+    document.getElementById("restart-btn").addEventListener("click", () => {
+      introDiv.style.display = "block";
+      appDiv.innerHTML = "";
+      totalScore = 0;
+      currentPhaseIndex = 0;
+    });
+  }
+});
+
 
