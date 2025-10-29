@@ -1,6 +1,6 @@
-console.log("MCIF app.js loaded");
+console.log("✅ MCIF app.js loaded");
 
-// DOM Elements
+// DOM elements
 const startBtn = document.getElementById("startBtn");
 const testSection = document.getElementById("testSection");
 const questionContainer = document.getElementById("questionContainer");
@@ -10,79 +10,80 @@ let currentQuestion = 0;
 let schema = null;
 let answers = [];
 
-// Fetch schema safely with absolute GitHub path fallback
+// 🧭 Try multiple paths for the JSON file
 async function loadSchema() {
-  const localPath = "MCIF_5_MasterSchema.json";
-  const githubPath = `${window.location.origin}/MCIF_5_MasterSchema.json`;
-  const pathsToTry = [localPath, githubPath];
+  const repoPath = window.location.pathname.split("/").filter(Boolean)[0];
+  const basePath = window.location.origin + "/" + (repoPath ? repoPath + "/" : "");
+  const paths = [
+    "MCIF_5_MasterSchema.json",
+    basePath + "MCIF_5_MasterSchema.json"
+  ];
 
-  for (const path of pathsToTry) {
+  for (const path of paths) {
+    console.log(`🔍 Trying to load schema from: ${path}`);
     try {
-      console.log("Attempting to load:", path);
-      const res = await fetch(path);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      console.log("Schema loaded successfully:", data);
+      const response = await fetch(path);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      console.log("✅ Schema loaded successfully!", data);
       return data;
     } catch (err) {
-      console.warn(`Failed to load from ${path}:`, err);
+      console.warn(`⚠️ Failed loading from ${path}:`, err);
     }
   }
-  throw new Error("Could not load schema — check file name and path.");
+  throw new Error("❌ Schema could not be loaded. Check file name/path or CORS.");
 }
 
-// Render current question
 function showQuestion() {
   const q = schema.questions[currentQuestion];
+  if (!q) {
+    questionContainer.innerHTML = "<p>❌ Error: No question found.</p>";
+    return;
+  }
   questionContainer.innerHTML = `
     <div class="question">
-      <h2>${q.domain} Domain</h2>
+      <h2>${q.domain}</h2>
       <p>${q.prompt}</p>
-      ${q.options.map((opt, i) => `
-        <div class="option" data-value="${opt.value}">${opt.text}</div>
-      `).join("")}
+      ${q.options.map(opt => `<div class="option" data-value="${opt.value}">${opt.text}</div>`).join("")}
     </div>
   `;
-
   document.querySelectorAll(".option").forEach(opt => {
-    opt.addEventListener("click", (e) => {
-      const val = parseInt(e.target.getAttribute("data-value"));
-      answers.push({ question: currentQuestion, value: val });
-      console.log("Answer recorded:", val);
+    opt.addEventListener("click", e => {
+      const val = parseInt(e.target.dataset.value);
+      answers.push({ q: currentQuestion, v: val });
+      console.log("🟩 Answer recorded:", val);
       nextBtn.classList.remove("hidden");
     });
   });
 }
 
-// Go to next question or finish
 function nextQuestion() {
   currentQuestion++;
   if (currentQuestion < schema.questions.length) {
     nextBtn.classList.add("hidden");
     showQuestion();
   } else {
-    finishTest();
+    questionContainer.innerHTML = "<h2>✅ Test Complete</h2><p>Thanks for participating!</p>";
+    nextBtn.classList.add("hidden");
+    console.log("📊 All answers:", answers);
   }
 }
 
-function finishTest() {
-  questionContainer.innerHTML = `<h2>Test Complete</h2><p>Thank you for completing the MCIF test.</p>`;
-  nextBtn.classList.add("hidden");
-  console.log("User answers:", answers);
-}
-
 startBtn.addEventListener("click", async () => {
+  console.log("▶️ Begin button clicked");
+  startBtn.disabled = true;
+  startBtn.innerText = "Loading...";
   try {
     schema = await loadSchema();
+    console.log("🚀 Schema ready, rendering test");
     startBtn.classList.add("hidden");
     document.getElementById("intro").classList.add("hidden");
     testSection.classList.remove("hidden");
     showQuestion();
   } catch (err) {
-    questionContainer.innerHTML = `<p style="color:red;">⚠️ Error: ${err.message}</p>`;
+    console.error("❌ Load error:", err);
+    questionContainer.innerHTML = `<p style="color:red;">${err.message}</p>`;
   }
 });
 
 nextBtn.addEventListener("click", nextQuestion);
-
-
