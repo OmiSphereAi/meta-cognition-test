@@ -1,193 +1,203 @@
-console.log("MCIF app loaded");
+/* ==========================================================
+   MCIF 5 — Meta Cognition Interactive Framework WebApp
+   Author: OmiSphere AI
+   Version: 2.0 | Offline-Ready | Lucid Focus UI
+   ========================================================== */
 
-// ===============================
-// MCIF-5 Interactive Test Engine
-// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+  const app = document.getElementById("app");
+  const STATE = {
+    started: false,
+    current: 0,
+    answers: [],
+    schema: null,
+    complete: false,
+  };
 
-// Global state
-let schema = null;
-let currentQuestionIndex = 0;
-let userResponses = [];
-let scoreSummary = {};
-const app = document.getElementById('app');
+  // 🎨 Utility: smooth fade transition
+  const fadeIn = (el) => {
+    el.style.opacity = 0;
+    el.style.display = "block";
+    let op = 0;
+    const timer = setInterval(() => {
+      if (op >= 1) clearInterval(timer);
+      el.style.opacity = op;
+      op += 0.05;
+    }, 16);
+  };
 
-// ===============================
-// Load Schema
-// ===============================
-fetch('MCIF_5_MasterSchema.json')
-  .then(res => res.json())
-  .then(data => {
-    schema = data;
-    initTest();
-  })
-  .catch(err => {
-    app.innerHTML = `<div class="error">⚠️ Error loading schema: ${err.message}</div>`;
-  });
+  // 🧠 Load schema (from JSON)
+  async function loadSchema() {
+    try {
+      const response = await fetch("MCIF_5_MasterSchema.json");
+      STATE.schema = await response.json();
 
-// ===============================
-// Initialize Test
-// ===============================
-function initTest() {
-  app.innerHTML = `
-    <div class="intro fade-in">
-      <h1>🧭 Meta-Cognition Intelligence Framework (MCIF-5)</h1>
-      <p>Welcome to your metacognitive exploration journey. Stay present, breathe, and engage your awareness fully.</p>
-      <button id="startBtn" class="primary">Begin</button>
-    </div>
-  `;
-  document.getElementById('startBtn').addEventListener('click', startTest);
-}
+      if (!STATE.schema.questions || !Array.isArray(STATE.schema.questions)) {
+        throw new Error("Invalid MCIF schema format");
+      }
 
-// ===============================
-// Start Test
-// ===============================
-function startTest() {
-  currentQuestionIndex = 0;
-  userResponses = [];
-  scoreSummary = {};
-  renderQuestion();
-}
-
-// ===============================
-// Render Question
-// ===============================
-function renderQuestion() {
-  const questions = schema.questions;
-  if (currentQuestionIndex >= questions.length) {
-    finishTest();
-    return;
+      renderIntro();
+    } catch (err) {
+      app.innerHTML = `
+        <div class="error">
+          <h2>⚠️ Error Loading Test</h2>
+          <p>${err.message}</p>
+          <p>Ensure MCIF_5_MasterSchema.json is in the same folder as index.html.</p>
+        </div>`;
+    }
   }
 
-  const q = questions[currentQuestionIndex];
-
-  app.innerHTML = `
-    <div class="question-container fade-in">
-      <div class="progress">
-        Question ${currentQuestionIndex + 1} of ${questions.length}
-        <div class="progress-bar">
-          <div class="progress-fill" style="width:${((currentQuestionIndex + 1) / questions.length) * 100}%"></div>
-        </div>
+  // 🏁 Intro screen
+  function renderIntro() {
+    app.innerHTML = `
+      <div class="intro fade">
+        <h1 class="title">🧩 MCIF Cognitive Profile Test</h1>
+        <p class="subtitle">A lucid cognitive immersion designed to map your synthesis profile.</p>
+        <button id="beginBtn" class="btn-primary">Begin</button>
       </div>
+    `;
 
-      <h2>${q.domain}: ${q.prompt}</h2>
-      <div class="options">
-        ${q.options
-          .map(
-            (opt, i) => `
+    const beginBtn = document.getElementById("beginBtn");
+    beginBtn.addEventListener("click", () => {
+      STATE.started = true;
+      STATE.current = 0;
+      STATE.answers = [];
+      renderQuestion();
+    });
+    fadeIn(app);
+  }
+
+  // ❓ Render Question
+  function renderQuestion() {
+    const q = STATE.schema.questions[STATE.current];
+    if (!q) return renderResults();
+
+    const progress = Math.round(((STATE.current + 1) / STATE.schema.questions.length) * 100);
+    app.innerHTML = `
+      <div class="question fade">
+        <div class="progress"><div class="bar" style="width:${progress}%;"></div></div>
+        <h2 class="domain">${q.domain}</h2>
+        <p class="prompt">${q.prompt}</p>
+        <div class="options">
+          ${q.options
+            .map(
+              (opt, i) => `
             <button class="option-btn" data-value="${opt.value}">
               ${opt.text}
             </button>
           `
-          )
-          .join('')}
+            )
+            .join("")}
+        </div>
+        <div class="status">${STATE.current + 1} / ${STATE.schema.questions.length}</div>
       </div>
-    </div>
-  `;
+    `;
 
-  document.querySelectorAll('.option-btn').forEach(btn =>
-    btn.addEventListener('click', () => handleResponse(q, btn.dataset.value))
-  );
-}
+    document.querySelectorAll(".option-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const value = parseInt(e.target.getAttribute("data-value"));
+        STATE.answers.push({
+          id: q.id || STATE.current,
+          domain: q.domain,
+          value,
+        });
 
-// ===============================
-// Handle Response
-// ===============================
-function handleResponse(question, value) {
-  const val = parseFloat(value);
-  userResponses.push({ domain: question.domain, value: val });
+        if (STATE.current + 1 < STATE.schema.questions.length) {
+          STATE.current++;
+          renderQuestion();
+        } else {
+          renderResults();
+        }
+      });
+    });
 
-  if (!scoreSummary[question.domain]) scoreSummary[question.domain] = [];
-  scoreSummary[question.domain].push(val);
-
-  currentQuestionIndex++;
-  fadeTransition(renderQuestion, 400);
-}
-
-// ===============================
-// Smooth Transition Helper
-// ===============================
-function fadeTransition(callback, delay) {
-  app.classList.add('fade-out');
-  setTimeout(() => {
-    app.classList.remove('fade-out');
-    callback();
-  }, delay);
-}
-
-// ===============================
-// Finish Test
-// ===============================
-function finishTest() {
-  const domainScores = {};
-  for (const domain in scoreSummary) {
-    const values = scoreSummary[domain];
-    const avg = values.reduce((a, b) => a + b, 0) / values.length;
-    domainScores[domain] = Math.round(avg * 10) / 10;
+    fadeIn(app);
   }
 
-  const total = Object.values(domainScores).reduce((a, b) => a + b, 0);
-  const overall = Math.round((total / Object.keys(domainScores).length) * 10) / 10;
+  // 📊 Results Screen
+  function renderResults() {
+    STATE.complete = true;
+    const avgByDomain = {};
+    STATE.answers.forEach((ans) => {
+      if (!avgByDomain[ans.domain]) avgByDomain[ans.domain] = [];
+      avgByDomain[ans.domain].push(ans.value);
+    });
 
-  renderResults(domainScores, overall);
-}
+    const domainScores = Object.entries(avgByDomain).map(([domain, vals]) => {
+      const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+      return { domain, avg: avg.toFixed(2) };
+    });
 
-// ===============================
-// Render Results
-// ===============================
-function renderResults(scores, overall) {
-  app.innerHTML = `
-    <div class="results fade-in">
-      <h1>🧩 Your MCIF-5 Profile</h1>
-      <p class="overall-score">Overall Meta-Cognitive Index: <strong>${overall}</strong></p>
-      <canvas id="resultsChart"></canvas>
-      <div class="domain-scores">
-        ${Object.entries(scores)
-          .map(([domain, score]) => `<p><strong>${domain}</strong>: ${score}</p>`)
-          .join('')}
+    const total = (
+      STATE.answers.reduce((sum, a) => sum + a.value, 0) / STATE.answers.length
+    ).toFixed(2);
+
+    app.innerHTML = `
+      <div class="results fade">
+        <h2 class="title">✨ Cognitive Synthesis Profile</h2>
+        <p class="subtitle">Your personalized metacognitive map</p>
+        <div class="score-display">
+          <div class="total-score">Overall: <span>${total}</span></div>
+          ${domainScores
+            .map(
+              (d) => `
+            <div class="domain-score">
+              <strong>${d.domain}</strong>: ${d.avg}
+            </div>
+          `
+            )
+            .join("")}
+        </div>
+        <canvas id="chart"></canvas>
+        <button id="restartBtn" class="btn-primary">Restart</button>
       </div>
-      <button id="restartBtn" class="primary">Restart Test</button>
-    </div>
-  `;
+    `;
 
-  renderChart(scores);
-  document.getElementById('restartBtn').addEventListener('click', initTest);
-}
+    fadeIn(app);
 
-// ===============================
-// Chart.js Radar Chart
-// ===============================
-function renderChart(scores) {
-  const ctx = document.getElementById('resultsChart').getContext('2d');
-  const labels = Object.keys(scores);
-  const data = Object.values(scores);
+    // Restart
+    document.getElementById("restartBtn").addEventListener("click", () => {
+      STATE.started = false;
+      STATE.current = 0;
+      STATE.answers = [];
+      STATE.complete = false;
+      renderIntro();
+    });
 
-  new Chart(ctx, {
-    type: 'radar',
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Meta-Cognitive Profile',
-          data: data,
-          fill: true,
-          backgroundColor: 'rgba(58, 134, 255, 0.3)',
-          borderColor: '#3A86FF',
-          pointBackgroundColor: '#3A86FF'
-        }
-      ]
-    },
-    options: {
-      scales: {
-        r: {
-          angleLines: { color: '#555' },
-          grid: { color: '#333' },
-          pointLabels: { color: '#EEE', font: { size: 14 } },
-          suggestedMin: 0,
-          suggestedMax: 10
-        }
-      },
-      plugins: { legend: { labels: { color: '#FFF' } } }
+    // 🎨 Chart Visualization (Radar)
+    const ctx = document.getElementById("chart");
+    if (window.Chart) {
+      new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: domainScores.map((d) => d.domain),
+          datasets: [
+            {
+              label: "Cognitive Balance",
+              data: domainScores.map((d) => d.avg),
+              backgroundColor: "rgba(0, 255, 255, 0.2)",
+              borderColor: "#00FFFF",
+              borderWidth: 2,
+              pointBackgroundColor: "#00FFFF",
+            },
+          ],
+        },
+        options: {
+          scales: {
+            r: {
+              angleLines: { color: "#333" },
+              grid: { color: "#555" },
+              pointLabels: { color: "#00FFFF" },
+              suggestedMin: 0,
+              suggestedMax: 10,
+            },
+          },
+          plugins: { legend: { display: false } },
+        },
+      });
     }
-  });
-}
+  }
 
+  // 🚀 Init app
+  loadSchema();
+});
