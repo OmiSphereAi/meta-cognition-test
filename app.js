@@ -1,89 +1,122 @@
-console.log("✅ MCIF app.js loaded");
+// app.js — MCIF v5 interactive system
+// Author: OmiSphere AI Lab
+// Optimized for GitHub Pages — No backend required
 
-// DOM elements
-const startBtn = document.getElementById("startBtn");
-const testSection = document.getElementById("testSection");
-const questionContainer = document.getElementById("questionContainer");
-const nextBtn = document.getElementById("nextBtn");
+document.addEventListener("DOMContentLoaded", () => {
+    const beginButton = document.getElementById("begin-btn");
+    const introSection = document.getElementById("intro");
+    const testSection = document.getElementById("test");
+    const questionContainer = document.getElementById("question-container");
+    const progressBar = document.getElementById("progress");
+    const resultSection = document.getElementById("result");
+    const resultText = document.getElementById("result-text");
 
-let currentQuestion = 0;
-let schema = null;
-let answers = [];
+    let questions = [];
+    let currentIndex = 0;
+    let answers = [];
 
-// 🧭 Try multiple paths for the JSON file
-async function loadSchema() {
-  const repoPath = window.location.pathname.split("/").filter(Boolean)[0];
-  const basePath = window.location.origin + "/" + (repoPath ? repoPath + "/" : "");
-  const paths = [
-    "MCIF_5_MasterSchema.json",
-    basePath + "MCIF_5_MasterSchema.json"
-  ];
+    // ✅ Fetch schema file with graceful fallback
+    async function loadSchema() {
+        const schemaFile = "MCIF_5_MasterSchema.json";
+        try {
+            const response = await fetch(schemaFile);
+            if (!response.ok) throw new Error(`Schema load failed: ${response.status}`);
+            const data = await response.json();
 
-  for (const path of paths) {
-    console.log(`🔍 Trying to load schema from: ${path}`);
-    try {
-      const response = await fetch(path);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
-      console.log("✅ Schema loaded successfully!", data);
-      return data;
-    } catch (err) {
-      console.warn(`⚠️ Failed loading from ${path}:`, err);
+            if (!data.questions || !Array.isArray(data.questions)) {
+                throw new Error("Invalid schema format: Missing 'questions' array.");
+            }
+
+            questions = data.questions;
+            console.log(`✅ Loaded ${questions.length} questions from schema`);
+            return true;
+        } catch (error) {
+            console.error("❌ Error loading schema:", error);
+            alert("Error loading test schema. Please check the console or ensure MCIF_5_MasterSchema.json is in the same folder.");
+            return false;
+        }
     }
-  }
-  throw new Error("❌ Schema could not be loaded. Check file name/path or CORS.");
-}
 
-function showQuestion() {
-  const q = schema.questions[currentQuestion];
-  if (!q) {
-    questionContainer.innerHTML = "<p>❌ Error: No question found.</p>";
-    return;
-  }
-  questionContainer.innerHTML = `
-    <div class="question">
-      <h2>${q.domain}</h2>
-      <p>${q.prompt}</p>
-      ${q.options.map(opt => `<div class="option" data-value="${opt.value}">${opt.text}</div>`).join("")}
-    </div>
-  `;
-  document.querySelectorAll(".option").forEach(opt => {
-    opt.addEventListener("click", e => {
-      const val = parseInt(e.target.dataset.value);
-      answers.push({ q: currentQuestion, v: val });
-      console.log("🟩 Answer recorded:", val);
-      nextBtn.classList.remove("hidden");
+    // ✅ Show intro / start test
+    beginButton.addEventListener("click", async () => {
+        beginButton.disabled = true;
+        beginButton.innerText = "Loading...";
+        const loaded = await loadSchema();
+
+        if (loaded) {
+            introSection.style.display = "none";
+            testSection.style.display = "block";
+            currentIndex = 0;
+            answers = [];
+            showQuestion();
+        } else {
+            beginButton.disabled = false;
+            beginButton.innerText = "Begin Test";
+        }
     });
-  });
-}
 
-function nextQuestion() {
-  currentQuestion++;
-  if (currentQuestion < schema.questions.length) {
-    nextBtn.classList.add("hidden");
-    showQuestion();
-  } else {
-    questionContainer.innerHTML = "<h2>✅ Test Complete</h2><p>Thanks for participating!</p>";
-    nextBtn.classList.add("hidden");
-    console.log("📊 All answers:", answers);
-  }
-}
+    // ✅ Display current question
+    function showQuestion() {
+        if (currentIndex >= questions.length) {
+            endTest();
+            return;
+        }
 
-startBtn.addEventListener("click", async () => {
-  console.log("▶️ Begin button clicked");
-  startBtn.disabled = true;
-  startBtn.innerText = "Loading...";
-  try {
-    schema = await loadSchema();
-    console.log("🚀 Schema ready, rendering test");
-    startBtn.classList.add("hidden");
-    document.getElementById("intro").classList.add("hidden");
-    testSection.classList.remove("hidden");
-    showQuestion();
-  } catch (err) {
-    console.error("❌ Load error:", err);
-    questionContainer.innerHTML = `<p style="color:red;">${err.message}</p>`;
-  }
+        const q = questions[currentIndex];
+        questionContainer.innerHTML = `
+            <div class="question-card fade-in">
+                <h2>${q.title || `Question ${currentIndex + 1}`}</h2>
+                <p class="question-text">${q.prompt || "No prompt provided."}</p>
+                <div class="options">
+                    ${q.options.map((opt, i) => `
+                        <button class="option-btn" data-index="${i}">
+                            ${opt}
+                        </button>`).join("")}
+                </div>
+            </div>
+        `;
+
+        updateProgress();
+        attachOptionListeners();
+    }
+
+    // ✅ Option click behavior
+    function attachOptionListeners() {
+        document.querySelectorAll(".option-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const answerIndex = parseInt(e.target.dataset.index);
+                answers.push({
+                    question: questions[currentIndex].title,
+                    answer: questions[currentIndex].options[answerIndex]
+                });
+                currentIndex++;
+                showQuestion();
+            });
+        });
+    }
+
+    // ✅ Progress bar update
+    function updateProgress() {
+        const percent = ((currentIndex / questions.length) * 100).toFixed(0);
+        progressBar.style.width = `${percent}%`;
+        progressBar.innerText = `${percent}%`;
+    }
+
+    // ✅ End of test
+    function endTest() {
+        testSection.style.display = "none";
+        resultSection.style.display = "block";
+
+        let summary = `
+            <h2>Test Complete</h2>
+            <p>You completed the MCIF cognitive mapping protocol.</p>
+            <ul>${answers.map(a => `<li><strong>${a.question}:</strong> ${a.answer}</li>`).join("")}</ul>
+        `;
+        resultText.innerHTML = summary;
+
+        // Optionally save results locally
+        localStorage.setItem("mcif_results", JSON.stringify(answers));
+        console.log("✅ Results saved locally:", answers);
+    }
+
 });
-
-nextBtn.addEventListener("click", nextQuestion);
