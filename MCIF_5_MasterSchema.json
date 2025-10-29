@@ -1,374 +1,557 @@
-
 {
   "meta": {
-    "name": "MCIF_5_MasterSchema",
-    "version": "5.0",
-    "codename": "Mind Core",
+    "name": "MCIF_v6_MasterSchema",
+    "version": "6.0",
+    "codename": "Mind Core Extended",
     "developer": "Andrew Carr + GPT-5 Collaboration",
-    "created_at": "2025-10-29",
-    "purpose": "Measure and develop human meta-cognitive intelligence through AI-guided exploration, reasoning, and synthesis.",
-    "core_principle": "Understanding not just what a person thinks, but how they think, why they think it, and how flexibly they can evolve those thoughts in real time."
+    "created_at": "2025-10-29T00:00:00Z",
+    "purpose": "Comprehensive, local-first meta-cognition test schema. Designed to run interactively in-browser without external AI.",
+    "core_principle": "Measure and train how a person thinks (process, flexibility, depth, and application) using deterministic rules, clear rubrics, and adaptive branching."
   },
-
   "design_inspiration": [
     "Troy A. Brewer's symbolic reasoning",
     "Cognitive science models of meta-awareness",
     "Historical polymath archetypes (Tesla, Einstein, Da Vinci)",
     "Game design flow mechanics",
-    "AI-human symbiosis"
+    "AI-human symbiosis (but this schema explicitly supports local-only operations)"
   ],
-
   "architecture": {
     "structure": [
       "Initialization and calibration",
-      "Dynamic questioning and reasoning",
-      "Self-reflection analysis",
-      "Abstract reasoning and real-world translation",
-      "Meta-cognitive synthesis",
-      "Final evaluation and archetype mapping"
+      "Question rendering and response capture",
+      "Self-rating collection",
+      "Deterministic scoring engine (client-side)",
+      "Adaptive branching (rule-based)",
+      "Micro-reflection and revision loop",
+      "Final aggregation and archetype mapping",
+      "Export (dashboard.json, transcript.json, narrative.txt, png placeholder metadata)"
     ],
-    "ai_modes": [
-      "Dialogue-based reasoning",
-      "Concept compression and pattern tracking",
-      "Emotionally neutral but cognitively adaptive feedback"
+    "client_requirements": [
+      "Static hosting (GitHub Pages, S3, file:// local)",
+      "JavaScript capable browser (ES6)",
+      "No server or API calls necessary"
     ]
   },
-
   "difficulty_tiers": {
     "Tier_1": {
       "code": "Explorer",
       "description": "Introductory level. Light reasoning, surface meta-awareness.",
-      "estimated_time_minutes": [15, 25],
-      "goal": "Identify awareness style and basic cognitive bias patterns.",
-      "tier_scaling_factor": 0.9
+      "estimated_time_minutes": [15, 30],
+      "goal": "Map baseline awareness style and basic bias recognition.",
+      "tier_scaling_factor": 0.9,
+      "default_question_count": 15
     },
     "Tier_2": {
       "code": "Architect",
-      "description": "Intermediate level. Includes complex pattern logic, layered self-analysis.",
-      "estimated_time_minutes": [30, 45],
-      "goal": "Assess reasoning agility, creativity-logic integration, and introspective control.",
-      "tier_scaling_factor": 1.0
+      "description": "Intermediate level. Layered reasoning and connection tasks.",
+      "estimated_time_minutes": [30, 60],
+      "goal": "Assess reasoning agility and synthesis across areas.",
+      "tier_scaling_factor": 1.0,
+      "default_question_count": 40
     },
     "Tier_3": {
       "code": "Visionary",
-      "description": "Advanced level. Full-scale synthesis, moral and symbolic reasoning, systemic cognition.",
-      "estimated_time_minutes": [60, 90],
-      "goal": "Test capacity for high-order abstraction, self-recursive awareness, and conceptual construction.",
-      "tier_scaling_factor": 1.15
+      "description": "Advanced level. Deep synthesis, moral-symbolic reasoning, and systemic cognition.",
+      "estimated_time_minutes": [60, 120],
+      "goal": "Test high-order abstraction, recursion, and conceptual construction.",
+      "tier_scaling_factor": 1.2,
+      "default_question_count": 95
     }
   },
-
   "domains": {
     "Meta_Awareness": {
-      "description": "Evaluates how consciously one observes and regulates thought, emotion, and perception.",
-      "subskills": ["Introspective clarity", "Thought tracing", "Bias recognition", "Self-monitoring"]
+      "description": "Observing and regulating one's own thought processes, emotions, and attention.",
+      "subskills": ["Introspective clarity", "Thought tracing", "Bias recognition", "Self-monitoring", "Reflection revision"]
     },
     "Cognitive_Synthesis": {
-      "description": "Assesses ability to merge logic, intuition, and creativity into unified concepts.",
-      "subskills": ["Conceptual integration", "Analogical thinking", "Cross-disciplinary reasoning"]
+      "description": "Combining concepts, analogies, and cross-domain connections into unified insights.",
+      "subskills": ["Conceptual integration", "Analogical mapping", "Cross-disciplinary translation", "Model building"]
     },
     "Adaptive_Reasoning": {
-      "description": "Measures mental flexibility under uncertainty and capacity to update models.",
-      "subskills": ["Hypothesis shifting", "Pattern adaptation", "Error reframing"]
+      "description": "Shifting hypotheses, updating mental models under uncertainty, and error reframing.",
+      "subskills": ["Hypothesis shifting", "Pattern adaptation", "Error analysis", "Plan reconfiguration"]
     },
     "Moral_Symbolic_Intelligence": {
-      "description": "Explores capacity to reason through values, symbolism, and ethical paradoxes.",
-      "subskills": ["Moral coherence", "Value hierarchies", "Symbolic decoding"]
+      "description": "Processing values, symbolic meaning, ethical paradoxes and moral architecture.",
+      "subskills": ["Moral coherence", "Value hierarchies", "Symbolic decoding", "Ethical calibration"]
     },
     "Creative_Application": {
-      "description": "Examines translation of abstract insight into tangible or strategic action.",
-      "subskills": ["Implementation design", "System building", "Insight embodiment"]
+      "description": "Translating abstract insight into tangible designs, plans, or creative outputs.",
+      "subskills": ["Implementation design", "System building", "Prototype thinking", "Embodied insight"]
     }
   },
-
-  "question_structure": {
-    "formats": [
-      "Open-ended reasoning",
-      "Comparative choice with justification",
-      "Hypothetical scenario synthesis",
-      "Self-reflection analysis"
-    ],
-    "difficulty_scaling": {
-      "Tier_1": "1-layer questions (describe, notice, relate)",
-      "Tier_2": "2-layer questions (explain, connect, apply)",
-      "Tier_3": "3-layer questions (analyze, model, innovate)"
-    }
-  },
-
-  "question_bank": {
-    "Tier_1": [
-      {
-        "id": "MA1",
-        "domain": "Meta_Awareness",
-        "prompt": "When you feel a strong emotion, how do you usually become aware of it? Describe what happens in your mind first."
-      },
-      {
-        "id": "CS1",
-        "domain": "Cognitive_Synthesis",
-        "prompt": "Name two unrelated ideas that fascinate you. How could they fit together into one concept?"
-      },
-      {
-        "id": "AR1",
-        "domain": "Adaptive_Reasoning",
-        "prompt": "When something doesn’t go as planned, what’s your first mental reaction?"
-      }
-    ],
-    "Tier_2": [
-      {
-        "id": "MA2",
-        "domain": "Meta_Awareness",
-        "prompt": "Think of a time you changed your opinion. What internal signal told you it was time to re-evaluate?"
-      },
-      {
-        "id": "CS2",
-        "domain": "Cognitive_Synthesis",
-        "prompt": "Invent a bridge between art and physics — how could each inform the other to create something new?"
-      },
-      {
-        "id": "AR2",
-        "domain": "Adaptive_Reasoning",
-        "prompt": "Imagine your core belief is proven partially wrong. How would you reconstruct your worldview around that?"
-      },
-      {
-        "id": "MS2",
-        "domain": "Moral_Symbolic_Intelligence",
-        "prompt": "Describe a moral dilemma where both sides seem right. How would you resolve it without betraying truth?"
-      }
-    ],
-    "Tier_3": [
-      {
-        "id": "MA3",
-        "domain": "Meta_Awareness",
-        "prompt": "Describe how consciousness might observe itself observing. What logical paradox arises, and how would you model it?"
-      },
-      {
-        "id": "CS3",
-        "domain": "Cognitive_Synthesis",
-        "prompt": "If you could redesign human thought as an algorithm, what parameters would you optimize and why?"
-      },
-      {
-        "id": "AR3",
-        "domain": "Adaptive_Reasoning",
-        "prompt": "Design a decision-making system that stays truthful under chaos or conflicting data. Explain your reasoning."
-      },
-      {
-        "id": "MS3",
-        "domain": "Moral_Symbolic_Intelligence",
-        "prompt": "Interpret the symbolic meaning of light and shadow in human consciousness. What does balance look like?"
-      },
-      {
-        "id": "CA3",
-        "domain": "Creative_Application",
-        "prompt": "You must teach future AIs about compassion. Describe the first lesson and how you would measure success."
-      }
-    ]
-  },
-
-  "scoring_logic": {
+  "scoring_schema": {
     "metrics": {
-      "Depth": "Measures layers of reasoning within one response (1-5).",
-      "Originality": "Measures novelty of connections and creative synthesis (1-5).",
-      "Clarity": "Measures structure, articulation, and coherence (1-5).",
-      "Self_Awareness": "Measures introspective accuracy and bias recognition (1-5).",
-      "Adaptability": "Measures capacity to pivot reasoning when challenged (1-5)."
+      "Depth": {
+        "scale": [1,5],
+        "description": "Layers of reasoning and multi-step argumentation present in the response."
+      },
+      "Originality": {
+        "scale": [1,5],
+        "description": "Novelty of connections, metaphors, and unique framing of ideas."
+      },
+      "Clarity": {
+        "scale": [1,5],
+        "description": "Logical organization, precise language, and coherent presentation."
+      },
+      "Self_Awareness": {
+        "scale": [1,5],
+        "description": "Degree of introspection, recognition of biases, and accuracy of self-evaluation."
+      },
+      "Adaptability": {
+        "scale": [1,5],
+        "description": "Evidence of model updating, willingness to revise, and flexibility in reasoning."
+      }
     },
     "weighting_by_domain": {
-      "Meta_Awareness": {"Depth": 0.25, "Self_Awareness": 0.35, "Clarity": 0.4},
-      "Cognitive_Synthesis": {"Depth": 0.3, "Originality": 0.4, "Clarity": 0.3},
-      "Adaptive_Reasoning": {"Depth": 0.3, "Adaptability": 0.5, "Clarity": 0.2},
+      "Meta_Awareness": {"Depth": 0.25, "Self_Awareness": 0.35, "Clarity": 0.25, "Adaptability": 0.15},
+      "Cognitive_Synthesis": {"Depth": 0.25, "Originality": 0.4, "Clarity": 0.25, "Adaptability": 0.1},
+      "Adaptive_Reasoning": {"Depth": 0.3, "Adaptability": 0.45, "Clarity": 0.25},
       "Moral_Symbolic_Intelligence": {"Depth": 0.25, "Originality": 0.25, "Clarity": 0.25, "Self_Awareness": 0.25},
       "Creative_Application": {"Originality": 0.4, "Depth": 0.3, "Clarity": 0.3}
     },
-    "final_score_calculation": {
-      "description": "Weighted average of metrics across all domains normalized to 0-100.",
-      "tier_adjustment": {
-        "Tier_1": 0.8,
-        "Tier_2": 1.0,
-        "Tier_3": 1.2
-      },
-      "mcq_formula": "MCQ_raw = mean(domain_scores) ; MCQ = clamp( (MCQ_raw * 100) * tier_scaling_factor, 0, 100 )",
-      "normalization_notes": "Domain scores computed from weighted metric sums; normalized to 0-100 before MCQ aggregation."
+    "domain_score_formula": "For each domain: score = (sum_over_metrics(metric_value * metric_weight)) / sum(metric_weights); result mapped from 1-5 to 0-100 scale.",
+    "final_score_formula": "MCQ_raw = mean(domain_scores); MCQ_adjusted = clamp(MCQ_raw * 100 * tier_scaling_factor, 0, 100).",
+    "archetype_ranges": {
+      "0-29": "Seeker — nascent reflective capacity, needs structured practice.",
+      "30-49": "Observer — reflective but early-stage synthesis.",
+      "50-69": "Thinker — structured reasoning and emerging adaptability.",
+      "70-89": "Inventor — integrative cognition with strong synthesis skills.",
+      "90-100": "Visionary — systemic meta-thinker with polymath tendencies."
     },
-    "archetype_mapping": {
-      "ranges": {
-        "0-39": "Observer — reflective but underdeveloped synthesis.",
-        "40-59": "Thinker — structured reasoning, emerging adaptability.",
-        "60-79": "Inventor — integrative cognition and high self-awareness.",
-        "80-100": "Visionary — systemic meta-thinker approaching polymathic range."
-      },
-      "blend_rule": "If top two archetype confidences within 0.10 absolute value, return blended archetype with proportional weights."
+    "confidence_flags": {
+      "low_data_threshold": 3,
+      "low_confidence_note": "Low-confidence axis: insufficient responses; consider taking more questions in this domain."
     }
   },
-
-  "session_protocol": {
-    "user_intro": "Welcome to the Meta-Cognitive Intelligence Framework. This isn’t a quiz — it’s a mirror for your mind. We’ll explore how you form, connect, and evolve thoughts.",
-    "ai_intro": "Hello! I’ll walk you through this test. It’s designed like a conversation — I’ll ask questions, challenge your reasoning, and note how you think. You’ll get both a score dashboard and a narrative archetype at the end.",
-    "ai_behavior": [
-      "Use calm, engaging tone",
-      "Encourage depth but not overthinking",
-      "Keep flow natural like a game or conversation",
-      "Acknowledge user reasoning explicitly"
-    ],
-    "meta_objective": "By the end, user and AI both understand the map of the user's cognition — the depth, style, rhythm, and adaptability of thought."
-  },
-
-  "segment_3_ai_flow": {
-    "version": "5.0-SEG3",
-    "overview": "Defines AI conversational behavior, scoring sequence, adaptive branching rules, reflection loop, report generation, export formats, and follow-up actions.",
-    "flow_steps": [
+  "deterministic_scoring_rules": {
+    "overview": "Rules to transform raw response + self-ratings into combined numeric metric values (1..5) without an LLM.",
+    "rules": [
       {
-        "step_id": "greeting",
-        "action": "AI greets user warmly; states purpose and safety notice.",
-        "example_text": "Hi — welcome to the MCIF exploration. This is a learning tool that helps you map how you think. It's not a diagnosis. Ready to choose a level (Explorer / Architect / Visionary)?"
+        "id": "self_rating_primary",
+        "desc": "If user provided self-ratings for all five metrics, use the average of each metric as the primary value."
       },
       {
-        "step_id": "choose_difficulty",
-        "action": "AI prompts for difficulty; shows brief estimated time; records choice.",
-        "logic": "If user hesitates, suggest 'Explorer' as quick route. If user asks for recommendation, ask whether they want speed or depth."
+        "id": "length_boost",
+        "desc": "If response length > 200 chars add +0.3 to Depth and Clarity (max 5). If > 500 chars add +0.6.",
+        "apply_to": ["Depth", "Clarity"]
       },
       {
-        "step_id": "calibration",
-        "action": "Run 2–3 warm-up prompts to assess user language, latency, and baseline tone.",
-        "sample_prompts": ["What's one idea you loved recently and why?", "Describe a small decision you made this week and how you made it."],
-        "outputs_recorded": ["avg_latency_seconds", "vocab_density", "emotional_tone"]
+        "id": "example_boost",
+        "desc": "If user includes a concrete example (detected by presence of phrases like 'for example', 'for instance', 'e.g.', 'such as') add +0.4 to Clarity and Depth.",
+        "apply_to": ["Depth", "Clarity"]
       },
       {
-        "step_id": "main_question_loop",
-        "action": "Iterate over question bank selected by difficulty; ask one at a time; record response and metadata.",
-        "metadata_per_response": ["timestamp", "latency_seconds", "raw_text", "sentiment_score", "prosody_tags_if_audio"],
-        "scoring_per_response": "Evaluate Depth, Originality, Clarity, Self_Awareness, Adaptability (per scoring logic). Store scores in per-domain accumulators."
+        "id": "revision_boost",
+        "desc": "If user edits a previous response in the micro-reflection loop, add +0.5 to Self_Awareness and +0.3 to Adaptability for that domain.",
+        "apply_to": ["Self_Awareness", "Adaptability"]
       },
       {
-        "step_id": "adaptive_branching",
-        "action": "After each response, run adaptive rules to choose next question or module.",
-        "rules": [
-          {
-            "condition": "High originality && Low clarity",
-            "action": "Insert structural clarity prompt (e.g., 'Can you give a concrete example?')"
-          },
-          {
-            "condition": "High stress or anxiety indicators",
-            "action": "Insert grounding micro-exercise (30s breath + sensory check) and ask for embodied description."
-          },
-          {
-            "condition": "High meta-awareness",
-            "action": "Offer an advanced paradox question to test recursion depth."
-          }
-        ]
+        "id": "multiple_perspectives",
+        "desc": "If user explicitly lists 2+ perspectives ('on one hand', 'however', 'another way') add +0.4 to Depth and Adaptability.",
+        "apply_to": ["Depth", "Adaptability"]
       },
       {
-        "step_id": "micro_reflection_loop",
-        "action": "At midpoint (or after main loop), AI selects 2 prior answers and asks user to reflect with new perspective.",
-        "prompt_example": "Earlier you said X. With what we've discussed so far, how would you re-describe that moment now?"
+        "id": "novelty_keywords",
+        "desc": "If response contains 'novel', 'unique', 'unconventional', 'radical', add +0.3 to Originality.",
+        "apply_to": ["Originality"]
       },
       {
-        "step_id": "completion_confirm",
-        "action": "AI asks whether user wants to add anything, confirms end of responses, and begins computation.",
-        "example_text": "Thanks — that was excellent. Do you want to add any closing thoughts before I compute your reflection report?"
+        "id": "heuristic_sentence_count",
+        "desc": "If sentence count > 3 add +0.2 Depth; if > 6 add +0.4 Depth.",
+        "apply_to": ["Depth"]
       },
       {
-        "step_id": "compute_scores",
-        "action": "Aggregate per-domain accumulators, normalize scores (0–100), apply tier adjustments, compute final archetype match, compute confidences.",
-        "details": {
-          "aggregation": "For each domain sum weighted metrics and divide by total weights.",
-          "normalization": "Clip to 0–100; compute z-scores for internal calibration.",
-          "archetype_matching": "Nearest prototype vector + softmax for confidence.",
-          "confidence_flags": "If data incomplete or axis confidence < 0.5, flag result as low-confidence."
-        }
-      },
-      {
-        "step_id": "generate_dashboard",
-        "action": "Create concise JSON dashboard with domain scores, MCQ, archetype, developmental level, and confidence.",
-        "fields": ["domain_scores", "MCQ", "dominant_archetype", "developmental_level", "overall_confidence"]
-      },
-      {
-        "step_id": "generate_narrative",
-        "action": "Compose a short symbolic narrative (3–6 paragraphs) explaining the user's cognitive signature, emblematic symbol, strengths, and growth path.",
-        "tone_guidance": "gentle, validating, insightful; use user's own words as 'resonance mirror' excerpts (1-2 lines)."
-      },
-      {
-        "step_id": "explainability_layer",
-        "action": "Provide transparent reasoning notes showing which responses and features most influenced each axis score (top 3 contributing features per axis).",
-        "format": "List of {axis: [(feature, weight, example_excerpt), ...]}"
-      },
-      {
-        "step_id": "offer_actions",
-        "action": "Offer 3-6 targeted exercises or habits mapped to user's growth areas.",
-        "severity_routing": {
-          "if_low_grounding": ["30s breath anchor x 3/day", "sensory journaling before creative work"],
-          "if_low_adaptability": ["micro-updating practice: change plan weekly", "rapid prototyping exercise"],
-          "if_overanalysis": ["5-min embodied pause before cognitive work", "timer-based deep work + physical exercise"]
-        }
-      },
-      {
-        "step_id": "export_options",
-        "action": "Offer the user formats to export: 'concise dashboard JSON', 'full transcript + annotated scores', 'narrative TXT', 'visual archetype PNG'.",
-        "privacy_prompt": "Confirm user wants to export. Exports are created only on user request."
-      },
-      {
-        "step_id": "follow_up_flow",
-        "action": "Ask user if they want a shorter micro-test (2-min) to track one growth area, schedule a re-test, or explore a module.",
-        "sample_text": "Would you like a 2-minute grounding micro-test now, or schedule a follow-up?"
+        "id": "conservative_clip",
+        "desc": "All boosts are additive but final metric values are clipped to [1,5]."
       }
     ]
   },
-
-  "report_and_export_schema": {
-    "transcript_json": {
-      "fields": ["question_id", "prompt_text", "user_response", "timestamp", "latency_seconds", "scoring_breakdown"]
+  "interactive_rules": {
+    "rendering": {
+      "one_question_at_a_time": true,
+      "display_prompt": "Prompt text; domain label; suggested time estimate (per question: 2-6 minutes)",
+      "self_rating_prompt": "Ask user to self-rate Depth, Originality, Clarity, Self_Awareness, Adaptability (1..5 sliders)",
+      "optional_timers": "Client may include a timer; response latency is recorded for analytics."
     },
-    "scoring_breakdown_fields": ["Depth", "Originality", "Clarity", "Self_Awareness", "Adaptability"],
-    "dashboard_json_fields": ["domain_scores", "MCQ", "archetype", "developmental_level", "confidence_score", "recommended_actions"],
-    "narrative_txt": "3-6 paragraph human-friendly narrative with symbol explanation and 3 recommended exercises."
-  },
-
-  "archetype_matching": {
-    "prototype_vectors_reference": "MCIF_5_MasterSchema prototypes (internal file)",
-    "distance_metric": "Euclidean + cosine similarity combined",
-    "softmax_temperature": 0.7,
-    "mixture_threshold": 0.15
-  },
-
-  "explainability_and_transparency": {
-    "requirement": "Always provide a short explanation of 'why' scores were assigned in plain language.",
-    "example": "Meta_Awareness score is high because 3/10 answers included recursive self-evaluation, and response latency suggested deliberation."
-  },
-
-  "edge_cases_and_safety": {
-    "missing_data_policy": "If user refuses multiple questions, compute partial report and flag axes as 'low confidence'.",
-    "distress_detection": "If text/audio indicates acute distress or self-harm ideation, present safety resources and suggest pausing the test.",
-    "no_diagnostic_claims": "Include statement in every report: 'This tool is for reflection and growth, not mental health diagnosis.'"
-  },
-
-  "additional_enhancements": {
-    "time_tracking": "AI tracks average response time for precision vs. intuition metrics.",
-    "language_analysis": "Evaluates linguistic richness, metaphor density, and conceptual cohesion.",
-    "emotional_spectrum_mapping": "Detects emotional regulation patterns through tone and reflection depth.",
-    "creativity_expansion_mode": "Optional sub-test where AI prompts for invention, analogy, or synthesis exercises.",
-    "add_on_modules": [
-      "Cognitive Type Profiler",
-      "Neuroplasticity Progress Tracker",
-      "AI Mentor Mode"
-    ]
-  },
-
-  "interaction_presets": {
-    "Quick_Insight_Mode": {
-      "duration_minutes": 10,
-      "question_count": [6, 8],
-      "goal": "Concise snapshot of thinking archetype and meta-cognitive range."
-    },
-    "Deep_Cognitive_Mode": {
-      "duration_minutes": 30,
-      "question_count": [15, 20],
-      "goal": "Evaluate higher-order thought and adaptive reasoning."
-    },
-    "Full_Spectrum_Mode": {
-      "duration_minutes": 60,
-      "question_count": [30, 40],
-      "goal": "Comprehensive breakdown across domains."
+    "adaptive_branching_rules": [
+      {
+        "id": "clarity_grounding",
+        "condition": "combined_clarity < 2.2 AND combined_originality >= 4",
+        "action": "Insert a clarifying prompt: 'That idea is creative — could you give a concrete, step-by-step example?'"
+      },
+      {
+        "id": "stress_grounding",
+        "condition": "user_marks_stress OR response_contains(['anxious','overwhelmed','panic'])",
+        "action": "Insert a 30-second grounding micro-exercise prompt and optional pause."
+      },
+      {
+        "id": "low_reflection",
+        "condition": "Self_Awareness across last 4 answers average < 2.5",
+        "action": "Insert a structured reflection prompt: 'Describe a time you were wrong and what sign alerted you.'"
+      },
+      {
+        "id": "high_meta_offer",
+        "condition": "Meta_Awareness domain running score > 80",
+        "action": "Offer an advanced recursion question and encourage Tier_3 follow-up."
+      },
+      {
+        "id": "diversity_insert",
+        "condition": "Less than 2 domains answered after midpoint",
+        "action": "Insert a cross-domain synthesis question to force lateral thinking."
+      }
+    ],
+    "micro_reflection": {
+      "when": "Midpoint for Tier_1 and Tier_2; After 60% of questions for Tier_3",
+      "how": "Select 2 earlier answers automatically (one early, one later). Ask user to re-describe with 1-3 sentence change. Store revision and use deterministic scoring rule 'revision_boost'."
     }
   },
-
-  "startup_prompt": "Hello, thinker. You’re about to take the Meta-Cognition Intelligence Framework (MCIF v5), an advanced assessment of how you think, reason, and create. Choose: Quick (10 min), Deep (30 min), or Full Spectrum (60 min)."
+  "question_bank": {
+    "Tier_1": {
+      "Meta_Awareness": [
+        {"id":"MA1-1","prompt":"When you notice a strong emotion, what is the first thing that appears in your mind? Describe the first two internal signals."},
+        {"id":"MA1-2","prompt":"Describe a typical moment when you realize you are distracted. What physical or mental cues do you observe?"},
+        {"id":"MA1-3","prompt":"How do you check whether your belief about a situation is biased? List two quick checks you might run."},
+        {"id":"MA1-4","prompt":"Name one habit you have that helps you notice your own thought patterns."},
+        {"id":"MA1-5","prompt":"Describe a recent mistake and tell how you realized it was a mistake."},
+        {"id":"MA1-6","prompt":"When learning something new, what tells you that you 'get it'? Describe any internal signs."},
+        {"id":"MA1-7","prompt":"How often do you pause and ask yourself ‘why am I thinking this’? Give a brief example."},
+        {"id":"MA1-8","prompt":"What role does your environment play in how aware you are of your thoughts? Choose one example."},
+        {"id":"MA1-9","prompt":"List three words that sum up how you think when you’re in flow."},
+        {"id":"MA1-10","prompt":"When you let your mind wander, do you notice a consistent pattern? Describe it."}
+      ],
+      "Cognitive_Synthesis": [
+        {"id":"CS1-1","prompt":"Name two unrelated interests you have. Sketch a single idea that connects them (2–4 sentences)."},
+        {"id":"CS1-2","prompt":"Describe one metaphor that explains how you think."},
+        {"id":"CS1-3","prompt":"Take a simple tool you use daily — list two new uses for it in another domain."},
+        {"id":"CS1-4","prompt":"Describe a pattern you noticed recently and why it felt meaningful."},
+        {"id":"CS1-5","prompt":"Pick an animal and explain what its behavior might teach about problem solving."},
+        {"id":"CS1-6","prompt":"Describe a time you combined two ideas and got a better outcome."},
+        {"id":"CS1-7","prompt":"Explain a simple system (e.g., morning routine) and identify one hidden assumption."},
+        {"id":"CS1-8","prompt":"Name a hobby and imagine its principles applied to a workplace problem."},
+        {"id":"CS1-9","prompt":"In one sentence, translate a technical idea into a poetic image."},
+        {"id":"CS1-10","prompt":"Describe a small experiment you could run tomorrow to test a belief."}
+      ],
+      "Adaptive_Reasoning": [
+        {"id":"AR1-1","prompt":"When plans go wrong, what is your immediate mental step? Describe it."},
+        {"id":"AR1-2","prompt":"Give an example of a time you changed your approach mid-way. What triggered it?"},
+        {"id":"AR1-3","prompt":"How do you decide which assumptions to keep and which to drop?"}, 
+        {"id":"AR1-4","prompt":"Describe a quick 'rule of thumb' you use under time pressure."},
+        {"id":"AR1-5","prompt":"When you are uncertain, what small action reduces uncertainty rapidly?"},
+        {"id":"AR1-6","prompt":"Name a decision you would revisit if given new data. What data would change your mind?"},
+        {"id":"AR1-7","prompt":"When you receive feedback, how do you check whether it's valid?"}, 
+        {"id":"AR1-8","prompt":"Describe a time you misread a situation. What corrective step helped?"}, 
+        {"id":"AR1-9","prompt":"List two quick heuristics you rely on and why."},
+        {"id":"AR1-10","prompt":"Describe one instance where an early pivot saved you time or resources."}
+      ],
+      "Moral_Symbolic_Intelligence": [
+        {"id":"MS1-1","prompt":"Think of a small moral choice you faced this week. What guided your decision?"},
+        {"id":"MS1-2","prompt":"Name a symbol that matters to you and explain what it stands for."},
+        {"id":"MS1-3","prompt":"Describe a time when following rules conflicted with your personal values."},
+        {"id":"MS1-4","prompt":"What does 'integrity' mean to you in one sentence? Give an example."},
+        {"id":"MS1-5","prompt":"Describe a cultural story (briefly) that shaped how you view a moral issue."},
+        {"id":"MS1-6","prompt":"When two values clash for you, how do you prioritize them?"}, 
+        {"id":"MS1-7","prompt":"Think of a symbol for 'balance.' Describe it and why it fits."},
+        {"id":"MS1-8","prompt":"Describe a decision where fairness mattered more than efficiency."},
+        {"id":"MS1-9","prompt":"Explain how empathy affects your judgments in one brief example."},
+        {"id":"MS1-10","prompt":"Describe a small ritual that helps you align with your values."}
+      ],
+      "Creative_Application": [
+        {"id":"CA1-1","prompt":"Take a recent idea and list three concrete next steps to make it real."},
+        {"id":"CA1-2","prompt":"Describe a minimal viable version of a project you care about."},
+        {"id":"CA1-3","prompt":"Name a systemic problem you notice and one small prototype to address it."},
+        {"id":"CA1-4","prompt":"Describe how you prioritize features when building something small."},
+        {"id":"CA1-5","prompt":"Explain one constraint you turn into an advantage when creating."},
+        {"id":"CA1-6","prompt":"Describe a time you simplified an idea and it worked better."},
+        {"id":"CA1-7","prompt":"List two collaborators or roles you would need to launch an idea."},
+        {"id":"CA1-8","prompt":"Create a 3-step plan to test an assumption in a weekend."},
+        {"id":"CA1-9","prompt":"Name a metric to know whether your idea succeeded."},
+        {"id":"CA1-10","prompt":"Describe a physical prototype (even if low-tech) for an abstract idea."}
+      ]
+    },
+    "Tier_2": {
+      "Meta_Awareness": [
+        {"id":"MA2-1","prompt":"Describe a time you deliberately changed a thinking habit. What triggered the change and what was the result?"},
+        {"id":"MA2-2","prompt":"Analyze a recurring bias you notice in yourself. When does it appear and how could you detect it earlier?"},
+        {"id":"MA2-3","prompt":"Explain how your mood affects your decision-making with an example."},
+        {"id":"MA2-4","prompt":"Describe a thinking pattern you inherited from your environment and how you might reframe it."},
+        {"id":"MA2-5","prompt":"When faced with cognitive overload, what 3-step strategy do you use to simplify your thoughts?"},
+        {"id":"MA2-6","prompt":"Pick a recent strong belief. Write a short argument for the opposite view."},
+        {"id":"MA2-7","prompt":"Describe how you verify the source and credibility of an idea you hear."},
+        {"id":"MA2-8","prompt":"Explain how you use journaling or note-taking to reveal thought patterns."},
+        {"id":"MA2-9","prompt":"Describe a practice that increases your meta-awareness and how often you do it."},
+        {"id":"MA2-10","prompt":"When you detect a defensive reaction in conversation, how do you respond internally and externally?"}
+      ],
+      "Cognitive_Synthesis": [
+        {"id":"CS2-1","prompt":"Combine a scientific concept with an artistic practice and sketch a single creative product that emerges."},
+        {"id":"CS2-2","prompt":"Design an analogy that explains a complex system in under 50 words."},
+        {"id":"CS2-3","prompt":"Take two disciplines you know and describe a shared principle that links them."},
+        {"id":"CS2-4","prompt":"Invent a thought experiment that reveals a hidden assumption in everyday life."},
+        {"id":"CS2-5","prompt":"Describe how you would map a policy problem onto a design challenge and propose one solution."},
+        {"id":"CS2-6","prompt":"Create a metaphor that captures how your mind moves between detail and big-picture."},
+        {"id":"CS2-7","prompt":"Describe a framework that turns vague inspiration into actionable steps."},
+        {"id":"CS2-8","prompt":"Explain how you would teach a non-expert one difficult idea from your domain."},
+        {"id":"CS2-9","prompt":"Invent a hybrid tool that blends two unrelated technologies for a new use."},
+        {"id":"CS2-10","prompt":"Describe a layered model (3 levels) for solving a persistent personal problem."}
+      ],
+      "Adaptive_Reasoning": [
+        {"id":"AR2-1","prompt":"You discover a core assumption in your plan is false. Write a short reconfigured plan that accounts for the new truth."},
+        {"id":"AR2-2","prompt":"Design a check within a project to detect when to pivot (what signal, who checks, what action)."}, 
+        {"id":"AR2-3","prompt":"Explain how you trade off speed vs accuracy in decisions with one concrete example."},
+        {"id":"AR2-4","prompt":"Describe a system for revising beliefs when confronted with moderate evidence against them."},
+        {"id":"AR2-5","prompt":"Create a rubric for evaluating conflicting pieces of evidence quickly."},
+        {"id":"AR2-6","prompt":"Design a micro-experiment to test a risky assumption within 48 hours."},
+        {"id":"AR2-7","prompt":"Explain how you would decompose a messy problem into testable hypotheses."},
+        {"id":"AR2-8","prompt":"Describe a decision where you intentionally limited information to avoid paralysis."},
+        {"id":"AR2-9","prompt":"Explain a mechanism you use to learn from failed attempts systematically."},
+        {"id":"AR2-10","prompt":"Describe an algorithm (3 steps) you use to prioritize tasks under pressure."}
+      ],
+      "Moral_Symbolic_Intelligence": [
+        {"id":"MS2-1","prompt":"Describe a moral dilemma where two widely-held values conflict. List criteria you would use to choose."},
+        {"id":"MS2-2","prompt":"Interpret a cultural symbol from your background and explain how it shapes a moral stance."},
+        {"id":"MS2-3","prompt":"Design a short decision rubric for resolving conflicts between fairness and efficiency."},
+        {"id":"MS2-4","prompt":"Explain how accountability and forgiveness can be balanced in a restorative process."},
+        {"id":"MS2-5","prompt":"Describe a policy choice that favors long-term virtue over short-term gain — justify it."},
+        {"id":"MS2-6","prompt":"Draft a step-by-step method to weigh stakeholder values when designing a product."},
+        {"id":"MS2-7","prompt":"Name an ethical principle you find difficult to apply and explain why."},
+        {"id":"MS2-8","prompt":"Describe a symbolic gesture that could shift organizational culture toward empathy."},
+        {"id":"MS2-9","prompt":"Explain how stories or rituals can help sustain moral commitments."},
+        {"id":"MS2-10","prompt":"Design a micro-game that trains people to recognize ethical trade-offs quickly."}
+      ],
+      "Creative_Application": [
+        {"id":"CA2-1","prompt":"Design a week-long sprint to prototype an idea with minimal resources."},
+        {"id":"CA2-2","prompt":"Create a prioritized feature list for a product idea focused on learning outcomes."},
+        {"id":"CA2-3","prompt":"Outline a system to convert a single insight into a repeatable workshop."},
+        {"id":"CA2-4","prompt":"Describe how you would scale a small pilot to serve 10x users while preserving quality."},
+        {"id":"CA2-5","prompt":"Design a constraint-driven challenge that forces creative trade-offs (3 rules max)."},
+        {"id":"CA2-6","prompt":"Create a feedback loop (3 steps) between prototype, testing, and iteration."},
+        {"id":"CA2-7","prompt":"Describe a funding-light rollout strategy for a meaningful idea (no VC)."}, 
+        {"id":"CA2-8","prompt":"Write a customer interview script (5 questions) that reveals core pain points."},
+        {"id":"CA2-9","prompt":"Describe one measure of success that detects whether an insight has real-world value."},
+        {"id":"CA2-10","prompt":"Design an accountability structure that helps you finish creative projects reliably."}
+      ]
+    },
+    "Tier_3": {
+      "Meta_Awareness": [
+        {"id":"MA3-1","prompt":"Describe how consciousness might observe itself observing — map the loop and identify a paradox and a resolution strategy."},
+        {"id":"MA3-2","prompt":"Design a practice that institutionalizes daily meta-reflection for six months; include metrics for progress."},
+        {"id":"MA3-3","prompt":"Compare two distinct epistemic stances you have held; analyze how you moved from one to the other."},
+        {"id":"MA3-4","prompt":"Construct a taxonomy of cognitive biases you personally display and propose an intervention for each."},
+        {"id":"MA3-5","prompt":"Model a 'thinking dashboard' (5 widgets) that would help you monitor mental states in real time."},
+        {"id":"MA3-6","prompt":"Propose a ritual or system that reliably produces insight for you; explain the mechanisms."},
+        {"id":"MA3-7","prompt":"Describe how identity and self-narrative shape the types of ideas you generate; suggest a method to diversify them."},
+        {"id":"MA3-8","prompt":"Design an experiment to quantify your reflective accuracy (are you good at seeing your own biases?)."},
+        {"id":"MA3-9","prompt":"Write a short model showing how stress changes your reasoning strategy — include causal links."},
+        {"id":"MA3-10","prompt":"Design a training schedule to increase meta-awareness by 30% in 90 days and explain measurement."}
+      ],
+      "Cognitive_Synthesis": [
+        {"id":"CS3-1","prompt":"If you could redesign human thought as an algorithm, specify 8 parameters you would optimize and why."},
+        {"id":"CS3-2","prompt":"Create a new discipline by fusing two existing fields — outline its core questions and methods."},
+        {"id":"CS3-3","prompt":"Design a framework for translating metaphors into operational models for teams."},
+        {"id":"CS3-4","prompt":"Write a stepwise method (5 phases) for turning ambiguous insight into a rigorous theory."},
+        {"id":"CS3-5","prompt":"Propose a multi-level map connecting phenomena across micro, meso, and macro scales for a complex issue."},
+        {"id":"CS3-6","prompt":"Design a cognitive toolkit (5 tools) for rapid concept synthesis and show how to use one tool in practice."},
+        {"id":"CS3-7","prompt":"Create a taxonomy of mental models you use and outline when each is most appropriate."},
+        {"id":"CS3-8","prompt":"Design a peer-review method for evaluating novel conceptual syntheses."},
+        {"id":"CS3-9","prompt":"Draft an instruction set for teaching cross-disciplinary thinking to advanced learners."},
+        {"id":"CS3-10","prompt":"Invent a compact notation or language to represent blended concepts and demonstrate it with two examples."}
+      ],
+      "Adaptive_Reasoning": [
+        {"id":"AR3-1","prompt":"Design a decision-making architecture that remains truthful and robust under noisy, conflicting data."},
+        {"id":"AR3-2","prompt":"Propose a meta-algorithm to update beliefs across time while avoiding catastrophic forgetting."},
+        {"id":"AR3-3","prompt":"Design an organizational learning loop that scales individual adaptation into collective change."},
+        {"id":"AR3-4","prompt":"Create a crisis decision flow that balances moral, strategic, and probabilistic considerations."},
+        {"id":"AR3-5","prompt":"Draft a framework for turning near-miss events into system-level improvements."},
+        {"id":"AR3-6","prompt":"Design a scoring system for alternate models that accounts for parsimony, generalization, and predictive power."},
+        {"id":"AR3-7","prompt":"Create a protocol for integrating contradictory expert opinions into a coherent plan."},
+        {"id":"AR3-8","prompt":"Describe a simulation or tabletop exercise that would stress-test your core assumptions."},
+        {"id":"AR3-9","prompt":"Propose a mechanism to safely explore radical hypothesis space while limiting real-world risk."},
+        {"id":"AR3-10","prompt":"Design a hybrid human-AI decision pipeline (conceptually) that leverages strengths without ceding responsibility."}
+      ],
+      "Moral_Symbolic_Intelligence": [
+        {"id":"MS3-1","prompt":"Interpret 'light' and 'shadow' symbolically in human consciousness; produce a balanced moral framework using them as axes."},
+        {"id":"MS3-2","prompt":"Design a thought experiment that reveals whether moral truth is context-dependent or universal."},
+        {"id":"MS3-3","prompt":"Construct a layered moral architecture that can be operationalized in policies (3 layers: principle, rule, exception)."},
+        {"id":"MS3-4","prompt":"Design a ritual or narrative that could shift societal priorities toward long-term stewardship."},
+        {"id":"MS3-5","prompt":"Create a moral calibration test for organizations measuring empathy, fairness, and responsibility."},
+        {"id":"MS3-6","prompt":"Write a concise philosophy (200–300 words) that reconciles competing moral intuitions you hold."},
+        {"id":"MS3-7","prompt":"Design a curriculum to teach symbolic literacy (myths, metaphors) to engineers and leaders."},
+        {"id":"MS3-8","prompt":"Propose a public policy that encodes symbolic values (e.g., dignity) and explain mechanisms of enforcement."},
+        {"id":"MS3-9","prompt":"Analyze an ethical paradox (e.g., trolley problem) and propose a decision architecture that minimizes harm over time."},
+        {"id":"MS3-10","prompt":"Design a community process that uses storytelling to heal moral fractures after conflict."}
+      ],
+      "Creative_Application": [
+        {"id":"CA3-1","prompt":"You must teach future AIs about compassion. Design the first lesson and measurable success criteria."},
+        {"id":"CA3-2","prompt":"Design a five-phase incubation program to move ideas from insight to societal pilot."},
+        {"id":"CA3-3","prompt":"Create a blueprint for a distributed, low-cost lab that turns community problems into testable prototypes."},
+        {"id":"CA3-4","prompt":"Design an evaluation metric that quantifies 'useful novelty' in creative projects."},
+        {"id":"CA3-5","prompt":"Create a scalable mentoring structure that preserves serendipity while increasing throughput."},
+        {"id":"CA3-6","prompt":"Design a hypothetical product that encodes a moral value as its central UX."},
+        {"id":"CA3-7","prompt":"Outline a sustainable business model that funds long-term creative research without diluting mission."},
+        {"id":"CA3-8","prompt":"Propose a field experiment to measure whether creativity grows with targeted constraints."},
+        {"id":"CA3-9","prompt":"Design an apprenticeship structure to transmit tacit insight across generations."},
+        {"id":"CA3-10","prompt":"Create a public-facing narrative (short manifesto) that communicates the value of integrative thinking and invites participation."}
+      ]
+    }
+  },
+  "ui_hints_and_time_estimates": {
+    "per_question_estimate_seconds": {
+      "Tier_1": 180,
+      "Tier_2": 300,
+      "Tier_3": 600
+    },
+    "suggested_ui_elements": [
+      "textarea with autosave",
+      "5-slider self-rating widget",
+      "progress bar with domain counts",
+      "micro-reflection modal",
+      "download buttons for dashboard/transcript"
+    ]
+  },
+  "export_schema": {
+    "transcript_json": {
+      "fields": [
+        "question_id",
+        "prompt_text",
+        "user_response",
+        "timestamp",
+        "latency_seconds",
+        "self_ratings",
+        "applied_boosts",
+        "combined_metrics"
+      ]
+    },
+    "dashboard_json": {
+      "fields": [
+        "generated_at",
+        "mode",
+        "MCQ",
+        "domain_scores",
+        "dominant_archetype",
+        "developmental_level",
+        "overall_confidence",
+        "recommended_actions"
+      ]
+    },
+    "narrative_txt_spec": {
+      "length_paragraphs": [3,6],
+      "include": [
+        "dominant_archetype_description",
+        "top_strengths (two domains)",
+        "development_recommendations (three)",
+        "user resonance excerpts (two short quotes from transcript)"
+      ]
+    }
+  },
+  "recommendation_engine": {
+    "rules": [
+      {
+        "id": "low_meta",
+        "condition": "Meta_Awareness.score < 40",
+        "actions": ["daily 5-minute reflection practice","micro-journaling: describe one decision each evening","grounding breathing exercises x3/day"]
+      },
+      {
+        "id": "low_adapt",
+        "condition": "Adaptive_Reasoning.score < 50",
+        "actions": ["weekly hypothesis testing habit","rapid-prototyping micro-challenges","play strategy games that require pivoting"]
+      },
+      {
+        "id": "low_creativity",
+        "condition": "Cognitive_Synthesis.score < 50 AND Creative_Application.score < 50",
+        "actions": ["analogy practice (3/day)","constraint creativity sprints (30 min)","collaboration with unfamiliar fields"]
+      },
+      {
+        "id": "high_strength",
+        "condition": "Any domain score > 80",
+        "actions": ["teach or blog about your methods","mentor others","enter a stretch project that scales impact"]
+      }
+    ]
+  },
+  "explainability": {
+    "requirement": "Every dashboard must include the top 3 contributing transcript items for each domain and a plain-language note explaining how numeric scores were derived (which deterministic rules applied).",
+    "format_example": {
+      "domain": "Cognitive_Synthesis",
+      "score": 78,
+      "top_contributors": [
+        {"question_id":"CS2-1","feature":"long_response_with_example","weight":0.23,"excerpt":"\"I connected X and Y... for example...\""},
+        {"question_id":"CS3-5","feature":"multi-level_model","weight":0.18,"excerpt":"\"At micro, meso, macro levels...\""}
+      ],
+      "explain_note": "Score computed from averaged self-ratings, length and example boosts applied; confidence calculated from number of responses."
+    }
+  },
+  "testing_and_validation_guides": {
+    "client_test_cases": [
+      {
+        "id":"TC1",
+        "desc":"User completes 3 Tier_1 questions with short responses and default sliders; expect domain scores present but lower confidence.",
+        "expected_outcome":"Domain scores computed; confidence flags for domains with <3 responses."
+      },
+      {
+        "id":"TC2",
+        "desc":"User completes Tier_3, provides examples and revisions; expect higher Self_Awareness and Adaptability boosts.",
+        "expected_outcome":"Revision boosts applied; MCQ scaled by tier factor."
+      }
+    ],
+    "qa_checklist": [
+      "Confirm MCIF_v6_MasterSchema.json fetchable via relative path",
+      "Confirm UI implements deterministic scoring rules exactly",
+      "Confirm export files are well-formed JSON following schema",
+      "Confirm micro-reflection edits are logged and boost rules applied",
+      "Confirm branch insertion rules behave deterministically"
+    ]
+  },
+  "developer_notes": {
+    "how_to_use_client_side": [
+      "1. Fetch MCIF_v6_MasterSchema.json synchronously at app start.",
+      "2. Render mode chooser using difficulty_tiers and interaction_presets.",
+      "3. Render questions from question_bank for selected tier; track domain counts to ensure coverage.",
+      "4. For each response collect: text, timestamp, latency, self_ratings (Depth,Originality,Clarity,Self_Awareness,Adaptability).",
+      "5. Apply deterministic_scoring_rules in the listed order to compute combined_metrics for the response (clip to 1..5).",
+      "6. Aggregate combined_metrics per-domain using weighting_by_domain and map to 0..100.",
+      "7. Apply final_score_formula for MCQ and map to archetype_ranges.",
+      "8. Generate narrative from template using top strengths and recommended actions.",
+      "9. Export dashboard.json, transcript.json locally (downloadable blob)."
+    ],
+    "implementation_tips": [
+      "Keep scoring functions pure and deterministic (no randomness).",
+      "Record applied boosts per response so explainability can trace every number to rules.",
+      "Offer an option to enable/disable self-rating (if disabled, heuristics must be used; schema’s rules cover heuristics).",
+      "Use micro-reflection to increase data quality: force 1–2 revisions in Tier_2/3 to measure reflection skill."
+    ]
+  },
+  "interaction_presets": {
+    "Quick_Insight": {
+      "mode_key":"Quick_Insight",
+      "duration_minutes":10,
+      "question_count":[6,8],
+      "default_tier":"Tier_1"
+    },
+    "Deep_Cognitive": {
+      "mode_key":"Deep_Cognitive",
+      "duration_minutes":30,
+      "question_count":[20,40],
+      "default_tier":"Tier_2"
+    },
+    "Full_Spectrum": {
+      "mode_key":"Full_Spectrum",
+      "duration_minutes":90,
+      "question_count":[60,95],
+      "default_tier":"Tier_3"
+    }
+  },
+  "archetypes": {
+    "Seeker":"Developing curiosity and reflective capacity; benefits from structure and regular micro-reflection.",
+    "Observer":"Reflective and cautious; benefits from practice translating reflection into synthesis.",
+    "Thinker":"Analytical and structured; benefits from creative constraints and cross-domain practice.",
+    "Inventor":"Integrative thinker, good at synthesis; benefits from scaling and mentoring others.",
+    "Visionary":"Systems-level meta-thinker; benefits from stewardship and public impact projects."
+  },
+  "appendix_examples": {
+    "scoring_example": {
+      "response": "I changed my plan when I saw the metrics drop. For example, I stopped pushing feature X and A/B tested Y instead.",
+      "self_ratings": {"Depth":4,"Originality":3,"Clarity":4,"Self_Awareness":4,"Adaptability":5},
+      "applied_boosts": ["length_boost","+0.3 depth, +0.3 clarity","example_boost","+0.4 depth and clarity"],
+      "combined_metrics_result": {"Depth":4.7,"Originality":3,"Clarity":4.7,"Self_Awareness":4,"Adaptability":5}
+    }
+  }
 }
