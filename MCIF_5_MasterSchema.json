@@ -1,210 +1,506 @@
 {
   "test": {
-    "title": "Meta-Cognition Intelligence Framework (MCIF-5)",
-    "description": "An introspective exploration of thought structure, synthesis depth, and consciousness mapping. This assessment measures not only what you think — but *how* your cognition organizes, reflects, and expands.",
-    "theme": {
-      "color_scheme": "lucid-blue-gold",
-      "font": "Inter, sans-serif",
-      "background": "gradient-soft-lucid",
-      "sound_frequencies": [432, 528, 852, 963]
+    "meta": {
+      "name": "Meta-Cognitive Intelligence Framework v5 (MCIF-5) - Mind Core",
+      "version": "5.0",
+      "author": "Andrew Carr",
+      "purpose": "Measure how a person perceives, reasons, integrates emotion, and synthesizes insight (meta-cognitive signature).",
+      "license": "Open for research and education; credit MCIF-5 for derived works.",
+      "notes": "This schema drives a standalone, non-AI test application. All rules, scoring, and narratives are static and deterministic."
+    },
+    "ui": {
+      "theme": "lucid",
+      "color_scheme": "blue-gold",
+      "font_stack": "Inter, system-ui, sans-serif",
+      "showProgressBar": true,
+      "feedbackAfterEachPhase": true,
+      "finalSummary": true,
+      "autoSaveLocal": true,
+      "soundOptions": [432, 528, 852, 963],
+      "allowFrequencyLayering": true,
+      "ambientOptions": ["ocean", "space", "wind", "pure_tone"]
+    },
+    "metrics": {
+      "axes": [
+        "Perception",
+        "Logic_and_Reasoning",
+        "Creativity",
+        "Emotional_Regulation",
+        "Adaptability",
+        "Meta_Awareness",
+        "Philosophical_Depth"
+      ],
+      "weights": {
+        "Perception": 0.15,
+        "Logic_and_Reasoning": 0.15,
+        "Creativity": 0.15,
+        "Emotional_Regulation": 0.15,
+        "Adaptability": 0.10,
+        "Meta_Awareness": 0.15,
+        "Philosophical_Depth": 0.15
+      },
+      "scale": {
+        "perPhaseSubscoreRange": [0, 100],
+        "compositeMaxPoints": 700
+      }
+    },
+    "tierThresholds": {
+      "Explorer": [0, 350],
+      "Architect": [351, 525],
+      "Visionary": [526, 700]
+    },
+    "archetypes": [
+      {
+        "id": "reflective_architect",
+        "name": "Reflective Architect",
+        "prototype_vector": {
+          "Perception": 70,
+          "Logic_and_Reasoning": 85,
+          "Creativity": 65,
+          "Emotional_Regulation": 70,
+          "Adaptability": 60,
+          "Meta_Awareness": 90,
+          "Philosophical_Depth": 75
+        },
+        "description": "High meta-awareness and strong logic. Excels at analyzing structures of mind and building clear conceptual architectures.",
+        "strengths": ["System mapping", "Analytic clarity", "Reflective synthesis"],
+        "growth": ["Turn analysis into consistent action", "Simplify concepts into steps"]
+      },
+      {
+        "id": "empathic_inventor",
+        "name": "Empathic Inventor",
+        "prototype_vector": {
+          "Perception": 75,
+          "Logic_and_Reasoning": 65,
+          "Creativity": 90,
+          "Emotional_Regulation": 85,
+          "Adaptability": 70,
+          "Meta_Awareness": 70,
+          "Philosophical_Depth": 60
+        },
+        "description": "Builds with heart and insight; synthesizes emotional intelligence and creative design.",
+        "strengths": ["Empathy-led innovation", "Human-centered concepts", "Insight-driven prototyping"],
+        "growth": ["Add structural rigor", "Translate empathy into reproducible processes"]
+      },
+      {
+        "id": "visionary_synthesist",
+        "name": "Visionary Synthesist",
+        "prototype_vector": {
+          "Perception": 80,
+          "Logic_and_Reasoning": 88,
+          "Creativity": 92,
+          "Emotional_Regulation": 75,
+          "Adaptability": 78,
+          "Meta_Awareness": 80,
+          "Philosophical_Depth": 90
+        },
+        "description": "Unifies systems, philosophy, and creativity into broad, actionable visions.",
+        "strengths": ["Systemic innovation", "Long-view synthesis", "Ideational leadership"],
+        "growth": ["Channel broad vision into focused execution", "Maintain tactical follow-through"]
+      },
+      {
+        "id": "grounded_operator",
+        "name": "Grounded Operator",
+        "prototype_vector": {
+          "Perception": 70,
+          "Logic_and_Reasoning": 90,
+          "Creativity": 55,
+          "Emotional_Regulation": 60,
+          "Adaptability": 65,
+          "Meta_Awareness": 40,
+          "Philosophical_Depth": 45
+        },
+        "description": "Highly pragmatic and reliable; excels at execution and practical system-building.",
+        "strengths": ["Execution", "Process orientation", "Dependability"],
+        "growth": ["Develop reflective awareness", "Cultivate creative flexibility"]
+      },
+      {
+        "id": "dreaming_idealist",
+        "name": "Dreaming Idealist",
+        "prototype_vector": {
+          "Perception": 78,
+          "Logic_and_Reasoning": 45,
+          "Creativity": 88,
+          "Emotional_Regulation": 82,
+          "Adaptability": 68,
+          "Meta_Awareness": 60,
+          "Philosophical_Depth": 80
+        },
+        "description": "Meaning-driven, emotionally rich, and visionary in values and ideals.",
+        "strengths": ["Meaning creation", "Value-driven design", "Rich inner life"],
+        "growth": ["Balance feeling with systematic critique", "Develop pragmatic scaffolding"]
+      },
+      {
+        "id": "balanced_strategist",
+        "name": "Balanced Strategist",
+        "prototype_vector": {
+          "Perception": 75,
+          "Logic_and_Reasoning": 75,
+          "Creativity": 75,
+          "Emotional_Regulation": 75,
+          "Adaptability": 75,
+          "Meta_Awareness": 75,
+          "Philosophical_Depth": 75
+        },
+        "description": "Well-rounded across axes; dynamic equilibrium of thought, feeling and action.",
+        "strengths": ["Versatility", "Balanced judgment", "Adaptive strategy"],
+        "growth": ["Sharpen a domain for mastery", "Push creative edges when safe"]
+      }
+    ],
+    "prototypeMatching": {
+      "distanceMetric": "euclidean_cosine", 
+      "euclideanWeight": 0.5,
+      "cosineWeight": 0.5,
+      "softmaxTemperature": 0.7,
+      "mixtureThreshold": 0.15
     },
     "phases": [
       {
         "id": "intro",
         "title": "Lucid Entry",
-        "content": "Welcome to the MCIF-5 Cognitive Matrix. This is a reflective journey, not a test. Breathe deeply. You may choose a sound frequency for optimal mental resonance before beginning.",
-        "action_label": "Begin Calibration",
-        "action": "next"
+        "type": "info",
+        "content": "Welcome to MCIF-5 — Mind Core. This tool maps how you think: perception, reasoning, emotion, adaptability, meta-awareness, and philosophical depth. This is a reflective tool, not a diagnosis. Choose your environment and sound tone before starting.",
+        "ui": {
+          "actionLabel": "Begin Calibration",
+          "allowSkip": false
+        }
       },
       {
         "id": "frequency_select",
         "title": "Frequency Calibration",
-        "content": "Select your preferred cognitive frequency tone for focus and coherence.",
-        "options": [
-          {"label": "432 Hz - Natural Earth Resonance", "value": 432},
-          {"label": "528 Hz - DNA Repair & Clarity", "value": 528},
-          {"label": "852 Hz - Intuitive Awakening", "value": 852},
-          {"label": "963 Hz - Divine Consciousness", "value": 963}
-        ],
         "type": "multiple_choice",
-        "action_label": "Continue to Orientation",
-        "action": "next"
+        "content": "Select the sound frequency (or combination) that supports your focus. You can layer tones for blended resonance.",
+        "options": [
+          { "id": "f432", "label": "432 Hz — Natural Earth Resonance", "value": 432 },
+          { "id": "f528", "label": "528 Hz — Clarity / DNA Repair", "value": 528 },
+          { "id": "f852", "label": "852 Hz — Intuitive Awakening", "value": 852 },
+          { "id": "f963", "label": "963 Hz — Divine / Transcendence", "value": 963 }
+        ],
+        "ui": { "allowMultiSelect": true, "actionLabel": "Continue" }
       },
       {
         "id": "orientation",
-        "title": "Cognitive Orientation",
-        "content": "Before we begin, remember: This framework observes your *process* of awareness — not correctness. It measures reflection, synthesis, adaptability, and visionary thinking. You may answer intuitively.",
-        "action_label": "Start Assessment",
-        "action": "next"
+        "title": "Orientation",
+        "type": "info",
+        "content": "Before each phase, breathe for 30 seconds. Answer honestly. You may choose multiple input styles: text offers depth, sliders provide quick numeric measures, and multiple-choice offers guided structure. After each phase you will receive brief feedback. When ready, begin Phase 1.",
+        "ui": { "actionLabel": "Start Phase 1", "timeToReadSeconds": 12 }
       },
       {
         "id": "phase_1",
-        "title": "Thought Velocity",
+        "title": "Phase 1 — Perceptual Awareness (Thought Velocity & Sensory Detail)",
+        "type": "question_block",
+        "description": "Measures sensory acuity, detail, and concept linkage.",
+        "scoring": {
+          "subscores": [
+            { "id": "detail", "label": "Detail", "max": 50 },
+            { "id": "sensory_emotion", "label": "Sensory-Emotion Link", "max": 25 },
+            { "id": "concept_depth", "label": "Concept Depth", "max": 25 }
+          ],
+          "mapsTo": "Perception"
+        },
         "questions": [
           {
             "id": "p1_q1",
-            "type": "slider",
-            "question": "How quickly do your thoughts move compared to others?",
-            "min": 0,
-            "max": 10,
-            "scale_labels": ["Very Slow", "Extremely Fast"]
+            "type": "text",
+            "prompt": "Choose an everyday object within reach. Describe it as if perceiving it for the first time — texture, temperature, light, edges, and the feeling it evokes. Be detailed.",
+            "ui": { "minChars": 120, "placeholder": "Describe the object in rich sensory detail..." }
           },
           {
             "id": "p1_q2",
-            "type": "text",
-            "question": "Describe what it feels like when you are ‘in flow’ — when your thoughts synchronize perfectly."
+            "type": "multiple_choice",
+            "prompt": "Which description best fits your spontaneous sensory focus?",
+            "options": [
+              { "label": "I notice texture and micro-details", "score": 85 },
+              { "label": "I notice color and light first", "score": 75 },
+              { "label": "I notice function and use", "score": 55 },
+              { "label": "I notice symbolic associations", "score": 65 }
+            ]
           },
           {
             "id": "p1_q3",
-            "type": "multiple_choice",
-            "question": "When your mind moves too fast, what tends to happen?",
-            "options": [
-              "I become verbally tangled.",
-              "I go silent and internalize.",
-              "I write or sketch rapidly.",
-              "I feel overstimulated or fragmented."
-            ]
+            "type": "slider",
+            "prompt": "Rate how vividly you feel the object's associated emotion or memory (0 = None, 10 = Vivid)",
+            "min": 0,
+            "max": 10
           }
         ]
       },
       {
         "id": "phase_2",
-        "title": "Pattern Synthesis",
+        "title": "Phase 2 — Cognitive Mechanics (Pattern Recognition & Systems Thinking)",
+        "type": "question_block",
+        "description": "Evaluates logical flow and ability to design systems that scale or self-correct.",
+        "scoring": {
+          "subscores": [
+            { "id": "logic", "label": "Logic", "max": 40 },
+            { "id": "systems", "label": "Systems Thinking", "max": 30 },
+            { "id": "practical_creativity", "label": "Practical Creativity", "max": 30 }
+          ],
+          "mapsTo": "Logic_and_Reasoning"
+        },
         "questions": [
           {
             "id": "p2_q1",
-            "type": "multiple_choice",
-            "question": "When presented with new data, what do you notice first?",
-            "options": [
-              "The hidden pattern.",
-              "The inconsistencies.",
-              "The meaning behind it.",
-              "The connections to other ideas."
-            ]
+            "type": "text",
+            "prompt": "A team keeps missing deadlines. Without saying 'work harder,' design a sustainable process or system that fixes this. Explain roles, feedback loops, and measures.",
+            "ui": { "minChars": 180, "placeholder": "Outline the system and its feedback mechanisms..." }
           },
           {
             "id": "p2_q2",
             "type": "slider",
-            "question": "Rate your ability to see connections between unrelated subjects.",
+            "prompt": "Rate how naturally you model systems in your mind (0 = not at all, 10 = effortlessly).",
             "min": 0,
-            "max": 10,
-            "scale_labels": ["Linear thinker", "Associative visionary"]
+            "max": 10
           },
           {
             "id": "p2_q3",
-            "type": "text",
-            "question": "Describe a time when you synthesized many ideas into one powerful concept."
+            "type": "multiple_choice",
+            "prompt": "When diagnosing a broken process, you usually:",
+            "options": [
+              { "label": "Trace the sequence and find bottlenecks", "score": 90 },
+              { "label": "Ask stakeholders and surface blind spots", "score": 70 },
+              { "label": "Prototype quick fixes and iterate", "score": 80 },
+              { "label": "Rebuild from core principles", "score": 85 }
+            ]
           }
         ]
       },
       {
         "id": "phase_3",
-        "title": "Emotive Logic",
+        "title": "Phase 3 — Emotive Intelligence (Emotion, Causality & Regulation)",
+        "type": "question_block",
+        "description": "Assesses emotional literacy, causal reasoning of emotions, and compassionate self-regulation.",
+        "scoring": {
+          "subscores": [
+            { "id": "emotional_identification", "label": "Emotional Identification", "max": 30 },
+            { "id": "causal_insight", "label": "Causal Insight", "max": 40 },
+            { "id": "self_compassion", "label": "Self-Compassion", "max": 30 }
+          ],
+          "mapsTo": "Emotional_Regulation"
+        },
         "questions": [
           {
             "id": "p3_q1",
-            "type": "multiple_choice",
-            "question": "When emotion and logic conflict, which tends to guide your final decision?",
-            "options": [
-              "Emotion — it gives me the bigger picture.",
-              "Logic — it keeps me grounded.",
-              "A balanced synthesis of both.",
-              "Depends on the environment or stakes."
-            ]
+            "type": "text",
+            "prompt": "You feel anxious before a speech and start scrolling your phone. Explain why this soothes you — identify the causal chain in your experience.",
+            "ui": { "minChars": 140, "placeholder": "Trace the emotional triggers and soothing pattern..." }
           },
           {
             "id": "p3_q2",
-            "type": "slider",
-            "question": "How emotionally attuned are you to others' thoughts while processing your own?",
-            "min": 0,
-            "max": 10,
-            "scale_labels": ["Self-contained", "Highly empathic"]
+            "type": "multiple_choice",
+            "prompt": "When stressed, your go-to strategy usually is:",
+            "options": [
+              { "label": "Distraction (phone, internet)", "score": 30 },
+              { "label": "Social check-in or venting", "score": 50 },
+              { "label": "Breathing / grounding", "score": 85 },
+              { "label": "Reflection & journaling", "score": 75 }
+            ]
           },
           {
             "id": "p3_q3",
-            "type": "text",
-            "question": "What role does emotion play in your creativity or reasoning?"
+            "type": "slider",
+            "prompt": "Rate your capacity to turn difficult emotion into constructive insight (0 low → 10 high).",
+            "min": 0,
+            "max": 10
           }
         ]
       },
       {
         "id": "phase_4",
-        "title": "Meta-Reflection",
+        "title": "Phase 4 — Meta-Cognitive Insight (Self-Monitoring & Process Diagnosis)",
+        "type": "question_block",
+        "description": "Measures capacity to observe and model one's own thought processes and design remedies.",
+        "scoring": {
+          "subscores": [
+            { "id": "meta_awareness", "label": "Meta-Awareness", "max": 40 },
+            { "id": "process_diagnosis", "label": "Process Diagnosis", "max": 40 },
+            { "id": "remedy_clarity", "label": "Remedy Clarity", "max": 20 }
+          ],
+          "mapsTo": "Meta_Awareness"
+        },
         "questions": [
           {
             "id": "p4_q1",
             "type": "slider",
-            "question": "How often do you observe your own thoughts from a third-person perspective?",
+            "prompt": "How often do you observe your own thinking from a third-person perspective (0 = never, 10 = constantly)?",
             "min": 0,
-            "max": 10,
-            "scale_labels": ["Rarely", "Constantly"]
+            "max": 10
           },
           {
             "id": "p4_q2",
             "type": "text",
-            "question": "What does ‘awareness of awareness’ mean to you personally?"
+            "prompt": "You understand your patterns but rarely act on them. What blocks conversion from insight → action for you? Describe steps that would unblock it.",
+            "ui": { "minChars": 160, "placeholder": "Identify internal and external barriers and practical steps..." }
           },
           {
             "id": "p4_q3",
             "type": "multiple_choice",
-            "question": "Do you experience thoughts as words, images, energy, or something else?",
-            "options": ["Words", "Images", "Energy", "Multi-layered synthesis"]
+            "prompt": "When monitoring your thinking, you primarily experience thoughts as:",
+            "options": [
+              { "label": "Verbal narratives", "score": 60 },
+              { "label": "Visual images", "score": 70 },
+              { "label": "Somatic energy / visceral", "score": 65 },
+              { "label": "Layered patterns (mix)", "score": 85 }
+            ]
           }
         ]
       },
       {
         "id": "phase_5",
-        "title": "Integration",
+        "title": "Phase 5 — Creative Intelligence & Integration",
+        "type": "question_block",
+        "description": "Assesses originality, coherence, and the ability to translate insights into action.",
+        "scoring": {
+          "subscores": [
+            { "id": "novelty", "label": "Novelty", "max": 40 },
+            { "id": "coherence", "label": "Coherence", "max": 30 },
+            { "id": "cross_domain", "label": "Cross-Domain Integration", "max": 30 }
+          ],
+          "mapsTo": "Creativity"
+        },
         "questions": [
           {
             "id": "p5_q1",
-            "type": "multiple_choice",
-            "question": "After intense reflection, what is your natural recovery process?",
-            "options": [
-              "Meditation or solitude.",
-              "Creative expression.",
-              "Physical movement.",
-              "Social connection."
-            ]
+            "type": "text",
+            "prompt": "Invent a new metric for measuring intelligence that addresses IQ's limits. Explain how it works and how you'd measure success.",
+            "ui": { "minChars": 220, "placeholder": "Describe conceptual design, measures, and use-cases..." }
           },
           {
             "id": "p5_q2",
             "type": "slider",
-            "question": "How easily can you translate inner insights into external action?",
+            "prompt": "Rate how readily you translate inner insight into tangible action or prototype (0 low → 10 high).",
             "min": 0,
-            "max": 10,
-            "scale_labels": ["Rarely", "Effortlessly"]
+            "max": 10
+          }
+        ]
+      },
+      {
+        "id": "phase_6",
+        "title": "Phase 6 — Philosophical Depth & Worldview Reasoning",
+        "type": "question_block",
+        "description": "Explores abstract reasoning, existential clarity, and coherence of values.",
+        "scoring": {
+          "subscores": [
+            { "id": "depth", "label": "Depth", "max": 40 },
+            { "id": "consistency", "label": "Logical Consistency", "max": 30 },
+            { "id": "existential_clarity", "label": "Existential Clarity", "max": 30 }
+          ],
+          "mapsTo": "Philosophical_Depth"
+        },
+        "questions": [
+          {
+            "id": "p6_q1",
+            "type": "text",
+            "prompt": "Is human potential fixed or ever-expanding? Defend your position and consider counterarguments.",
+            "ui": { "minChars": 180, "placeholder": "Make a clear argument and note at least one counterpoint..." }
+          },
+          {
+            "id": "p6_q2",
+            "type": "slider",
+            "prompt": "Rate the degree to which your worldview is internally coherent and actionable (0 = fragmented, 10 = coherent and actionable).",
+            "min": 0,
+            "max": 10
           }
         ]
       },
       {
         "id": "results",
-        "title": "Your Cognitive Profile",
+        "title": "Synthesis & Feedback",
+        "type": "results",
+        "description": "Aggregates per-phase scores into composite metrics, maps to archetype and tier, and provides concrete growth tasks.",
         "feedback_rules": [
           {
+            "id": "rule_high_velocity",
             "condition": "p1_q1 > 8",
-            "feedback": "You exhibit high thought velocity — a hallmark of advanced synthesis capacity. Grounding practices will help harness this power into coherent output."
+            "feedback": "You show very high thought velocity — grounding rituals and structured output routines will help translate your rapid cognition into clear artifacts."
           },
           {
+            "id": "rule_system_thinker",
             "condition": "p2_q2 > 8",
-            "feedback": "You are a systems-level thinker, capable of mapping complex interrelations beyond surface logic."
+            "feedback": "You naturally see systems and connections. Consider building explicit mapping tools (diagrams, causal loops) to share your ideas."
           },
           {
-            "condition": "p3_q2 > 7 && p3_q1 == 'A balanced synthesis of both.'",
-            "feedback": "You operate through emotive logic — both analytical and intuitive, merging feeling and reasoning in balance."
+            "id": "rule_emotive_logic",
+            "condition": "p3_q3 > 7 && p3_q1 == 'Reflection & journaling'",
+            "feedback": "You convert emotional signals into reflective insight; formalizing your reflections with action prompts will increase impact."
           },
           {
+            "id": "rule_meta_maturity",
             "condition": "p4_q1 > 8",
-            "feedback": "You demonstrate meta-awareness — the ability to observe cognition itself. This is a sign of reflective consciousness maturity."
+            "feedback": "Advanced meta-awareness detected — you can observe your cognition. Practice targeted re-encoding: identify one thought pattern and design an experiment to change it."
           },
           {
+            "id": "rule_integration_ready",
             "condition": "p5_q2 > 7",
-            "feedback": "You possess strong integration — your insights naturally become creative or actionable energy."
+            "feedback": "High integration capacity — prototypes and sprints will translate your insight into real-world outcomes quickly."
+          },
+          {
+            "id": "rule_philosophical_depth",
+            "condition": "p6_q2 > 7",
+            "feedback": "Your worldview is well-formed and actionable — consider mentoring or teaching to refine expression and test ideas."
+          },
+          {
+            "id": "rule_low_reflection",
+            "condition": "p4_q1 < 3",
+            "feedback": "Low meta-observation. Start with micro-reflection (5-minute daily logs) to build the habit of monitoring thought."
+          },
+          {
+            "id": "rule_short_answers_warning",
+            "condition": "p1_q2 == '' || p2_q1 == '' || p5_q1 == ''",
+            "feedback": "Some answers were brief. Richer responses yield more reliable feedback. Consider re-taking the test with longer responses in text prompts."
           }
         ],
-        "summary": "Your profile blends velocity, synthesis, reflection, and emotional intelligence — an architecture of awareness that defines the Lucid Mind archetype."
+        "summary_template": "Composite scoring synthesizes Perception, Logic, Creativity, Emotional Regulation, Adaptability, Meta-Awareness, and Philosophical Depth into a 0–700 index. Tier mapping: Explorer (0–350), Architect (351–525), Visionary (526–700). Archetype is matched by prototype similarity across the 7 axes."
       }
-    ]
+    ],
+    "scoring": {
+      "approach": "Phase-level subscores (0–100) computed from numeric sliders, option scores, and heuristics on text responses (length & lexical markers). Subscores are weighted to axes as defined per-phase. Composite is scale-normalized to 0–700.",
+      "textHeuristics": {
+        "minCharsForReliable": 120,
+        "lengthScalingFactor": 0.6,
+        "lexicalIndicators": {
+          "metaWords": ["aware", "observe", "reflect", "meta", "notice", "monitor"],
+          "creativityWords": ["novel", "invent", "synthesize", "combine", "bridge"],
+          "logicWords": ["because", "therefore", "if", "then", "causal", "structure"]
+        },
+        "maxTextContribution": 300
+      },
+      "phaseToAxisMapping": {
+        "phase_1": "Perception",
+        "phase_2": "Logic_and_Reasoning",
+        "phase_3": "Emotional_Regulation",
+        "phase_4": "Meta_Awareness",
+        "phase_5": "Creativity",
+        "phase_6": "Philosophical_Depth"
+      },
+      "archetypeMappingRules": {
+        "method": "prototype_distance_then_softmax",
+        "prototypeVectorsReference": "archetypes.prototype_vector",
+        "fallback": "balanced_strategist"
+      }
+    },
+    "export": {
+      "formats": ["JSON", "TXT"],
+      "include": ["responses", "perPhaseScores", "compositeScore", "tier", "archetype", "feedback"],
+      "privacyNotice": "Results stay local unless exported. This tool is for reflection and growth, not medical or diagnostic claims."
+    },
+    "safety": {
+      "distressDetection": {
+        "enabled": true,
+        "keywords": ["suicide", "harm", "kill myself", "end my life", "self-harm"],
+        "action": "If distress language is detected in text responses, show immediate safety resources and pause the assessment. Flag results as 'low-confidence' and suggest seeking professional support."
+      },
+      "dataRetention": {
+        "localStorageKey": "MCIF_5_RESULTS",
+        "autoSave": true,
+        "clearOnRestart": false
+      }
+    },
+    "developer": {
+      "notes": "This schema is verbose by design. The frontend should check for missing fields and apply sensible defaults. All numeric comparisons in feedback rules should assume slider values are numeric. Text heuristics are optional but recommended for richer scores.",
+      "versionHistory": [
+        { "v": "5.0", "date": "2025-10-29", "changes": "Full MCIF-5 master schema; final vision mapping." }
+      ]
+    }
   }
 }
-
