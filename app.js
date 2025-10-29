@@ -1,3 +1,5 @@
+console.log("MCIF app loaded");
+
 // ===============================
 // MCIF-5 Interactive Test Engine
 // ===============================
@@ -188,3 +190,4 @@ function renderChart(scores) {
     }
   });
 }
+
