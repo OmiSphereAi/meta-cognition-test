@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meta-Cognition Interactive Framework (MCIF)</title>
+  <title>MCIF Test</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+      background: radial-gradient(circle at top left, #0d1b2a, #1b263b, #415a77);
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -16,7 +16,6 @@
       justify-content: center;
       min-height: 100vh;
       margin: 0;
-      transition: background 1s ease;
     }
     #container {
       background: rgba(255,255,255,0.1);
@@ -38,9 +37,7 @@
       margin-top: 1em;
       transition: background 0.3s;
     }
-    button:hover {
-      background-color: #48cae4;
-    }
+    button:hover { background-color: #48cae4; }
     .hidden { display: none; }
     .question { margin: 1.5em 0; }
     .option {
@@ -51,15 +48,13 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-    .option:hover {
-      background: rgba(255,255,255,0.25);
-    }
+    .option:hover { background: rgba(255,255,255,0.25); }
   </style>
 </head>
 <body>
   <div id="container">
     <h1>Meta-Cognition Interactive Framework (MCIF)</h1>
-    <p id="intro">Explore your inner cognitive process — click below to begin.</p>
+    <p id="intro">Click below to begin your interactive test.</p>
     <button id="startBtn">Begin</button>
 
     <div id="testSection" class="hidden">
