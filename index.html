@@ -1,150 +1,74 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCIF Cognitive Profile Test</title>
-  <meta name="description" content="MCIF 5 — Meta Cognition Interactive Framework" />
-
-  <!-- Lucid UI Base -->
+  <title>Meta-Cognition Interactive Framework (MCIF)</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at 30% 20%, #050505, #000);
-      font-family: 'Inter', system-ui, sans-serif;
-      color: #e0faff;
-      height: 100%;
-      overflow-x: hidden;
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+      color: #fff;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
+      margin: 0;
+      transition: background 1s ease;
     }
-
-    #app {
-      width: 95%;
-      max-width: 800px;
+    #container {
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 2em;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+      width: 90%;
+      max-width: 700px;
       text-align: center;
-      padding: 2rem;
-      border-radius: 20px;
-      background: rgba(10, 20, 25, 0.85);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-      transition: all 0.5s ease;
     }
-
-    h1, h2 {
-      color: #00ffff;
-      text-shadow: 0 0 10px rgba(0,255,255,0.3);
-      margin-bottom: 1rem;
-    }
-
-    p {
-      color: #9bd4d4;
-      line-height: 1.5;
-    }
-
     button {
-      background-color: #00ffff;
-      color: #000;
+      background-color: #00b4d8;
+      color: #fff;
+      padding: 0.8em 1.5em;
       border: none;
-      border-radius: 12px;
-      padding: 0.8rem 2rem;
-      font-size: 1rem;
-      font-weight: 600;
+      border-radius: 8px;
       cursor: pointer;
-      margin: 0.5rem;
-      transition: all 0.25s ease;
+      font-size: 1rem;
+      margin-top: 1em;
+      transition: background 0.3s;
     }
-
     button:hover {
-      background-color: #0fffea;
-      transform: scale(1.05);
+      background-color: #48cae4;
     }
-
-    .option-btn {
-      display: block;
-      width: 100%;
-      margin: 0.4rem 0;
-      padding: 0.9rem;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(0,255,255,0.3);
-      border-radius: 12px;
-      color: #d8ffff;
-      transition: all 0.2s ease;
+    .hidden { display: none; }
+    .question { margin: 1.5em 0; }
+    .option {
+      background: rgba(255,255,255,0.15);
+      padding: 0.8em;
+      border-radius: 6px;
+      margin: 0.5em 0;
+      cursor: pointer;
+      transition: background 0.3s;
     }
-
-    .option-btn:hover {
-      background-color: rgba(0,255,255,0.15);
-      border-color: #00ffff;
-      transform: scale(1.02);
-    }
-
-    .progress {
-      width: 100%;
-      height: 6px;
-      background-color: rgba(255,255,255,0.1);
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      overflow: hidden;
-    }
-
-    .progress .bar {
-      height: 100%;
-      background: linear-gradient(90deg, #00ffff, #007bff);
-      width: 0%;
-      transition: width 0.5s ease-in-out;
-    }
-
-    .domain-score, .total-score {
-      margin: 0.4rem 0;
-    }
-
-    #chart {
-      max-width: 400px;
-      margin: 2rem auto;
-    }
-
-    footer {
-      text-align: center;
-      color: #00a6a6;
-      font-size: 0.8rem;
-      margin-top: 2rem;
-      opacity: 0.6;
-    }
-
-    .fade {
-      animation: fadeIn 0.8s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
+    .option:hover {
+      background: rgba(255,255,255,0.25);
     }
   </style>
 </head>
-
 <body>
-  <!-- Main App Container -->
-  <div id="app">
-    <h2>Loading test...</h2>
+  <div id="container">
+    <h1>Meta-Cognition Interactive Framework (MCIF)</h1>
+    <p id="intro">Explore your inner cognitive process — click below to begin.</p>
+    <button id="startBtn">Begin</button>
+
+    <div id="testSection" class="hidden">
+      <div id="questionContainer"></div>
+      <button id="nextBtn" class="hidden">Next</button>
+    </div>
   </div>
 
-  <footer>© 2025 OmiSphere AI | MCIF Cognitive Framework</footer>
-
-  <!-- JS Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- MCIF App -->
-  <script>
-    // Debug safeguard: alert if JS fails silently
-    window.onerror = function (msg, url, lineNo, colNo, err) {
-      alert("❌ JS Error: " + msg + " (Line " + lineNo + ")");
-      return false;
-    };
-  </script>
   <script src="app.js"></script>
 </body>
 </html>
