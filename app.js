@@ -45,17 +45,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 🔹 Load JSON Schema
+  // 🔹 Load JSON Schema (with fallback)
   async function loadSchema() {
     try {
       const res = await fetch("MCIF_5_MasterSchema.json");
       if (!res.ok) throw new Error("JSON not found");
       schemaData = await res.json();
-      console.log("Schema loaded successfully:", schemaData);
+      console.log("✅ Schema loaded successfully from file.");
     } catch (err) {
-      console.error("Error loading schema:", err);
-      alert("Error loading MCIF schema. Check file name or location.");
+      console.warn("⚠️ Could not load MCIF_5_MasterSchema.json, using fallback schema.");
+      schemaData = fallbackSchema();
     }
+  }
+
+  // 🔹 Fallback Schema
+  function fallbackSchema() {
+    return {
+      phases: [
+        {
+          name: "Perceptual Awareness",
+          prompt: "Choose an everyday object. Describe it as if perceived for the first time.",
+        },
+        {
+          name: "Cognitive Mechanics",
+          prompt: "A team keeps missing deadlines. Without saying 'work harder,' design a sustainable fix.",
+        },
+        {
+          name: "Emotive Intelligence",
+          prompt: "You feel anxious before a speech and start scrolling your phone. Why does this soothe you?",
+        },
+        {
+          name: "Meta-Cognitive Insight",
+          prompt: "You understand your patterns but rarely act on them. What blocks that conversion?",
+        },
+        {
+          name: "Creative Intelligence",
+          prompt: "Invent a new kind of intelligence measurement more accurate than IQ. Explain it.",
+        },
+        {
+          name: "Philosophical Depth",
+          prompt: "Is human potential fixed or ever-expanding? Justify your reasoning.",
+        }
+      ]
+    };
   }
 
   // 🔹 Start Button Listener
@@ -66,6 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
       await loadSchema();
       if (schemaData) {
         startTest();
+      } else {
+        appDiv.innerHTML = "<p>Error: Schema could not be loaded.</p>";
       }
     });
   } else {
@@ -81,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showPhase() {
     if (!schemaData || !schemaData.phases) {
-      appDiv.innerHTML = "<p>Error: Schema data missing phases.</p>";
+      appDiv.innerHTML = "<p>Error: Schema missing phases.</p>";
       return;
     }
 
