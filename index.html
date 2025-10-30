@@ -1,95 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCIF 5.0 – Meta-Cognitive Intelligence Framework</title>
-  <link rel="stylesheet" href="styles.css" />
+  <!-- META CORE -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Meta Cognition Interactive Framework (MCIF) Test Interface – Built for high-precision cognitive synthesis, adaptive learning, and seamless schema flow.">
+  <meta name="theme-color" content="#0d0d0d">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>Meta-Cognition Test | OmnisphereAI</title>
+
+  <!-- FAVICON -->
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+
+  <!-- FONTS & STYLE -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- MAIN STYLESHEET -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- STRUCTURAL SAFEGUARD -->
+  <script>
+    // Prevent phase errors during initial load
+    window.addEventListener('error', e => {
+      console.error('Runtime Error Captured:', e.message);
+      const errDisplay = document.getElementById('error-display');
+      if (errDisplay) errDisplay.textContent = `⚠️ ${e.message}`;
+    });
+  </script>
 </head>
 
 <body>
-  <div id="app-container">
-    <!-- 🌌 Background Frequency Audio -->
-    <audio id="bg-frequency" loop></audio>
+  <div id="app-root">
+    <!-- HEADER -->
+    <header class="app-header">
+      <h1 class="logo">🧠 Meta-Cognition Test</h1>
+      <p class="subtitle">by OmnisphereAI | v6 Neural Mentor Standard</p>
+    </header>
 
-    <!-- 🧠 Intro Screen -->
-    <section id="intro-screen" class="screen visible fade-in">
-      <header class="intro-header">
-        <h1 class="app-title">MCIF 5.0 <span class="sub">“Mind Core”</span></h1>
-        <p class="tagline">Explore how you perceive, reason, and create.</p>
-      </header>
+    <!-- MAIN TEST AREA -->
+    <main id="test-container" class="flow-container">
+      <!-- Dynamic MCIF schema injection -->
+      <section id="intro-phase" class="phase visible">
+        <h2>Welcome to the Meta-Cognition Test</h2>
+        <p>This interactive system evaluates synthesis, focus, and cognitive coherence through adaptive schema layers.</p>
+        <button id="begin-test" class="cta-button">Begin Assessment</button>
+      </section>
 
-      <div class="intro-body slide-up">
-        <p class="intro-text">
-          This is not a quiz. It’s a mirror of how you <em>think</em>.  
-          Take your time and answer reflectively.  
-          Choose a frequency to guide your focus:
-        </p>
+      <!-- Dynamic phase zones -->
+      <section id="question-phase" class="phase hidden">
+        <div id="question-display"></div>
+        <div id="response-options"></div>
+      </section>
 
-        <!-- 🎵 Frequency Selector -->
-        <div class="frequency-selector">
-          <label for="frequency">Background Frequency:</label>
-          <select id="frequency">
-            <option value="">None</option>
-            <option value="432">432 Hz – Harmony</option>
-            <option value="528">528 Hz – Transformation</option>
-            <option value="852">852 Hz – Awakening</option>
-            <option value="963">963 Hz – Divine Connection</option>
-          </select>
-        </div>
+      <!-- Results & Feedback -->
+      <section id="results-phase" class="phase hidden">
+        <h2>Test Complete</h2>
+        <div id="results-summary"></div>
+        <button id="restart-test" class="cta-button secondary">Restart</button>
+      </section>
 
-        <!-- 🚀 Begin Button -->
-        <button id="begin-btn" class="btn glow">Begin the Journey</button>
-      </div>
-    </section>
+      <!-- Error feedback -->
+      <div id="error-display" class="error-zone"></div>
+    </main>
 
-    <!-- 🧭 Test Screen -->
-    <section id="test-screen" class="screen hidden fade-transition">
-      <header class="phase-header">
-        <h2 id="phase-title">Phase Title</h2>
-        <p id="phase-desc">Phase description...</p>
-      </header>
-
-      <div class="question-box fade-in">
-        <p id="question-text"></p>
-        <textarea
-          id="answer-input"
-          placeholder="Type your reflection here..."
-          rows="8"
-        ></textarea>
-      </div>
-
-      <div class="nav-buttons">
-        <button id="prev-btn" class="btn secondary">Back</button>
-        <button id="next-btn" class="btn primary">Next</button>
-      </div>
-
-      <div class="progress-container">
-        <div id="progress-bar" class="progress-bar"></div>
-      </div>
-    </section>
-
-    <!-- 🌠 Results Screen -->
-    <section id="results-screen" class="screen hidden fade-transition">
-      <h2 class="slide-up">Your MCIF Profile</h2>
-      <div id="results-summary" class="fade-in"></div>
-      <canvas id="results-chart" width="300" height="300"></canvas>
-
-      <div class="archetype-section fade-in">
-        <h3 id="archetype-name"></h3>
-        <p id="archetype-desc"></p>
-      </div>
-
-      <div class="meta-summary fade-in">
-        <p><strong>Meta Score:</strong> <span id="meta-score">—</span></p>
-        <p><strong>Tier:</strong> <span id="tier-label">—</span></p>
-      </div>
-
-      <button id="restart-btn" class="btn glow">Restart Test</button>
-    </section>
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <p>© 2025 OmnisphereAI | MCIF Neural Mentor Protocol v6</p>
+      <small>Adaptive Flow Engine | Schema Sync: Active</small>
+    </footer>
   </div>
 
-  <!-- 🧩 Script (Defer ensures DOM is loaded first) -->
-  <script src="app.js" defer></script>
+  <!-- APP.JS CORE LOGIC -->
+  <script type="module" src="app.js" defer></script>
 </body>
 </html>
