@@ -3,32 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCIF 5.0 – Meta-Cognitive Intelligence Framework</title>
+  <title>MCIF 5.0 — Mind Core Assessment</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div id="app-container">
-    <!-- Background frequency sound control -->
-    <audio id="bg-frequency" loop></audio>
+    <!-- Background frequency audio -->
+    <audio id="bg-frequency" preload="auto" loop></audio>
 
-    <!-- Header -->
+    <!-- HEADER -->
     <header class="fade-in">
-      <h1 class="app-title">MCIF 5.0 <span class="sub">“Mind Core”</span></h1>
-      <p class="tagline">A Meta-Cognitive Intelligence Experience</p>
+      <h1 class="app-title">MCIF 5.0 <span class="sub">Mind Core</span></h1>
+      <p class="tagline">Explore your meta-cognitive signature.</p>
     </header>
 
-    <!-- Intro Screen -->
-    <section id="intro-screen" class="screen active">
-      <div class="intro-content slide-up">
+    <!-- INTRO SCREEN -->
+    <section id="intro-screen" class="screen visible">
+      <div class="intro-content fade-in">
         <p class="intro-text">
-          Welcome to the <strong>Meta-Cognitive Intelligence Framework 5.0</strong> test.  
-          This is not a typical quiz—it measures how you <em>think, reflect, and create</em>.
+          Welcome to the <strong>Meta-Cognitive Intelligence Framework</strong> test.  
+          This measures *how* you think — not what you know.
         </p>
-        <p>Estimated time: 15 – 90 minutes depending on tier.</p>
+        <p>Choose a background frequency and begin your cognitive journey.</p>
 
         <div class="controls">
           <label for="frequency">Background Frequency:</label>
-          <select id="frequency">
+          <select id="frequency" class="dropdown">
             <option value="">None</option>
             <option value="432">432 Hz – Harmony</option>
             <option value="528">528 Hz – Transformation</option>
@@ -37,19 +37,19 @@
           </select>
         </div>
 
-        <button id="begin-btn" class="btn glow">Begin Journey</button>
+        <button id="begin-btn" class="btn glow">Begin</button>
       </div>
     </section>
 
-    <!-- Test Screen -->
-    <section id="test-screen" class="screen hidden fade-transition">
-      <div class="phase-header">
-        <h2 id="phase-title"></h2>
-        <p id="phase-desc"></p>
+    <!-- TEST SCREEN -->
+    <section id="test-screen" class="screen hidden">
+      <div class="phase-header slide-in">
+        <h2 id="phase-title">Phase</h2>
+        <p id="phase-desc">Description</p>
       </div>
 
       <div class="question-box fade-in">
-        <p id="question-text"></p>
+        <p id="question-text">Question will appear here.</p>
         <textarea id="answer-input" placeholder="Type your reflection here..." rows="8"></textarea>
       </div>
 
@@ -59,24 +59,60 @@
       </div>
 
       <div class="progress-container">
-        <div class="progress-bar"></div>
+        <div id="progress-bar" class="progress-bar"></div>
       </div>
     </section>
 
-    <!-- Results Screen -->
-    <section id="results-screen" class="screen hidden fade-transition">
-      <h2 class="slide-up">Your MCIF Profile</h2>
+    <!-- RESULTS SCREEN -->
+    <section id="results-screen" class="screen hidden">
+      <h2 class="slide-up">Your MCIF 5.0 Profile</h2>
       <div id="results-summary" class="fade-in"></div>
-      <canvas id="results-chart" width="300" height="300"></canvas>
+      <canvas id="results-chart" width="320" height="320"></canvas>
 
       <div class="archetype-section fade-in">
         <h3 id="archetype-name"></h3>
         <p id="archetype-desc"></p>
       </div>
 
-      <button id="restart-btn" class="btn glow">Restart Test</button>
+      <button id="restart-btn" class="btn glow">Restart</button>
     </section>
   </div>
+
+  <!-- Ensure scripts load after DOM is ready -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const beginBtn = document.getElementById("begin-btn");
+      const introScreen = document.getElementById("intro-screen");
+      const testScreen = document.getElementById("test-screen");
+      const bgFrequency = document.getElementById("bg-frequency");
+      const frequencySelect = document.getElementById("frequency");
+
+      // Safely handle Begin click
+      beginBtn.addEventListener("click", () => {
+        try {
+          // Background frequency
+          const freq = frequencySelect.value;
+          if (freq) {
+            bgFrequency.src = `./assets/${freq}.mp3`;
+            bgFrequency.volume = 0.4;
+            bgFrequency.play().catch(() => console.warn("Audio autoplay blocked"));
+          }
+
+          // Transition screens
+          introScreen.classList.add("fade-out");
+          setTimeout(() => {
+            introScreen.classList.add("hidden");
+            testScreen.classList.remove("hidden");
+            testScreen.classList.add("fade-in");
+            document.dispatchEvent(new Event("testStart"));
+          }, 600);
+        } catch (err) {
+          console.error("Error starting test:", err);
+          alert("Something went wrong. Please refresh and try again.");
+        }
+      });
+    });
+  </script>
 
   <script src="app.js"></script>
 </body>
