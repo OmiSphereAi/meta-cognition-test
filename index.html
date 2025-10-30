@@ -1,166 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meta-Cognition Test | MCIF LucidFlow</title>
-    <link rel="stylesheet" href="style.css" />
-    <script defer src="app.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCIF Cognitive Flow Test</title>
 
-    <!-- LucidFlow Core Variables -->
-    <style>
-        :root {
-            --background-hue: 200;
-            --lucid-text: #f4f4f4;
-            --lucid-accent: #00ffff;
-            --lucid-glow: rgba(0, 255, 255, 0.4);
-        }
+  <link rel="stylesheet" href="style.css" />
 
-        body {
-            margin: 0;
-            font-family: "Inter", sans-serif;
-            background: linear-gradient(135deg, hsl(var(--background-hue), 45%, 12%), hsl(calc(var(--background-hue) + 60), 50%, 10%));
-            color: var(--lucid-text);
-            overflow: hidden;
-            transition: background 3s linear;
-        }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 
-        #intro-screen, #app {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-        }
-
-        #intro-screen {
-            animation: fadeIn 2s ease forwards;
-        }
-
-        h1 {
-            font-weight: 600;
-            font-size: 2.4rem;
-            text-shadow: 0 0 15px var(--lucid-glow);
-        }
-
-        p {
-            max-width: 600px;
-            line-height: 1.6;
-            opacity: 0.85;
-        }
-
-        button {
-            padding: 14px 28px;
-            margin-top: 20px;
-            background: linear-gradient(90deg, #00ffff, #0077ff);
-            border: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            color: #fff;
-            cursor: pointer;
-            box-shadow: 0 0 15px var(--lucid-glow);
-            transition: all 0.25s ease;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px var(--lucid-glow);
-        }
-
-        select {
-            background: #111;
-            border: 1px solid #00ffff77;
-            color: var(--lucid-text);
-            border-radius: 10px;
-            padding: 8px;
-            margin-top: 15px;
-        }
-
-        textarea, input[type="range"] {
-            width: 80%;
-            margin: 10px 0;
-        }
-
-        .question-container {
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
-        }
-
-        .question-text {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .progress-bar {
-            width: 80%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            margin-top: 30px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00ffff, #00ff99);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        .lucid-pulse {
-            animation: pulse 0.6s ease;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 10px var(--lucid-glow); }
-            50% { transform: scale(1.07); box-shadow: 0 0 25px var(--lucid-glow); }
-            100% { transform: scale(1); box-shadow: 0 0 10px var(--lucid-glow); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .results-screen {
-            animation: fadeIn 1s ease forwards;
-        }
-
-        audio {
-            display: none;
-        }
-    </style>
+  <style>
+    /* Quick sanity fallback in case style.css doesn’t load */
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(ellipse at top left, #0e0f1a, #1b1c27);
+      color: #f0f0f0;
+      overflow-x: hidden;
+    }
+    .lucid-btn {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4a80f0, #6ef1c9);
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(78, 255, 219, 0.2);
+    }
+    .lucid-btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px rgba(78, 255, 219, 0.4);
+    }
+    #frequency-selector {
+      margin: 10px;
+      padding: 6px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-weight: 500;
+    }
+    .fade-in {
+      animation: fadeIn 0.6s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
+
 <body>
-    <!-- 🎬 Intro Screen -->
-    <div id="intro-screen">
-        <h1>Meta-Cognition Interactive Framework</h1>
-        <p>Welcome to the LucidFlow edition of the MCIF test — designed to reveal your unique cognitive architecture, strengths, and synthesis profile.</p>
-        <label for="frequency-selector">Choose Background Frequency:</label>
+  <div id="app">
+    <!-- Lucid Flow Background Layer -->
+    <div class="lucid-background"></div>
+
+    <!-- Control Bar -->
+    <header id="control-bar">
+      <div class="title">MCIF Cognitive Flow Test</div>
+      <div class="controls">
+        <label for="frequency-selector">Frequency:</label>
         <select id="frequency-selector">
-            <option value="432">432 Hz — Natural Harmony</option>
-            <option value="528">528 Hz — Transformation</option>
-            <option value="852">852 Hz — Intuition</option>
-            <option value="963">963 Hz — Divine Consciousness</option>
+          <option value="432">432 Hz</option>
+          <option value="528">528 Hz</option>
+          <option value="852">852 Hz</option>
+          <option value="963">963 Hz</option>
         </select>
-        <button id="begin-button">Acknowledge & Begin</button>
-    </div>
+      </div>
+    </header>
 
-    <!-- 🧩 App Content -->
-    <div id="app" style="display:none;"></div>
+    <!-- Start Screen -->
+    <section id="intro-screen" class="fade-in">
+      <div class="intro-content">
+        <h1>Welcome to the MCIF Cognitive Flow Test</h1>
+        <p>
+          This interactive experience is designed to map your unique cognitive signature —
+          your strengths, synthesis patterns, and growth edges. Each phase reveals another layer
+          of how your mind integrates logic, emotion, intuition, and structure.
+        </p>
+        <button id="begin-btn" class="lucid-btn">Begin</button>
+      </div>
+    </section>
 
-    <!-- 🔊 Frequency Background Audio -->
-    <audio id="background-audio"></audio>
+    <!-- Dynamic Content Area -->
+    <main id="test-area"></main>
+
+    <!-- Progress + Flow UI -->
+    <div class="progress-meter"></div>
+    <div class="flow-meter"></div>
+
+    <audio id="audio-player"></audio>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
