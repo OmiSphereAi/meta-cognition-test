@@ -1,647 +1,398 @@
 {
-  "schemaVersion": "5.0",
-  "codename": "Mind Core",
-  "title": "MCIF v5 — Meta-Cognitive Intelligence Framework",
-  "author": "Andrew Carr + GPT-5 Collaboration",
-  "description": "Comprehensive schema for MCIF v5.0 — phases, questions, scoring, archetypes, UI hooks, and export metadata.",
-  "lastUpdated": "2025-10-29",
-  "license": "Open for research and education; credit MCIF v5",
-  "ui": {
-    "lucidFlow": true,
-    "frequencyOptions": [432, 528, 852, 963],
-    "showFrequencyControl": true,
-    "defaultFrequency": 432,
-    "accessibility": {
-      "textSizes": ["base", "large", "xlarge"],
-      "contrastFriendly": true
-    }
+  "meta": {
+    "version": "5.0",
+    "codename": "Mind Core",
+    "description": "Meta-Cognitive Intelligence Framework 5.0 — Mind Core. Measures awareness, reasoning, emotion, creativity, and reflection through adaptive cognitive mapping.",
+    "author": "OmniSphere AI Project",
+    "release_date": "2025-10-29",
+    "lucid_ui_version": "2.1",
+    "adaptive_engine": true,
+    "total_score": 700
   },
+
   "phases": [
     {
       "id": "phase1",
       "title": "Perceptual Awareness",
-      "name": "Perceptual Awareness",
-      "order": 1,
-      "description": "Measures sensory acuity, detail noticing, and the ability to link sensation to meaning.",
-      "estimated_time_minutes": 10,
-      "scoring_weights": {
-        "Detail": 0.5,
-        "SensoryEmotionLink": 0.3,
-        "ConceptDepth": 0.2
-      },
-      "questions": [
+      "description": "Measures sensory precision, emotional linkage, and perceptual originality.",
+      "objectives": [
+        "Observe an object as if for the first time.",
+        "Describe what you perceive without labeling.",
+        "Identify how perception links to emotion."
+      ],
+      "prompts": [
         {
-          "id": "P1-Q1",
+          "id": "p1_1",
           "type": "text",
-          "prompt": "Choose an everyday object and describe it as if perceived for the first time. Focus on texture, light, temperature, and the feeling it evokes.",
-          "ui": {
-            "placeholder": "Describe in sensory-rich detail...",
-            "minimal_length": 60,
-            "hint": "List at least three sensory aspects (sight, touch, sound, smell, temperature)."
-          },
-          "meta": {
-            "Depth": 0.6,
-            "Clarity": 0.3,
-            "Originality": 0.1
-          }
+          "question": "Choose an everyday object and describe it as if seen for the first time. Focus on color, texture, sound, and feeling.",
+          "hints": ["Notice what stands out first.", "Avoid naming; describe experience."],
+          "expected_response": "Detailed sensory and emotional description."
         },
         {
-          "id": "P1-Q2",
+          "id": "p1_2",
           "type": "slider",
-          "prompt": "On a scale from 0–100, how aware are you of subtle sensory changes in your environment (like light shift, background hum, temperature)?",
-          "min": 0,
-          "max": 100,
-          "default": 50,
-          "ui": {
-            "labelLeft": "Not aware",
-            "labelRight": "Extremely aware",
-            "hint": "Slide to indicate general sensory attunement."
-          },
-          "meta": {
-            "Detail": 0.7,
-            "SelfAwareness": 0.3
-          }
+          "question": "How vividly can you imagine new sensory details right now?",
+          "scale": { "min": 0, "max": 100, "labels": ["Dim", "Vivid"] }
         },
         {
-          "id": "P1-Q3",
+          "id": "p1_3",
           "type": "multiple_choice",
-          "prompt": "When you first notice a new sensory detail, what do you usually do?",
-          "options": [
-            { "id": "p1q3o1", "label": "Hold attention and observe", "score": 3 },
-            { "id": "p1q3o2", "label": "Name it and move on", "score": 2 },
-            { "id": "p1q3o3", "label": "Ignore it unless it matters", "score": 1 },
-            { "id": "p1q3o4", "label": "React emotionally before analyzing", "score": 2 }
-          ],
-          "meta": {
-            "Detail": 0.4,
-            "SensoryEmotionLink": 0.4,
-            "Clarity": 0.2
-          },
-          "ui": {
-            "layout": "stacked",
-            "hint": "Choose the behavior that best matches your pattern."
-          }
-        },
-        {
-          "id": "P1-Q4",
-          "type": "text",
-          "prompt": "Give a short example of a time you noticed a small detail that changed your understanding of a situation.",
-          "ui": {
-            "placeholder": "Briefly describe the moment and the shift in understanding (2–4 sentences).",
-            "minimal_length": 40
-          },
-          "meta": {
-            "Depth": 0.5,
-            "Clarity": 0.3,
-            "SelfAwareness": 0.2
+          "question": "When observing something new, which comes first for you?",
+          "options": ["Feeling", "Thinking", "Naming", "Imagining"],
+          "scoring_map": {
+            "Feeling": 25,
+            "Thinking": 20,
+            "Naming": 15,
+            "Imagining": 30
           }
         }
-      ]
+      ],
+      "scoring": {
+        "detail": 50,
+        "sensory_emotion_link": 25,
+        "concept_depth": 25
+      }
     },
+
     {
       "id": "phase2",
       "title": "Cognitive Mechanics",
-      "name": "Cognitive Mechanics",
-      "order": 2,
-      "description": "Tests logical flow, pattern recognition, and systems thinking in practical contexts.",
-      "estimated_time_minutes": 15,
-      "scoring_weights": {
-        "Logic": 0.45,
-        "SystemsThinking": 0.35,
-        "PracticalCreativity": 0.2
-      },
-      "questions": [
+      "description": "Tests logical flow, systems thinking, and problem-solving creativity.",
+      "objectives": [
+        "Analyze dynamic systems logically.",
+        "Identify structural flaws in reasoning.",
+        "Propose adaptive, sustainable solutions."
+      ],
+      "prompts": [
         {
-          "id": "P2-Q1",
+          "id": "p2_1",
           "type": "text",
-          "prompt": "A team keeps missing deadlines. Without saying 'work harder,' design a sustainable process that fixes this problem. Describe roles, checkpoints, and feedback loops.",
-          "ui": {
-            "placeholder": "Outline process elements and reason for each step.",
-            "minimal_length": 120,
-            "hint": "Consider structural causes (communication, incentives, clarity)."
-          },
-          "meta": {
-            "Logic": 0.5,
-            "SystemsThinking": 0.4,
-            "Originality": 0.1
-          }
+          "question": "A team keeps missing deadlines. Without saying 'work harder,' design a sustainable solution.",
+          "expected_response": "Solution-based reasoning that balances structure and motivation."
         },
         {
-          "id": "P2-Q2",
-          "type": "multiple_choice",
-          "prompt": "When solving a complex problem you typically:",
-          "options": [
-            { "id": "p2q2o1", "label": "Break it into smaller pieces", "score": 3 },
-            { "id": "p2q2o2", "label": "Look for analogies", "score": 2 },
-            { "id": "p2q2o3", "label": "Prototype rapidly", "score": 3 },
-            { "id": "p2q2o4", "label": "Wait for insight", "score": 1 }
-          ],
-          "meta": {
-            "Logic": 0.5,
-            "PracticalCreativity": 0.4,
-            "Adaptability": 0.1
-          },
-          "ui": {
-            "layout": "columns"
-          }
-        },
-        {
-          "id": "P2-Q3",
+          "id": "p2_2",
           "type": "slider",
-          "prompt": "Rate your comfort with uncertainty when making a decision (0 = very uncomfortable, 100 = very comfortable).",
-          "min": 0,
-          "max": 100,
-          "default": 50,
-          "meta": {
-            "Adaptability": 0.7,
-            "Clarity": 0.3
-          }
+          "question": "How well do you structure your thoughts before speaking?",
+          "scale": { "min": 0, "max": 100, "labels": ["Spontaneous", "Highly Structured"] }
         },
         {
-          "id": "P2-Q4",
-          "type": "text",
-          "prompt": "Describe a time you redesigned a routine or system that improved outcomes. What did you change and why?",
-          "ui": {
-            "placeholder": "Explain changes, measurable outcomes, and reasoning.",
-            "minimal_length": 80
-          },
-          "meta": {
-            "Logic": 0.4,
-            "SystemsThinking": 0.4,
-            "PracticalCreativity": 0.2
+          "id": "p2_3",
+          "type": "multiple_choice",
+          "question": "Which most resembles your natural problem-solving style?",
+          "options": [
+            "Step-by-step logical analysis",
+            "Intuitive insight and pattern leaps",
+            "Emotional empathy-based resolution",
+            "System mapping and interconnection"
+          ],
+          "scoring_map": {
+            "Step-by-step logical analysis": 40,
+            "Intuitive insight and pattern leaps": 30,
+            "Emotional empathy-based resolution": 20,
+            "System mapping and interconnection": 35
           }
         }
-      ]
+      ],
+      "scoring": {
+        "logic": 40,
+        "systems_thinking": 30,
+        "practical_creativity": 30
+      }
     },
+
     {
       "id": "phase3",
       "title": "Emotive Intelligence",
-      "name": "Emotive Intelligence",
-      "order": 3,
-      "description": "Evaluates emotional literacy, causal understanding of feelings, and self-compassion.",
-      "estimated_time_minutes": 12,
-      "scoring_weights": {
-        "EmotionalIdentification": 0.35,
-        "CausalInsight": 0.45,
-        "SelfCompassion": 0.2
-      },
-      "questions": [
+      "description": "Explores emotional literacy, causality, and regulation.",
+      "objectives": [
+        "Recognize emotional triggers.",
+        "Understand emotional function in decision-making.",
+        "Demonstrate compassionate insight."
+      ],
+      "prompts": [
         {
-          "id": "P3-Q1",
+          "id": "p3_1",
           "type": "text",
-          "prompt": "You feel anxious before a speech and start scrolling your phone. Why does this soothe you? Describe the short-term and long-term effects of that action.",
-          "ui": {
-            "placeholder": "Explain what shifts in attention and feeling occur.",
-            "minimal_length": 80
-          },
-          "meta": {
-            "EmotionalIdentification": 0.4,
-            "CausalInsight": 0.4,
-            "SelfCompassion": 0.2
-          }
+          "question": "You feel anxious before a speech and start scrolling your phone. Why does that soothe you?",
+          "expected_response": "Demonstrates self-awareness and emotional reasoning."
         },
         {
-          "id": "P3-Q2",
-          "type": "multiple_choice",
-          "prompt": "When you notice a strong emotion, your first step is to:",
-          "options": [
-            { "id": "p3q2o1", "label": "Label the feeling", "score": 3 },
-            { "id": "p3q2o2", "label": "Act to change it", "score": 2 },
-            { "id": "p3q2o3", "label": "Observe silently", "score": 3 },
-            { "id": "p3q2o4", "label": "Distract yourself", "score": 1 }
-          ],
-          "meta": {
-            "EmotionalIdentification": 0.5,
-            "SelfCompassion": 0.3,
-            "Clarity": 0.2
-          }
-        },
-        {
-          "id": "P3-Q3",
+          "id": "p3_2",
           "type": "slider",
-          "prompt": "How much do you typically forgive yourself after making a mistake? (0–100)",
-          "min": 0,
-          "max": 100,
-          "default": 60,
-          "meta": {
-            "SelfCompassion": 0.8,
-            "EmotionalIdentification": 0.2
-          }
+          "question": "How easily can you identify what emotion you're feeling in the moment?",
+          "scale": { "min": 0, "max": 100, "labels": ["Rarely", "Always"] }
         },
         {
-          "id": "P3-Q4",
-          "type": "text",
-          "prompt": "Describe a time when reframing an emotion changed what you did next.",
-          "ui": {
-            "placeholder": "Short narrative — what changed and how did you reframe?",
-            "minimal_length": 60
-          },
-          "meta": {
-            "CausalInsight": 0.5,
-            "SelfCompassion": 0.3,
-            "Clarity": 0.2
+          "id": "p3_3",
+          "type": "multiple_choice",
+          "question": "When others express emotion, how do you respond?",
+          "options": ["Offer advice", "Reflect feelings", "Withdraw", "Absorb their emotion"],
+          "scoring_map": {
+            "Offer advice": 20,
+            "Reflect feelings": 40,
+            "Withdraw": 10,
+            "Absorb their emotion": 30
           }
         }
-      ]
+      ],
+      "scoring": {
+        "emotional_identification": 30,
+        "causal_insight": 40,
+        "self_compassion": 30
+      }
     },
+
     {
       "id": "phase4",
       "title": "Meta-Cognitive Insight",
-      "name": "Meta-Cognitive Insight",
-      "order": 4,
-      "description": "Assesses awareness of one's own thought processes, ability to self-correct, and habit translation.",
-      "estimated_time_minutes": 12,
-      "scoring_weights": {
-        "MetaAwareness": 0.45,
-        "ProcessDiagnosis": 0.35,
-        "RemedyClarity": 0.2
-      },
-      "questions": [
+      "description": "Assesses awareness of thought processes and self-observation.",
+      "objectives": [
+        "Identify personal cognitive habits.",
+        "Recognize limits in perspective-taking.",
+        "Propose self-corrective actions."
+      ],
+      "prompts": [
         {
-          "id": "P4-Q1",
+          "id": "p4_1",
           "type": "text",
-          "prompt": "You understand your patterns but rarely act on them. What blocks that conversion from insight to action?",
-          "ui": {
-            "placeholder": "Name internal and external barriers; propose micro-steps.",
-            "minimal_length": 120
-          },
-          "meta": {
-            "MetaAwareness": 0.4,
-            "ProcessDiagnosis": 0.4,
-            "RemedyClarity": 0.2
-          }
+          "question": "You understand your patterns but rarely act on them. What blocks that conversion?",
+          "expected_response": "Reflective analysis of inertia and meta-barriers."
         },
         {
-          "id": "P4-Q2",
-          "type": "multiple_choice",
-          "prompt": "When given feedback you disagree with, you usually:",
-          "options": [
-            { "id": "p4q2o1", "label": "Reflect and test the feedback", "score": 3 },
-            { "id": "p4q2o2", "label": "Defend your position", "score": 1 },
-            { "id": "p4q2o3", "label": "Ask clarifying questions", "score": 3 },
-            { "id": "p4q2o4", "label": "Ignore and proceed", "score": 1 }
-          ],
-          "meta": {
-            "MetaAwareness": 0.5,
-            "Adaptability": 0.3,
-            "Clarity": 0.2
-          }
-        },
-        {
-          "id": "P4-Q3",
+          "id": "p4_2",
           "type": "slider",
-          "prompt": "How frequently do you reflect on your decisions deliberately? (0 = never, 100 = daily)",
-          "min": 0,
-          "max": 100,
-          "default": 40,
-          "meta": {
-            "MetaAwareness": 0.7,
-            "ProcessDiagnosis": 0.3
-          }
+          "question": "How well can you catch yourself mid-thought and adjust?",
+          "scale": { "min": 0, "max": 100, "labels": ["Rarely", "Effortlessly"] }
         },
         {
-          "id": "P4-Q4",
-          "type": "text",
-          "prompt": "Pick an earlier answer you gave in this test. Re-describe it now with the perspective you have gained since beginning the test.",
-          "ui": {
-            "placeholder": "Quote original idea briefly then reframe.",
-            "minimal_length": 80
-          },
-          "meta": {
-            "MetaAwareness": 0.6,
-            "Clarity": 0.3,
-            "Adaptability": 0.1
+          "id": "p4_3",
+          "type": "multiple_choice",
+          "question": "When facing a recurring mistake, your first instinct is to:",
+          "options": [
+            "Just move on",
+            "Analyze it deeply",
+            "Ask others for input",
+            "Ignore it until repeated"
+          ],
+          "scoring_map": {
+            "Just move on": 10,
+            "Analyze it deeply": 40,
+            "Ask others for input": 30,
+            "Ignore it until repeated": 15
           }
         }
-      ]
+      ],
+      "scoring": {
+        "meta_awareness": 40,
+        "process_diagnosis": 40,
+        "remedy_clarity": 20
+      }
     },
+
     {
       "id": "phase5",
       "title": "Creative Intelligence",
-      "name": "Creative Intelligence",
-      "order": 5,
-      "description": "Measures originality, cross-domain integration, and translating insight into tangible constructs.",
-      "estimated_time_minutes": 18,
-      "scoring_weights": {
-        "Novelty": 0.45,
-        "Coherence": 0.3,
-        "CrossDomainIntegration": 0.25
-      },
-      "questions": [
+      "description": "Measures originality, synthesis, and associative reasoning.",
+      "objectives": [
+        "Combine unrelated concepts meaningfully.",
+        "Generate novel systems or solutions.",
+        "Demonstrate cross-domain synthesis."
+      ],
+      "prompts": [
         {
-          "id": "P5-Q1",
+          "id": "p5_1",
           "type": "text",
-          "prompt": "Invent a new kind of intelligence measurement that could be more accurate than IQ. Explain what it measures, core metrics, and an example of how it's used.",
-          "ui": {
-            "placeholder": "Describe measurement, metrics, and a use case.",
-            "minimal_length": 160
-          },
-          "meta": {
-            "Novelty": 0.6,
-            "Coherence": 0.3,
-            "CrossDomainIntegration": 0.1
-          }
+          "question": "Invent a new kind of intelligence test more accurate than IQ and explain it.",
+          "expected_response": "Original yet coherent concept showing balanced innovation."
         },
         {
-          "id": "P5-Q2",
-          "type": "multiple_choice",
-          "prompt": "When asked to create, you prefer to:",
-          "options": [
-            { "id": "p5q2o1", "label": "Prototype quickly and iterate", "score": 3 },
-            { "id": "p5q2o2", "label": "Plan thoroughly then build", "score": 2 },
-            { "id": "p5q2o3", "label": "Collaborate and synthesize", "score": 3 },
-            { "id": "p5q2o4", "label": "Work in solitude", "score": 1 }
-          ],
-          "meta": {
-            "Novelty": 0.4,
-            "CrossDomainIntegration": 0.4,
-            "Clarity": 0.2
-          },
-          "ui": {
-            "layout": "inline"
-          }
-        },
-        {
-          "id": "P5-Q3",
+          "id": "p5_2",
           "type": "slider",
-          "prompt": "How often do you purposely combine two unrelated ideas to make something new? (0–100)",
-          "min": 0,
-          "max": 100,
-          "default": 45,
-          "meta": {
-            "Novelty": 0.5,
-            "CrossDomainIntegration": 0.5
-          }
+          "question": "How often do you connect ideas from unrelated fields?",
+          "scale": { "min": 0, "max": 100, "labels": ["Rarely", "Constantly"] }
         },
         {
-          "id": "P5-Q4",
-          "type": "text",
-          "prompt": "Give a short plan to turn one of your ideas into a 1-week prototype. Include constraints and measurable goals.",
-          "ui": {
-            "placeholder": "Include steps, metrics, and test criteria.",
-            "minimal_length": 100
-          },
-          "meta": {
-            "Coherence": 0.5,
-            "PracticalCreativity": 0.3,
-            "Depth": 0.2
+          "id": "p5_3",
+          "type": "multiple_choice",
+          "question": "Creativity, to you, is best described as:",
+          "options": [
+            "Combining old things in new ways",
+            "Pure inspiration",
+            "Problem-solving",
+            "Expression of feeling"
+          ],
+          "scoring_map": {
+            "Combining old things in new ways": 35,
+            "Pure inspiration": 25,
+            "Problem-solving": 30,
+            "Expression of feeling": 20
           }
         }
-      ]
+      ],
+      "scoring": {
+        "novelty": 40,
+        "coherence": 30,
+        "cross_domain_integration": 30
+      }
     },
+
     {
       "id": "phase6",
       "title": "Philosophical Depth",
-      "name": "Philosophical Depth",
-      "order": 6,
-      "description": "Explores abstract reasoning, worldview coherence, and existential clarity.",
-      "estimated_time_minutes": 15,
-      "scoring_weights": {
-        "Depth": 0.45,
-        "LogicalConsistency": 0.35,
-        "ExistentialClarity": 0.2
-      },
-      "questions": [
+      "description": "Explores abstraction, ethics, and worldview reasoning.",
+      "objectives": [
+        "Engage with big-picture questions.",
+        "Balance logic with empathy.",
+        "Demonstrate reflective humility."
+      ],
+      "prompts": [
         {
-          "id": "P6-Q1",
+          "id": "p6_1",
           "type": "text",
-          "prompt": "Is human potential fixed or ever-expanding? Justify your reasoning and describe practical implications for education and personal growth.",
-          "ui": {
-            "placeholder": "Argue a position with examples and counterpoints.",
-            "minimal_length": 160
-          },
-          "meta": {
-            "Depth": 0.5,
-            "LogicalConsistency": 0.3,
-            "ExistentialClarity": 0.2
-          }
+          "question": "Is human potential fixed or ever-expanding? Justify your reasoning.",
+          "expected_response": "Balanced philosophical reasoning with awareness of paradox."
         },
         {
-          "id": "P6-Q2",
-          "type": "multiple_choice",
-          "prompt": "Which appeals to you most when evaluating an ethical dilemma?",
-          "options": [
-            { "id": "p6q2o1", "label": "Consequences and outcomes", "score": 2 },
-            { "id": "p6q2o2", "label": "Principles and duties", "score": 2 },
-            { "id": "p6q2o3", "label": "Compassion and context", "score": 3 },
-            { "id": "p6q2o4", "label": "Symbolic meanings and narratives", "score": 3 }
-          ],
-          "meta": {
-            "LogicalConsistency": 0.4,
-            "Depth": 0.3,
-            "SelfAwareness": 0.3
-          }
-        },
-        {
-          "id": "P6-Q3",
+          "id": "p6_2",
           "type": "slider",
-          "prompt": "How comfortable are you with holding two opposing ideas simultaneously and integrating them? (0–100)",
-          "min": 0,
-          "max": 100,
-          "default": 50,
-          "meta": {
-            "Depth": 0.5,
-            "Adaptability": 0.5
-          }
+          "question": "How open are you to beliefs that contradict your own?",
+          "scale": { "min": 0, "max": 100, "labels": ["Closed", "Completely Open"] }
         },
         {
-          "id": "P6-Q4",
-          "type": "text",
-          "prompt": "Create a short metaphor that describes the structure of human thought. Explain why it fits.",
-          "ui": {
-            "placeholder": "Invent a metaphor and explain the mapping.",
-            "minimal_length": 80
-          },
-          "meta": {
-            "Novelty": 0.4,
-            "Depth": 0.4,
-            "Coherence": 0.2
+          "id": "p6_3",
+          "type": "multiple_choice",
+          "question": "Philosophy, to you, is:",
+          "options": [
+            "A guide to life",
+            "An intellectual exercise",
+            "A quest for truth",
+            "A creative art"
+          ],
+          "scoring_map": {
+            "A guide to life": 35,
+            "An intellectual exercise": 25,
+            "A quest for truth": 40,
+            "A creative art": 30
           }
         }
-      ]
+      ],
+      "scoring": {
+        "depth": 40,
+        "logical_consistency": 30,
+        "existential_clarity": 30
+      }
     }
   ],
+
   "compositeMetrics": {
-    "dimensions": [
-      "Perception",
-      "Logic & Reasoning",
-      "Creativity",
-      "Emotional Regulation",
-      "Adaptability",
-      "Meta-Awareness",
-      "Philosophical Depth"
-    ],
-    "weights": {
-      "Perception": 0.15,
-      "Logic & Reasoning": 0.15,
-      "Creativity": 0.15,
-      "Emotional Regulation": 0.15,
-      "Adaptability": 0.10,
-      "Meta-Awareness": 0.15,
-      "Philosophical Depth": 0.15
-    },
-    "total_points": 700,
-    "tier_thresholds": {
-      "Explorer": [0, 350],
-      "Architect": [351, 525],
-      "Visionary": [526, 700]
-    },
-    "calculation_notes": "Each phase normalizes to 0-100, then weighted by composite weights. Standard deviation across phase scores becomes Adaptability index."
+    "Perception": 0.15,
+    "LogicReasoning": 0.15,
+    "Creativity": 0.15,
+    "EmotionalRegulation": 0.15,
+    "Adaptability": 0.10,
+    "MetaAwareness": 0.15,
+    "PhilosophicalDepth": 0.15
   },
-  "scoring": {
-    "metrics": [
-      "Depth",
-      "Originality",
-      "Clarity",
-      "Self_Awareness",
-      "Adaptability"
-    ],
-    "weighting_by_phase": {
-      "Perceptual Awareness": { "Detail": 0.5, "SensoryEmotionLink": 0.3, "ConceptDepth": 0.2 },
-      "Cognitive Mechanics": { "Logic": 0.45, "SystemsThinking": 0.35, "PracticalCreativity": 0.2 },
-      "Emotive Intelligence": { "EmotionalIdentification": 0.35, "CausalInsight": 0.45, "SelfCompassion": 0.2 },
-      "Meta-Cognitive Insight": { "MetaAwareness": 0.45, "ProcessDiagnosis": 0.35, "RemedyClarity": 0.2 },
-      "Creative Intelligence": { "Novelty": 0.45, "Coherence": 0.3, "CrossDomainIntegration": 0.25 },
-      "Philosophical Depth": { "Depth": 0.45, "LogicalConsistency": 0.35, "ExistentialClarity": 0.2 }
-    },
-    "tier_scaling": { "Explorer": 0.9, "Architect": 1.0, "Visionary": 1.15 },
-    "normalization": "Scale each aggregated domain to 0–100. Sum weighted domains to composite total."
-  },
+
   "archetypes": [
     {
       "id": "reflective_architect",
       "name": "Reflective Architect",
-      "description": "High meta-awareness and logic; excellent at analyzing structures of mind and systems.",
-      "prototype_vector": { "Perception": 70, "Logic & Reasoning": 85, "Creativity": 65, "Emotional Regulation": 70, "Adaptability": 65, "Meta-Awareness": 90, "Philosophical Depth": 75 },
-      "core_gifts": ["System modeling", "Structural insight", "Long-form reasoning"],
-      "common_challenges": ["Over-analysis", "Perfection paralysis"],
-      "careers": ["Systems Designer", "Research Architect", "Strategic Planner", "Policy Analyst", "Product Architect", "AI Ethicist", "Urban Planner", "Data Scientist", "Enterprise Architect", "Academic Researcher"]
+      "description": "Analyzes structures of thought and mind with deep introspection.",
+      "gifts": ["Analytical precision", "Self-awareness", "Systemic clarity"],
+      "growth_focus": ["Simplify insight into action"],
+      "career_fields": ["Philosophy", "Psychology", "Architecture", "AI Ethics", "Education", "Therapy", "UX Research", "Systems Design", "Writing", "Leadership"]
     },
     {
       "id": "empathic_inventor",
       "name": "Empathic Inventor",
-      "description": "Combines emotional intelligence with creativity; builds solutions grounded in human value.",
-      "prototype_vector": { "Perception": 75, "Logic & Reasoning": 65, "Creativity": 85, "Emotional Regulation": 90, "Adaptability": 75, "Meta-Awareness": 70, "Philosophical Depth": 70 },
-      "core_gifts": ["Human-centered design", "Narrative empathy", "Cross-domain fusion"],
-      "common_challenges": ["Difficulty with rigid structure", "People-pleasing"],
-      "careers": ["Product Designer", "Social Innovator", "Therapist-Designer", "Creative Director", "Community Strategist", "UX Researcher", "Human Factors Engineer", "Organizational Coach", "Nonprofit Leader", "Public Engagement Lead"]
+      "description": "Builds emotionally intelligent systems that connect people.",
+      "gifts": ["Creativity", "Empathy", "Emotional design"],
+      "growth_focus": ["Ground emotional insight with discipline"],
+      "career_fields": ["Design", "Counseling", "Music", "Storytelling", "Education", "Health Tech", "Social Entrepreneurship", "Marketing", "Coaching", "Innovation"]
     },
     {
       "id": "visionary_synthesist",
       "name": "Visionary Synthesist",
-      "description": "Unites logic, philosophy, and creativity to form large-scale, unifying concepts.",
-      "prototype_vector": { "Perception": 70, "Logic & Reasoning": 80, "Creativity": 95, "Emotional Regulation": 70, "Adaptability": 85, "Meta-Awareness": 85, "Philosophical Depth": 90 },
-      "core_gifts": ["Idea synthesis", "Long-term vision", "Pattern spanning"],
-      "common_challenges": ["Implementation detail fatigue", "Impatience with execution"],
-      "careers": ["Futurist", "Chief Innovation Officer", "Philosopher-Engineer", "Strategic Futurist", "R&D Lead", "Inventor", "Think Tank Director", "CTO", "Creative Producer", "Systems Theorist"]
+      "description": "Integrates diverse disciplines into unified systems of understanding.",
+      "gifts": ["Synthesis", "Abstraction", "Future thinking"],
+      "growth_focus": ["Balance ideas with practicality"],
+      "career_fields": ["Research", "Futurism", "Engineering", "Philosophy", "AI Strategy", "Policy", "Science Communication", "Think Tanks", "Teaching", "Writing"]
     },
     {
       "id": "grounded_operator",
       "name": "Grounded Operator",
-      "description": "Highly pragmatic and reliable; focuses on execution and systems that deliver results.",
-      "prototype_vector": { "Perception": 65, "Logic & Reasoning": 90, "Creativity": 55, "Emotional Regulation": 70, "Adaptability": 60, "Meta-Awareness": 55, "Philosophical Depth": 50 },
-      "core_gifts": ["Execution", "Operational design", "Risk management"],
-      "common_challenges": ["Low tolerance for ambiguity", "Neglect of long-term strategy"],
-      "careers": ["Operations Manager", "Project Manager", "Supply Chain Lead", "Logistics Director", "Systems Operator", "Program Manager", "Field Director", "Manufacturing Lead", "Infrastructure Manager", "Implementation Specialist"]
+      "description": "Executes structured action with pragmatic efficiency.",
+      "gifts": ["Organization", "Consistency", "Reliability"],
+      "growth_focus": ["Expand creative flexibility"],
+      "career_fields": ["Management", "Logistics", "Accounting", "Production", "Operations", "Engineering", "Finance", "Law", "Administration", "Analytics"]
     },
     {
       "id": "dreaming_idealist",
       "name": "Dreaming Idealist",
-      "description": "Strong emotional and symbolic orientation; prioritizes meaning and narrative over process.",
-      "prototype_vector": { "Perception": 85, "Logic & Reasoning": 55, "Creativity": 95, "Emotional Regulation": 85, "Adaptability": 70, "Meta-Awareness": 65, "Philosophical Depth": 85 },
-      "core_gifts": ["Meaning-making", "Storytelling", "visionary empathy"],
-      "common_challenges": ["Practical follow-through", "Detail neglect"],
-      "careers": ["Writer", "Artist", "Cultural Strategist", "Chaplain", "Creative Producer", "Brand Storyteller", "Screenwriter", "Public Philosopher", "Poet", "Creative Therapist"]
+      "description": "Sees meaning and beauty where others see limits.",
+      "gifts": ["Vision", "Imagination", "Compassion"],
+      "growth_focus": ["Translate ideals into consistent action"],
+      "career_fields": ["Art", "Music", "Writing", "Spiritual Mentorship", "Film", "Nonprofit Work", "Education", "Creative Direction", "Therapy", "Innovation"]
     },
     {
       "id": "balanced_strategist",
       "name": "Balanced Strategist",
-      "description": "Even scores across axes; adaptable, pragmatic, and reflective.",
-      "prototype_vector": { "Perception": 75, "Logic & Reasoning": 75, "Creativity": 75, "Emotional Regulation": 75, "Adaptability": 75, "Meta-Awareness": 75, "Philosophical Depth": 75 },
-      "core_gifts": ["Versatility", "Integration", "Team leadership"],
-      "common_challenges": ["Jack-of-all-trades diffusion"],
-      "careers": ["Consultant", "Program Director", "Executive Generalist", "Policy Consultant", "Entrepreneur", "Strategy Lead", "Program Manager", "Management Consultant", "Director of Operations", "Civic Leader"]
+      "description": "Maintains equilibrium between emotion, reason, and creativity.",
+      "gifts": ["Adaptability", "Composure", "Strategic balance"],
+      "growth_focus": ["Develop deep specialization"],
+      "career_fields": ["Leadership", "Coaching", "Negotiation", "Diplomacy", "Management", "Consulting", "Research", "Design", "Policy", "Tech Development"]
     },
     {
-      "id": "perceptual_savant",
-      "name": "Perceptual Savant",
-      "description": "Exceptional sensory discrimination and attention to micro-patterns; often sees details others miss.",
-      "prototype_vector": { "Perception": 95, "Logic & Reasoning": 65, "Creativity": 70, "Emotional Regulation": 60, "Adaptability": 60, "Meta-Awareness": 70, "Philosophical Depth": 60 },
-      "core_gifts": ["Signal detection", "Pattern spotting", "high-fidelity observation"],
-      "common_challenges": ["Detail fixation", "Difficulty prioritizing"],
-      "careers": ["Quality Assurance", "Forensic Analyst", "Sensor Engineer", "Conservator", "Microscopy Specialist", "Data Quality Lead", "Acoustic Engineer", "Sensing Researcher", "Field Ecologist", "Conservation Scientist"]
+      "id": "rational_alchemist",
+      "name": "Rational Alchemist",
+      "description": "Transforms chaos into structured insight using analytical magic.",
+      "gifts": ["Analytical thinking", "Creative synthesis", "Systemic vision"],
+      "growth_focus": ["Accept uncertainty and intuition"],
+      "career_fields": ["Science", "Technology", "AI Research", "Mathematics", "Philosophy", "Engineering", "Music Theory", "Cognitive Science", "Economics", "Data Science"]
     },
     {
-      "id": "analytic_scholar",
-      "name": "Analytic Scholar",
-      "description": "Curious, methodical, and evidence-oriented; loves frameworks and rigor.",
-      "prototype_vector": { "Perception": 70, "Logic & Reasoning": 95, "Creativity": 60, "Emotional Regulation": 65, "Adaptability": 60, "Meta-Awareness": 70, "Philosophical Depth": 75 },
-      "core_gifts": ["Analytical rigor", "Methodological clarity", "deep research"],
-      "common_challenges": ["Overreliance on data", "Slow decision pace"],
-      "careers": ["Researcher", "Academic", "Statistician", "Economist", "Data Scientist", "Clinical Researcher", "Methodologist", "Policy Analyst", "Quant Analyst", "Archivist"]
+      "id": "intuitive_connector",
+      "name": "Intuitive Connector",
+      "description": "Bridges people and ideas through deep emotional intuition.",
+      "gifts": ["Empathy", "Pattern recognition", "Mediation"],
+      "growth_focus": ["Develop logical structure"],
+      "career_fields": ["Counseling", "Public Speaking", "Teaching", "Mediation", "Community Development", "Health Coaching", "Performing Arts", "Branding", "Education", "HR"]
     },
     {
-      "id": "inventive_tinkerer",
-      "name": "Inventive Tinkerer",
-      "description": "Hands-on experimentalist; learns by making and iterating quickly.",
-      "prototype_vector": { "Perception": 70, "Logic & Reasoning": 70, "Creativity": 95, "Emotional Regulation": 60, "Adaptability": 85, "Meta-Awareness": 65, "Philosophical Depth": 55 },
-      "core_gifts": ["Rapid prototyping", "practical creativity", "iterative learning"],
-      "common_challenges": ["Documentation gaps", "overfocus on prototypes"],
-      "careers": ["Maker-Inventor", "Hardware Engineer", "R&D Prototyper", "Product Developer", "Makerspace Lead", "Prototype Engineer", "IoT Developer", "Innovation Lab Lead", "Mechanical Designer", "Tinkering Educator"]
+      "id": "curious_explorer",
+      "name": "Curious Explorer",
+      "description": "Constantly seeks novelty, depth, and experience across domains.",
+      "gifts": ["Curiosity", "Adaptability", "Playful intelligence"],
+      "growth_focus": ["Focus on long-term mastery"],
+      "career_fields": ["Travel", "Research", "Writing", "Education", "Entrepreneurship", "Design", "Science", "Exploration", "Adventure Therapy", "Creative Media"]
     },
     {
-      "id": "ethical_mediator",
-      "name": "Ethical Mediator",
-      "description": "Prioritizes fairness and reconciliation, excels at integrating multiple viewpoints.",
-      "prototype_vector": { "Perception": 70, "Logic & Reasoning": 70, "Creativity": 65, "Emotional Regulation": 90, "Adaptability": 75, "Meta-Awareness": 80, "Philosophical Depth": 80 },
-      "core_gifts": ["Mediation", "ethical clarity", "systems compassion"],
-      "common_challenges": ["Difficulty choosing sides", "risk-averse"],
-      "careers": ["Mediator", "Arbitrator", "Ethics Consultant", "Conflict Resolution Specialist", "Diplomat", "HR Leader", "Community Organizer", "Restorative Justice Facilitator", "Policy Mediator", "Peacebuilding Coordinator"]
+      "id": "spiritual_systemist",
+      "name": "Spiritual Systemist",
+      "description": "Connects metaphysical insight with structural intelligence.",
+      "gifts": ["Transcendence", "Harmony", "Pattern awareness"],
+      "growth_focus": ["Balance intuition with practicality"],
+      "career_fields": ["Philosophy", "Wellness Coaching", "Holistic Science", "Ethical AI", "Teaching", "Religious Studies", "Cultural Design", "Therapy", "Spiritual Art", "Leadership"]
     }
   ],
-  "archetypeMapping": {
-    "distanceMetric": "euclidean",
-    "alphaCosine": 0.5,
-    "softmaxTemperature": 0.7,
-    "mixtureThreshold": 0.15,
-    "explainability": {
-      "topContributors": 3,
-      "format": ["axis", "featureWeight", "exampleExcerpt"]
+
+  "metaScore": {
+    "formula": "(Phase1 + Phase2 + Phase3 + Phase4 + Phase5 + Phase6) / 6 * weighting",
+    "weighting": {
+      "Perception": 0.15,
+      "LogicReasoning": 0.15,
+      "Creativity": 0.15,
+      "EmotionalRegulation": 0.15,
+      "Adaptability": 0.10,
+      "MetaAwareness": 0.15,
+      "PhilosophicalDepth": 0.15
+    },
+    "tiers": {
+      "Explorer": [0, 350],
+      "Architect": [351, 525],
+      "Visionary": [526, 700]
     }
-  },
-  "explainability": {
-    "requirement": true,
-    "note": "Report must include top contributing responses/features per axis and a plain-language explanation for scores."
-  },
-  "exportOptions": {
-    "dashboardJson": true,
-    "transcriptJson": true,
-    "narrativeTxt": true,
-    "visualArchetypePng": true
-  },
-  "mentorMode": {
-    "enabled": true,
-    "default": {
-      "Perception": ["Describe five objects using new metaphors (daily)"],
-      "Logic": ["Reverse-engineer a daily routine once per week"],
-      "Creativity": ["Fuse two unrelated ideas into a micro-prototype"],
-      "Emotion": ["Body-signal journaling before reactive decisions"],
-      "MetaAwareness": ["Write a 'thought about a thought' every morning"],
-      "Philosophy": ["State a belief and argue its opposite weekly"]
-    }
-  },
-  "safety": {
-    "distressKeywords": ["suicide", "harm", "kill myself", "end my life", "hurt myself", "hopeless"],
-    "action": "showSafetyModal",
-    "safetyModalText": "We detected language suggesting distress. If you're in immediate danger call local emergency services. If you are in the U.S., call or text 988."
-  },
-  "validation": {
-    "phasesArrayRequired": true,
-    "eachPhaseMustHaveId": true,
-    "eachQuestionMustHaveIdAndType": true
-  },
-  "developerNotes": {
-    "deployment": "Place MCIF_5_MasterSchema.json in same folder as index.html and app.js. Use static host or GitHub Pages. If fetch fails, check casing and file placement.",
-    "compatibility": "Works with app.js expecting phase.questions arrays, question.type values: text, slider, multiple_choice, and slider values numeric."
   }
 }
