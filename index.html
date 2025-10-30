@@ -1,60 +1,232 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCIF v5 Cognitive Archetype Test</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MCIF v5 — Mind Core: Meta-Cognitive Intelligence Framework</title>
+  <link rel="stylesheet" href="style.css" />
+  <!--
+    NOTES:
+    - This page expects app.js and MCIF_5_MasterSchema.json to be in the same directory.
+    - IDs used by app.js: beginButton, testContainer, questionContainer, resultContainer,
+      progressBar, frequencyControl, resonanceMeter, reflectionPanel, frequencyVisualizer,
+      saveButton, restoreButton, exportJsonBtn, exportTxtBtn, safetyModal, modalCloseBtn.
+  -->
 </head>
-<body>
-  <!-- Background Audio Layer -->
-  <audio id="backgroundAudio" loop>
-    <source src="432hz.mp3" type="audio/mpeg" />
-  </audio>
+<body class="lucid-flow" data-stage="intro">
+  <div class="ui-shell">
 
-  <!-- Lucid Flow Background Canvas -->
-  <canvas id="frequencyVisualizer"></canvas>
-
-  <!-- Header -->
-  <header>
-    <h1>MCIF v5: Cognitive Archetype Assessment</h1>
-    <p>Discover your archetype, resonance, and cognitive design.</p>
-  </header>
-
-  <!-- Begin Section -->
-  <section id="beginSection">
-    <button id="beginButton" class="lucid-button">Begin Assessment</button>
-    <div id="frequencyControlContainer">
-      <label for="frequencyControl">Frequency Mode:</label>
-      <select id="frequencyControl">
-        <option value="432">432 Hz (Natural Resonance)</option>
-        <option value="528">528 Hz (Transformation)</option>
-        <option value="852">852 Hz (Intuition)</option>
-        <option value="963">963 Hz (Divine Connection)</option>
-      </select>
-    </div>
-  </section>
-
-  <!-- Test Container -->
-  <section id="testContainer">
-    <div id="progressWrapper">
-      <div id="progressBar"></div>
+    <!-- BACKGROUND LAYER: gradients + phase-adaptive hues -->
+    <div id="bgLayer" class="bg-layer" aria-hidden="true">
+      <div class="bg-gradient"></div>
+      <div class="bg-aurora" id="bgAurora"></div>
+      <canvas id="backgroundSpiral" class="background-spiral" width="1200" height="1200" aria-hidden="true"></canvas>
     </div>
 
-    <div id="questionContainer"></div>
+    <!-- TOP BAR -->
+    <header class="topbar" role="banner">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" role="img" aria-label="MCIF logo">
+          <!-- simple svg emblem -->
+          <svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true">
+            <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#1de9b6"/><stop offset="1" stop-color="#0A78FF"/></linearGradient></defs>
+            <rect x="6" y="6" width="52" height="52" rx="10" fill="url(#g1)"></rect>
+            <path d="M16 32c6-12 24-12 30 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="title">
+          <div class="product">MCIF v5 — Mind Core</div>
+          <div class="subtitle">Meta-Cognitive Intelligence Framework</div>
+        </div>
+      </div>
 
-    <div id="resonanceWrapper">
-      <h4>Resonance Meter</h4>
-      <div id="resonanceMeter"></div>
+      <nav class="top-actions" role="navigation" aria-label="Top actions">
+        <label for="accessibilitySize" class="sr-only">Text size</label>
+        <select id="accessibilitySize" class="compact-select" title="Text size">
+          <option value="base">Normal</option>
+          <option value="large">Large</option>
+          <option value="xlarge">XL</option>
+        </select>
+
+        <button id="saveButton" class="icon-btn" title="Quick save session" aria-label="Save session">
+          💾
+        </button>
+        <button id="restoreButton" class="icon-btn" title="Restore last saved session" aria-label="Restore session">
+          ♻️
+        </button>
+      </nav>
+    </header>
+
+    <!-- MAIN APP AREA -->
+    <main id="appMain" role="main" class="main-grid" aria-live="polite">
+
+      <!-- INTRO SCREEN -->
+      <section id="introScreen" class="card intro-card" aria-labelledby="introHeading" role="region">
+        <div class="card-inner">
+          <h1 id="introHeading" class="page-title">Welcome — MCIF v5 “Mind Core”</h1>
+          <p class="lead">
+            This tool explores <strong>how you think</strong> — perception, reasoning, emotion, creativity and reflection.
+            It is research/educational and not a clinical diagnosis. Breathe, relax, and answer honestly.
+          </p>
+
+          <div class="tier-row" role="radiogroup" aria-label="Choose difficulty tier">
+            <label class="tier-card">
+              <input type="radio" name="tier" value="Explorer" checked />
+              <div class="tier-title">Explorer</div>
+              <div class="tier-sub">15–25 min — Quick insight</div>
+            </label>
+
+            <label class="tier-card">
+              <input type="radio" name="tier" value="Architect" />
+              <div class="tier-title">Architect</div>
+              <div class="tier-sub">30–45 min — Balanced</div>
+            </label>
+
+            <label class="tier-card">
+              <input type="radio" name="tier" value="Visionary" />
+              <div class="tier-title">Visionary</div>
+              <div class="tier-sub">60–90 min — Deep exploration</div>
+            </label>
+          </div>
+
+          <div class="controls-row">
+            <div class="frequency-control">
+              <label for="frequencyControl">Ambient Frequency</label>
+              <select id="frequencyControl" aria-label="Choose background frequency">
+                <option value="432">432 Hz — Ground</option>
+                <option value="528">528 Hz — Harmony</option>
+                <option value="852">852 Hz — Vision</option>
+                <option value="963">963 Hz — Unity</option>
+              </select>
+            </div>
+
+            <div class="soundscape-control">
+              <label for="soundscapeSelect">Soundscape</label>
+              <select id="soundscapeSelect" aria-label="Ambient sound">
+                <option value="none">None</option>
+                <option value="ocean">Ocean</option>
+                <option value="wind">Wind</option>
+                <option value="space">Space pad</option>
+                <option value="pure">Pure tone</option>
+              </select>
+            </div>
+          </div>
+
+          <p class="safety-note">You can pause at any time. If you experience distress, safety resources will appear.</p>
+
+          <div class="intro-actions">
+            <button id="beginButton" class="primary-btn" aria-label="Begin test">Begin</button>
+            <button id="tutorialButton" class="secondary-btn" aria-label="Open tutorial">Tutorial</button>
+            <button id="demoButton" class="tertiary-btn" aria-label="Try demo">2-Question Demo</button>
+          </div>
+
+          <div class="disclaimer">
+            <small>By using this tool, you confirm it's for personal reflection and research. Not medical advice.</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- TEST CONTAINER -->
+      <section id="testContainer" class="card test-card" aria-live="assertive" role="region" hidden>
+        <div class="card-inner">
+
+          <!-- Progress + resonance -->
+          <div class="top-row">
+            <div class="progress-wrap" aria-hidden="false">
+              <div class="progress-label">Progress</div>
+              <div class="progress-track"><div id="progressBar" class="progress-bar" style="width:0%">0%</div></div>
+            </div>
+
+            <div class="resonance-wrap" aria-hidden="false">
+              <div class="resonance-label">Flow Resonance</div>
+              <div class="resonance-track"><div id="resonanceMeter" class="resonance-meter" style="width:0%"></div></div>
+              <div class="resonance-help">This meter gives immediate, non-diagnostic feedback about your cognitive flow.</div>
+            </div>
+
+            <div class="controls-mini">
+              <button id="pauseBtn" class="icon-btn" title="Pause test" aria-label="Pause">⏸</button>
+              <button id="restartBtn" class="icon-btn" title="Restart" aria-label="Restart">🔁</button>
+            </div>
+          </div>
+
+          <!-- Frequency visualizer canvas (surprise feature) -->
+          <div class="visualizer-wrap" aria-hidden="false">
+            <canvas id="frequencyVisualizer" width="900" height="140" role="img" aria-label="Frequency visualizer"></canvas>
+          </div>
+
+          <!-- Question container -->
+          <div id="questionContainer" class="question-area" role="form" aria-describedby="phaseHelp"></div>
+
+          <div id="phaseHelp" class="phase-help">Answer in full sentences; longer answers give richer feedback. Use the slider for quick self-ratings.</div>
+
+        </div>
+      </section>
+
+      <!-- MICRO-REFLECTION PANEL -->
+      <aside id="reflectionPanel" class="card reflection-card" role="complementary" hidden>
+        <div class="card-inner">
+          <h3>Dimensional Reflection</h3>
+          <div id="reflectionContent" class="reflection-content" aria-live="polite">
+            <p class="muted">Your mirrored insights will appear here as you progress.</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- RESULTS PANEL -->
+      <section id="resultContainer" class="card results-card" role="region" hidden>
+        <div class="card-inner">
+          <div class="results-header">
+            <h2 id="resultsTitle">Your MCIF Synthesis</h2>
+            <div class="result-actions">
+              <button id="exportJsonBtn" class="primary-btn" aria-label="Export JSON">Export JSON</button>
+              <button id="exportTxtBtn" class="secondary-btn" aria-label="Export TXT">Export TXT</button>
+              <button id="restartAfterResultBtn" class="tertiary-btn" aria-label="Restart test">Restart</button>
+            </div>
+          </div>
+
+          <div id="resultBody" class="result-body" aria-live="polite">
+            <!-- Filled by app.js -->
+          </div>
+
+          <div class="result-footer">
+            <button id="openMentorBtn" class="primary-btn" aria-label="Open mentor">Activate Mentor Mode</button>
+            <button id="downloadProfileBtn" class="secondary-btn" aria-label="Download profile">Download Profile</button>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- SAFETY / DISTRESS MODAL -->
+    <div id="safetyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="safetyTitle" hidden>
+      <div class="modal-inner">
+        <h3 id="safetyTitle">Safety resources</h3>
+        <div class="modal-body">
+          <p>We detected language that suggests distress. Please reach out for immediate help if you're in danger.</p>
+          <ul>
+            <li>If you're in the U.S., call or text <strong>988</strong> (Suicide & Crisis Lifeline).</li>
+            <li>Contact local emergency services if you feel at risk.</li>
+            <li>Consider pausing the test and seeking support from a trusted person.</li>
+          </ul>
+        </div>
+        <div class="modal-actions">
+          <button id="modalCloseBtn" class="primary-btn">Acknowledge & Pause</button>
+        </div>
+      </div>
     </div>
-  </section>
 
-  <!-- Results -->
-  <section id="resultContainer"></section>
+    <!-- FOOTER -->
+    <footer class="footer" role="contentinfo">
+      <div class="footer-inner">
+        <div class="license">MCIF v5 — Open for research & education. No medical claims.</div>
+        <div class="version">Schema v5.0 • front-end v1.0</div>
+      </div>
+    </footer>
+  </div>
 
-  <!-- Reflection Panel (hidden by default, shown dynamically) -->
-  <div id="reflectionPanel" class="reflection-panel"></div>
+  <!-- Inline small accessibility helpers -->
+  <div id="srAnnounce" class="sr-only" aria-live="assertive"></div>
 
-  <script src="app.js"></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
