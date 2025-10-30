@@ -3,48 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCIF 5.0 – Mind Core</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>MCIF 5.0 – Meta-Cognitive Intelligence Framework</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="app">
+  <div id="app-container">
+    <!-- Background frequency sound control -->
+    <audio id="bg-frequency" loop></audio>
+
+    <!-- Header -->
     <header class="fade-in">
-      <h1>Meta-Cognitive Intelligence Framework <span>5.0</span></h1>
-      <p class="subtitle">Mind Core • Awareness | Reason | Creation | Reflection</p>
+      <h1 class="app-title">MCIF 5.0 <span class="sub">“Mind Core”</span></h1>
+      <p class="tagline">A Meta-Cognitive Intelligence Experience</p>
     </header>
 
-    <main id="main-container" class="fade-in">
-      <section id="intro" class="active slide-up">
-        <h2>Welcome to the MCIF Test</h2>
-        <p>
-          This isn’t just a test — it’s a reflection of how your mind perceives,
-          connects, and creates meaning. Take your time, answer naturally.
+    <!-- Intro Screen -->
+    <section id="intro-screen" class="screen active">
+      <div class="intro-content slide-up">
+        <p class="intro-text">
+          Welcome to the <strong>Meta-Cognitive Intelligence Framework 5.0</strong> test.  
+          This is not a typical quiz—it measures how you <em>think, reflect, and create</em>.
         </p>
-        <button id="startBtn" class="btn">Begin Assessment</button>
-      </section>
+        <p>Estimated time: 15 – 90 minutes depending on tier.</p>
 
-      <section id="test-section" class="hidden fade-in">
-        <div id="phase-display">
-          <h2 id="phase-title"></h2>
-          <p id="phase-prompt"></p>
-          <textarea id="response" placeholder="Type your reflection here..."></textarea>
-          <button id="nextBtn" class="btn">Continue</button>
+        <div class="controls">
+          <label for="frequency">Background Frequency:</label>
+          <select id="frequency">
+            <option value="">None</option>
+            <option value="432">432 Hz – Harmony</option>
+            <option value="528">528 Hz – Transformation</option>
+            <option value="852">852 Hz – Awakening</option>
+            <option value="963">963 Hz – Divine Connection</option>
+          </select>
         </div>
-      </section>
 
-      <section id="results-section" class="hidden fade-in">
-        <h2>Your Results</h2>
-        <div id="score-summary"></div>
-        <div id="archetype-summary"></div>
-        <div id="career-summary"></div>
-        <button id="downloadBtn" class="btn">Download PDF Summary</button>
-        <button id="restartBtn" class="btn secondary">Retake Test</button>
-      </section>
-    </main>
+        <button id="begin-btn" class="btn glow">Begin Journey</button>
+      </div>
+    </section>
 
-    <footer class="fade-in">
-      <p>© 2025 Mind Core Cognitive Systems | MCIF v5.0</p>
-    </footer>
+    <!-- Test Screen -->
+    <section id="test-screen" class="screen hidden fade-transition">
+      <div class="phase-header">
+        <h2 id="phase-title"></h2>
+        <p id="phase-desc"></p>
+      </div>
+
+      <div class="question-box fade-in">
+        <p id="question-text"></p>
+        <textarea id="answer-input" placeholder="Type your reflection here..." rows="8"></textarea>
+      </div>
+
+      <div class="nav-buttons">
+        <button id="prev-btn" class="btn secondary">Back</button>
+        <button id="next-btn" class="btn primary">Next</button>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-bar"></div>
+      </div>
+    </section>
+
+    <!-- Results Screen -->
+    <section id="results-screen" class="screen hidden fade-transition">
+      <h2 class="slide-up">Your MCIF Profile</h2>
+      <div id="results-summary" class="fade-in"></div>
+      <canvas id="results-chart" width="300" height="300"></canvas>
+
+      <div class="archetype-section fade-in">
+        <h3 id="archetype-name"></h3>
+        <p id="archetype-desc"></p>
+      </div>
+
+      <button id="restart-btn" class="btn glow">Restart Test</button>
+    </section>
   </div>
 
   <script src="app.js"></script>
