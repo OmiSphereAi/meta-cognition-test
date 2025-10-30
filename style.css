@@ -1,143 +1,160 @@
-/* === LUCID FLOW NEURODESIGN === */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Space+Grotesk:wght@400;600&display=swap');
+/* =========================================================
+   MCIF v5 Lucid Flow UI Stylesheet
+   ========================================================= */
 
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(120deg, #0a0a20, #1a002f);
+  font-family: "Inter", sans-serif;
+  background: radial-gradient(circle at 50% 50%, #0f2027, #203a43, #2c5364);
+  color: #e0f7fa;
   overflow-x: hidden;
-  transition: background 1s ease;
+  height: 100%;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #e8e8ff;
-  font-family: 'Inter', sans-serif;
-}
-
-#app-container {
-  width: 95%;
-  max-width: 800px;
+/* Header */
+header {
   text-align: center;
+  margin-top: 3vh;
+}
+header h1 {
+  font-size: 2.2rem;
+  color: #aef1ff;
+  letter-spacing: 0.05em;
+}
+header p {
+  font-size: 1.1rem;
+  color: #bdefff;
 }
 
-.lucid-glow {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 0 20px rgba(120, 0, 255, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  transition: all 0.6s ease;
+/* Begin Section */
+#beginSection {
+  text-align: center;
+  margin-top: 6vh;
 }
-
-.lucid-glow:hover {
-  box-shadow: 0 0 40px rgba(160, 50, 255, 0.2);
-}
-
-.title {
-  font-size: 2.4rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  font-family: 'Space Grotesk', sans-serif;
-  background: linear-gradient(90deg, #a86cff, #00eaff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.subtitle {
-  font-size: 1rem;
-  color: #ccc;
-  margin-bottom: 2rem;
-}
-
-.start-btn, .next-btn, .option-btn, .restart-btn, .freq-btn, .freq-stop {
-  background: linear-gradient(90deg, #7a42f4, #3ddad7);
-  color: white;
+.lucid-button {
+  background: linear-gradient(120deg, #4ac29a, #bdfff3);
   border: none;
-  border-radius: 10px;
-  padding: 0.8rem 1.6rem;
-  font-size: 1rem;
+  border-radius: 8px;
+  color: #0a2e36;
+  font-size: 1.4rem;
+  padding: 12px 26px;
   cursor: pointer;
-  margin: 0.4rem;
-  font-family: 'Space Grotesk', sans-serif;
-  transition: transform 0.2s ease, opacity 0.3s ease;
+  transition: 0.3s;
+  box-shadow: 0 0 20px rgba(76, 255, 214, 0.3);
+}
+.lucid-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(76, 255, 214, 0.6);
 }
 
-.start-btn:hover,
-.next-btn:hover,
-.option-btn:hover,
-.restart-btn:hover,
-.freq-btn:hover,
-.freq-stop:hover {
-  transform: scale(1.05);
+/* Frequency Control */
+#frequencyControlContainer {
+  margin-top: 1em;
+  color: #9de2ff;
+}
+#frequencyControl {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #4ac29a;
+  border-radius: 6px;
+  color: #fff;
+  padding: 6px 10px;
+  margin-left: 0.5em;
+}
+
+/* Test Section */
+#testContainer {
+  display: none;
+  text-align: center;
+  margin: 3vh auto;
+  max-width: 700px;
+  padding: 2em;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(100, 255, 200, 0.2);
+}
+
+.input-container button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  background: linear-gradient(120deg, #89f7fe, #66a6ff);
+  color: #0d1b2a;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.input-container button:hover {
   opacity: 0.9;
 }
 
-.question-box h2 {
-  font-size: 1.6rem;
-  margin-bottom: 1.2rem;
-}
-
-textarea {
+/* Progress Bar */
+#progressWrapper {
   width: 90%;
-  height: 120px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  padding: 10px;
-  font-size: 1rem;
-  font-family: 'Inter', sans-serif;
-  resize: none;
+  margin: 0 auto 20px auto;
+}
+#progressBar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #7fffd4, #40e0d0);
+  border-radius: 10px;
+  text-align: right;
+  padding-right: 6px;
+  color: #002b36;
+  font-weight: bold;
 }
 
-.slider {
-  width: 80%;
-  margin-top: 1rem;
-  accent-color: #a86cff;
+/* Resonance Meter */
+#resonanceWrapper {
+  margin-top: 30px;
+}
+#resonanceMeter {
+  height: 18px;
+  width: 0%;
+  border-radius: 9px;
+  background: linear-gradient(90deg, #4ac29a, #bdfff3);
+  transition: width 0.6s ease, background 0.6s ease;
 }
 
-.result-box ul {
-  text-align: left;
-  list-style: none;
-  padding: 0;
-  margin-top: 1rem;
+/* Results Section */
+#resultContainer {
+  display: none;
+  margin: 5vh auto;
+  text-align: center;
+  max-width: 700px;
+  padding: 2em;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(100, 255, 220, 0.3);
 }
 
-.result-box li {
-  margin: 0.6rem 0;
-  padding: 0.4rem;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 8px;
+/* Reflection Panel */
+.reflection-panel {
+  margin-top: 2em;
+  padding: 1.5em;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(76, 255, 214, 0.3);
+  color: #c5faff;
   font-size: 0.95rem;
 }
 
-.freq-control {
+/* Frequency Visualizer Canvas */
+#frequencyVisualizer {
   position: fixed;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 10px rgba(170, 0, 255, 0.2); }
-  50% { box-shadow: 0 0 30px rgba(170, 0, 255, 0.4); }
-  100% { box-shadow: 0 0 10px rgba(170, 0, 255, 0.2); }
-}
-
-.start-btn {
-  animation: pulse 3s infinite ease-in-out;
+/* Smooth fade transitions */
+section, header {
+  transition: all 0.8s ease;
 }
 
 
