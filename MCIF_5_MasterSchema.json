@@ -515,7 +515,7 @@
       ]
     },
 
-    "phases": [
+    "stages": [
       {
         "id": "intro",
         "title": "Welcome — Lucid Entry",
@@ -1148,3 +1148,4 @@
     }
   }
 }
+
