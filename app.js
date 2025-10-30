@@ -1,166 +1,249 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meta-Cognition Test | MCIF LucidFlow</title>
-    <link rel="stylesheet" href="style.css" />
-    <script defer src="app.js"></script>
+/****************************************************
+ * MCIF Cognitive Test Engine - Lucid Flow Edition
+ * Version: 5.0
+ * Integrated with: MCIF_5_MasterSchema.json
+ * --------------------------------------------------
+ * Features:
+ * - Fixed "Begin" button logic
+ * - Smooth Lucid UI transitions
+ * - Cognitive Flow Meter
+ * - Progress Reflection Tracker
+ * - Frequency-Synced Background Controls
+ ****************************************************/
 
-    <!-- LucidFlow Core Variables -->
-    <style>
-        :root {
-            --background-hue: 200;
-            --lucid-text: #f4f4f4;
-            --lucid-accent: #00ffff;
-            --lucid-glow: rgba(0, 255, 255, 0.4);
-        }
+document.addEventListener("DOMContentLoaded", () => {
+  const app = document.getElementById("app");
+  const beginBtn = document.getElementById("begin-btn");
+  const frequencySelector = document.getElementById("frequency-selector");
+  const audioPlayer = document.getElementById("audio-player");
 
-        body {
-            margin: 0;
-            font-family: "Inter", sans-serif;
-            background: linear-gradient(135deg, hsl(var(--background-hue), 45%, 12%), hsl(calc(var(--background-hue) + 60), 50%, 10%));
-            color: var(--lucid-text);
-            overflow: hidden;
-            transition: background 3s linear;
-        }
+  let schema = null;
+  let currentPhase = 0;
+  let currentQuestion = 0;
+  let userResponses = [];
+  let currentFrequency = 432;
 
-        #intro-screen, #app {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-        }
+  // ✅ Surprise UI Features
+  const lucidBackground = document.createElement("div");
+  lucidBackground.classList.add("lucid-background");
+  app.appendChild(lucidBackground);
 
-        #intro-screen {
-            animation: fadeIn 2s ease forwards;
-        }
+  const progressMeter = document.createElement("div");
+  progressMeter.classList.add("progress-meter");
+  app.appendChild(progressMeter);
 
-        h1 {
-            font-weight: 600;
-            font-size: 2.4rem;
-            text-shadow: 0 0 15px var(--lucid-glow);
-        }
+  const flowMeter = document.createElement("div");
+  flowMeter.classList.add("flow-meter");
+  app.appendChild(flowMeter);
 
-        p {
-            max-width: 600px;
-            line-height: 1.6;
-            opacity: 0.85;
-        }
+  // Lucid animation
+  function startLucidAnimation() {
+    lucidBackground.classList.add("active");
+  }
 
-        button {
-            padding: 14px 28px;
-            margin-top: 20px;
-            background: linear-gradient(90deg, #00ffff, #0077ff);
-            border: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            color: #fff;
-            cursor: pointer;
-            box-shadow: 0 0 15px var(--lucid-glow);
-            transition: all 0.25s ease;
-        }
+  function stopLucidAnimation() {
+    lucidBackground.classList.remove("active");
+  }
 
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px var(--lucid-glow);
-        }
+  // 🧠 Load Schema
+  async function loadSchema() {
+    try {
+      const res = await fetch("MCIF_5_MasterSchema.json");
+      if (!res.ok) throw new Error(`Failed to load schema: ${res.status}`);
+      schema = await res.json();
+      console.log("Schema loaded successfully.");
+    } catch (err) {
+      console.error(err);
+      alert("Error loading test schema. Please ensure MCIF_5_MasterSchema.json is in the same folder.");
+    }
+  }
 
-        select {
-            background: #111;
-            border: 1px solid #00ffff77;
-            color: var(--lucid-text);
-            border-radius: 10px;
-            padding: 8px;
-            margin-top: 15px;
-        }
+  // 🎶 Frequency Audio Handling
+  function playFrequency(frequency) {
+    if (audioPlayer) {
+      const context = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = context.createOscillator();
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(frequency, context.currentTime);
+      const gainNode = context.createGain();
+      gainNode.gain.value = 0.03; // soft background
+      oscillator.connect(gainNode);
+      gainNode.connect(context.destination);
+      oscillator.start();
+      oscillator.stop(context.currentTime + 2); // smooth pulse
+    }
+  }
 
-        textarea, input[type="range"] {
-            width: 80%;
-            margin: 10px 0;
-        }
+  frequencySelector.addEventListener("change", (e) => {
+    currentFrequency = parseInt(e.target.value);
+    playFrequency(currentFrequency);
+  });
 
-        .question-container {
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
-        }
+  // ✨ Start Test
+  async function beginTest() {
+    await loadSchema();
+    if (!schema || !schema.phases || schema.phases.length === 0) {
+      alert("Schema missing or invalid phases.");
+      return;
+    }
 
-        .question-text {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
+    beginBtn.style.display = "none";
+    startLucidAnimation();
+    renderPhase();
+  }
 
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+  beginBtn.addEventListener("click", beginTest);
 
-        .progress-bar {
-            width: 80%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            margin-top: 30px;
-            overflow: hidden;
-        }
+  // 🧩 Render Phase
+  function renderPhase() {
+    const phase = schema.phases[currentPhase];
+    if (!phase) {
+      renderResults();
+      return;
+    }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00ffff, #00ff99);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
+    app.innerHTML = `
+      <div class="phase-container fade-in">
+        <h2>${phase.title}</h2>
+        <p class="phase-description">${phase.description}</p>
+        <div id="question-container"></div>
+      </div>
+    `;
 
-        .lucid-pulse {
-            animation: pulse 0.6s ease;
-        }
+    currentQuestion = 0;
+    renderQuestion();
+  }
 
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 10px var(--lucid-glow); }
-            50% { transform: scale(1.07); box-shadow: 0 0 25px var(--lucid-glow); }
-            100% { transform: scale(1); box-shadow: 0 0 10px var(--lucid-glow); }
-        }
+  // 🧭 Render Question
+  function renderQuestion() {
+    const phase = schema.phases[currentPhase];
+    const question = phase.questions[currentQuestion];
+    const container = document.getElementById("question-container");
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    if (!question) {
+      currentPhase++;
+      renderPhase();
+      return;
+    }
 
-        .results-screen {
-            animation: fadeIn 1s ease forwards;
-        }
+    progressMeter.innerHTML = `Phase ${currentPhase + 1}/${schema.phases.length} — Question ${currentQuestion + 1}/${phase.questions.length}`;
 
-        audio {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <!-- 🎬 Intro Screen -->
-    <div id="intro-screen">
-        <h1>Meta-Cognition Interactive Framework</h1>
-        <p>Welcome to the LucidFlow edition of the MCIF test — designed to reveal your unique cognitive architecture, strengths, and synthesis profile.</p>
-        <label for="frequency-selector">Choose Background Frequency:</label>
-        <select id="frequency-selector">
-            <option value="432">432 Hz — Natural Harmony</option>
-            <option value="528">528 Hz — Transformation</option>
-            <option value="852">852 Hz — Intuition</option>
-            <option value="963">963 Hz — Divine Consciousness</option>
-        </select>
-        <button id="begin-button">Acknowledge & Begin</button>
-    </div>
+    let inputElement = "";
+    switch (question.type) {
+      case "multiple_choice":
+        inputElement = question.options
+          .map(opt => `<button class="option-btn" data-value="${opt}">${opt}</button>`)
+          .join("");
+        break;
+      case "slider":
+        inputElement = `
+          <input type="range" min="${question.min}" max="${question.max}" value="${(question.min + question.max) / 2}" class="slider" id="slider-${question.id}">
+          <label for="slider-${question.id}" class="slider-label">${(question.min + question.max) / 2}</label>
+        `;
+        break;
+      case "text":
+      default:
+        inputElement = `<textarea id="response-${question.id}" placeholder="Type your response here..." rows="4"></textarea>`;
+    }
 
-    <!-- 🧩 App Content -->
-    <div id="app" style="display:none;"></div>
+    container.innerHTML = `
+      <div class="question-card">
+        <h3>${question.prompt}</h3>
+        <div class="input-container">${inputElement}</div>
+        <button id="next-btn" class="lucid-btn">Next</button>
+      </div>
+    `;
 
-    <!-- 🔊 Frequency Background Audio -->
-    <audio id="background-audio"></audio>
-</body>
-</html>
+    // 🎚️ Slider feedback
+    const slider = container.querySelector(".slider");
+    if (slider) {
+      const label = container.querySelector(".slider-label");
+      slider.addEventListener("input", () => (label.textContent = slider.value));
+    }
+
+    // 💬 Multiple choice logic
+    const optionButtons = container.querySelectorAll(".option-btn");
+    optionButtons.forEach(btn =>
+      btn.addEventListener("click", (e) => {
+        const value = e.target.getAttribute("data-value");
+        recordResponse(question.id, value);
+      })
+    );
+
+    document.getElementById("next-btn").addEventListener("click", () => {
+      let value = "";
+      if (slider) value = slider.value;
+      else {
+        const textarea = document.getElementById(`response-${question.id}`);
+        value = textarea ? textarea.value.trim() : "";
+      }
+      if (value === "") {
+        alert("Please enter a response before proceeding.");
+        return;
+      }
+      recordResponse(question.id, value);
+    });
+  }
+
+  // 🧾 Record Response
+  function recordResponse(questionId, value) {
+    userResponses.push({
+      phase: currentPhase,
+      questionId,
+      value,
+      timestamp: new Date().toISOString()
+    });
+    currentQuestion++;
+    updateFlowMeter();
+    renderQuestion();
+  }
+
+  // 🌊 Flow Meter
+  function updateFlowMeter() {
+    const totalQuestions = schema.phases.reduce((sum, p) => sum + p.questions.length, 0);
+    const progress = (userResponses.length / totalQuestions) * 100;
+    flowMeter.style.width = `${progress}%`;
+  }
+
+  // 🧩 Render Results
+  function renderResults() {
+    stopLucidAnimation();
+    const metaScore = calculateMetaScore();
+    app.innerHTML = `
+      <div class="results-container fade-in">
+        <h2>Your Cognitive Profile</h2>
+        <p class="meta-score">Meta Score: <strong>${metaScore}</strong></p>
+        <div id="insight-list">${generateInsights(metaScore)}</div>
+        <button class="lucid-btn" onclick="window.location.reload()">Restart Test</button>
+      </div>
+    `;
+  }
+
+  // 🧠 Meta Score Logic
+  function calculateMetaScore() {
+    let score = 0;
+    userResponses.forEach(r => {
+      const val = parseFloat(r.value);
+      if (!isNaN(val)) score += val;
+    });
+    return Math.round(score / (userResponses.length || 1));
+  }
+
+  // 🌟 Generate Insights
+  function generateInsights(metaScore) {
+    const archetypes = [
+      "Visionary", "Architect", "Empath", "Innovator", "Guardian",
+      "Explorer", "Seeker", "Catalyst", "Healer", "Strategist"
+    ];
+    const archetype = archetypes[metaScore % archetypes.length];
+    return `
+      <h3>Primary Archetype: ${archetype}</h3>
+      <p>Your responses suggest a ${archetype}-type mind — uniquely capable of merging abstract and practical reasoning. You display resilience, creative synthesis, and distinct intuitive logic.</p>
+      <ul>
+        <li>Core Strength: ${metaScore > 75 ? "High Synthesis Ability" : "Reflective Insight"}</li>
+        <li>Growth Edge: ${metaScore < 50 ? "Develop Consistency and Focus" : "Channel Energy into Structure"}</li>
+        <li>Suggested Pathways: Cognitive Strategy, Innovation Labs, Mentorship, Design Thinking</li>
+      </ul>
+    `;
+  }
+});
