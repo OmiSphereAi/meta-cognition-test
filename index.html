@@ -1,112 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>MCIF v5 — Mind Core</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCIF 5.0 – Mind Core</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div class="title-block">
-          <div class="title">MCIF v5 — Mind Core</div>
-          <div class="subtitle">Meta-Cognitive Intelligence Framework</div>
-        </div>
-      </div>
-
-      <div class="top-controls">
-        <label for="frequency-selector" class="freq-label">Ambient</label>
-        <select id="frequency-selector" aria-label="Ambient Frequency">
-          <option value="432">432 Hz</option>
-          <option value="528">528 Hz</option>
-          <option value="852">852 Hz</option>
-          <option value="963">963 Hz</option>
-        </select>
-
-        <button id="playAmbience" class="secondary-btn">Play</button>
-        <button id="stopAmbience" class="secondary-btn">Stop</button>
-
-        <button id="saveButton" class="secondary-btn">Save</button>
-        <button id="restoreButton" class="secondary-btn">Restore</button>
-      </div>
+  <div id="app">
+    <header class="fade-in">
+      <h1>Meta-Cognitive Intelligence Framework <span>5.0</span></h1>
+      <p class="subtitle">Mind Core • Awareness | Reason | Creation | Reflection</p>
     </header>
 
-    <main>
-      <section id="introScreen" class="card show" aria-labelledby="introHead">
-        <h1 id="introHead">Welcome — MCIF v5 “Mind Core”</h1>
-        <p class="lead">A reflective, interactive test that maps <strong>how</strong> you think — perception, reasoning, creativity, emotion, and meta-awareness. It’s a mirror, not a diagnosis.</p>
-
-        <div class="tier-row">
-          <label for="tierSelect">Choose tier</label>
-          <select id="tierSelect" aria-label="Choose tier">
-            <option value="Explorer">Explorer — 15–25 min</option>
-            <option value="Architect">Architect — 30–45 min</option>
-            <option value="Visionary">Visionary — 60–90 min</option>
-          </select>
-        </div>
-
-        <div class="controls-row">
-          <button id="begin-btn" class="primary-btn">Begin</button>
-          <button id="demoButton" class="secondary-btn">2-question Demo</button>
-          <button id="tutorialButton" class="secondary-btn">Tutorial</button>
-        </div>
-        <p class="muted">You can pause or restore your session anytime. If you feel distressed, stop and seek support.</p>
+    <main id="main-container" class="fade-in">
+      <section id="intro" class="active slide-up">
+        <h2>Welcome to the MCIF Test</h2>
+        <p>
+          This isn’t just a test — it’s a reflection of how your mind perceives,
+          connects, and creates meaning. Take your time, answer naturally.
+        </p>
+        <button id="startBtn" class="btn">Begin Assessment</button>
       </section>
 
-      <section id="test-area" class="card hide" aria-live="polite">
-        <div class="phase-header">
-          <div>
-            <h2 id="phaseTitle">Phase</h2>
-            <div id="phaseSub" class="phase-sub muted">Phase description</div>
-          </div>
-
-          <div class="progress-wrap">
-            <div class="progress-text muted" id="progressText">0 / 0</div>
-            <div class="progress-track" aria-hidden="true">
-              <div id="progressFill" class="progress-fill"></div>
-            </div>
-          </div>
-        </div>
-
-        <div id="questionContainer" class="question-container"></div>
-
-        <div class="nav-row">
-          <button id="prev-btn" class="secondary-btn" aria-label="Previous">Back</button>
-          <button id="pause-btn" class="secondary-btn" aria-label="Pause">Pause</button>
-          <button id="next-btn" class="primary-btn" aria-label="Next">Next</button>
-        </div>
-
-        <div id="reflectionBox" class="reflection-box muted" style="display:none;">
-          <label>Reflection note (optional)</label>
-          <textarea id="reflectionNote" placeholder="Short thought..."></textarea>
+      <section id="test-section" class="hidden fade-in">
+        <div id="phase-display">
+          <h2 id="phase-title"></h2>
+          <p id="phase-prompt"></p>
+          <textarea id="response" placeholder="Type your reflection here..."></textarea>
+          <button id="nextBtn" class="btn">Continue</button>
         </div>
       </section>
 
-      <section id="resultContainer" class="card hide">
-        <h2>Your MCIF Report</h2>
-        <div id="resultsBody" class="results-body muted"></div>
-        <div class="result-actions">
-          <button id="exportJsonBtn" class="secondary-btn">Export JSON</button>
-          <button id="exportTxtBtn" class="secondary-btn">Export TXT</button>
-          <button id="restart-btn" class="primary-btn">Restart</button>
-        </div>
+      <section id="results-section" class="hidden fade-in">
+        <h2>Your Results</h2>
+        <div id="score-summary"></div>
+        <div id="archetype-summary"></div>
+        <div id="career-summary"></div>
+        <button id="downloadBtn" class="btn">Download PDF Summary</button>
+        <button id="restartBtn" class="btn secondary">Retake Test</button>
       </section>
     </main>
 
-    <footer>MCIF v5 — Open for research & education • No medical claims</footer>
+    <footer class="fade-in">
+      <p>© 2025 Mind Core Cognitive Systems | MCIF v5.0</p>
+    </footer>
   </div>
 
-  <!-- Hidden aliases for legacy compatibility -->
-  <div style="position:fixed;left:-9999px;opacity:0" aria-hidden="true">
-    <button id="beginButton"></button>
-    <button id="begin-button"></button>
-    <button id="acknowledgeBtn"></button>
-    <div id="appContainer"></div>
-  </div>
-
-  <script src="app.js" defer></script>
+  <script src="app.js"></script>
 </body>
 </html>
