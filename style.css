@@ -1,77 +1,89 @@
-/* style.css - MCIF v5 Lucid Flow (polished, responsive) */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Meta-Cognition Test — A lucid AI-powered self-assessment experience measuring depth, synthesis, and reflection across mental layers." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Meta-Cognition Test | Omnisphere AI</title>
 
-/* fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="style.css" />
 
-:root{
-  --bg-1: #071021;
-  --bg-2: #0f1630;
-  --accent1: #6ee7d6;
-  --accent2: #7a6bff;
-  --muted: rgba(255,255,255,0.72);
-  --glass: rgba(255,255,255,0.03);
-  --card-shadow: rgba(10,10,30,0.6);
-  --max-width: 980px;
-}
+  <!-- Fallback Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
 
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#fff;background:linear-gradient(160deg,var(--bg-1),var(--bg-2));-webkit-font-smoothing:antialiased}
-.app-shell{min-height:100vh;display:flex;flex-direction:column}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(6px)}
-.brand{display:flex;gap:12px;align-items:center}
-.logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 8px 30px rgba(122,107,255,0.12)}
-.title{font-weight:700}
-.subtitle{font-size:12px;color:var(--muted)}
+  <!-- Manifest for GitHub Pages -->
+  <link rel="manifest" href="manifest.json" />
 
-.top-controls{display:flex;gap:10px;align-items:center}
-.freq-label{font-size:13px;color:var(--muted);margin-right:6px}
-select{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff}
+  <!-- Prevent Flash of Unstyled Content -->
+  <style>
+    html { visibility: hidden; opacity: 0; }
+  </style>
+</head>
 
-/* Main layout */
-main{display:flex;gap:20px;padding:28px;align-items:flex-start;justify-content:center;max-width:calc(var(--max-width));margin:0 auto;width:100%}
-.card{background:var(--glass);border-radius:14px;padding:22px;box-shadow:0 10px 40px var(--card-shadow);backdrop-filter:blur(8px);max-width:700px;width:100%}
-.show{display:block}
-.hide{display:none}
+<body>
+  <noscript>
+    <div class="noscript-warning">
+      ⚠️ JavaScript is required to run the Meta-Cognition Test. Please enable it in your browser.
+    </div>
+  </noscript>
 
-/* Intro */
-.lead{color:var(--muted);margin-top:8px}
-.tier-row{margin-top:12px;display:flex;gap:12px;align-items:center}
-.controls-row{margin-top:18px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.primary-btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:0;padding:12px 18px;border-radius:10px;color:#022;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(122,107,255,0.12)}
-.secondary-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:var(--muted);cursor:pointer}
+  <div id="app-root">
+    <!-- LOADER PHASE -->
+    <div id="loader" class="active">
+      <div class="spinner"></div>
+      <p>Initializing Meta-Cognition Test Environment...</p>
+    </div>
 
-/* Test area */
-.phase-header{display:flex;justify-content:space-between;align-items:center}
-.phase-title{font-size:1.15rem;margin:0}
-.phase-sub{font-size:13px;color:var(--muted)}
-.progress-wrap{display:flex;align-items:center;gap:12px}
-.progress-text{font-size:13px}
-.progress-track{height:8px;background:rgba(255,255,255,0.04);border-radius:8px;overflow:hidden;width:220px}
-.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent2),var(--accent1));transition:width .5s ease}
+    <!-- LANDING PHASE -->
+    <section id="landing" class="hidden">
+      <header>
+        <h1 class="logo">🧠 Meta-Cognition Test</h1>
+        <p class="subtitle">A Cognitive Depth Analysis by <strong>Omnisphere AI</strong></p>
+      </header>
+      <button id="start-btn" class="primary-btn">Begin Test</button>
+    </section>
 
-/* question container */
-.question-container{margin-top:18px;min-height:160px}
-.q-block{padding:14px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)}
-.q-text{font-weight:600;margin-bottom:10px}
-.option{display:block;padding:10px;margin:8px 0;border-radius:8px;border:1px solid rgba(255,255,255,0.04);cursor:pointer;background:transparent}
-.option.selected{background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#022;border:none;box-shadow:0 8px 20px rgba(122,107,255,0.12)}
+    <!-- TEST INTERFACE -->
+    <main id="test-area" class="hidden">
+      <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+      </div>
 
-/* slider */
-.range-row{display:flex;flex-direction:column;gap:8px;align-items:center}
-input[type=range]{width:100%;-webkit-appearance:none;height:8px;border-radius:8px;background:linear-gradient(90deg,#3b82f6,#9333ea)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid #3b82f6;box-shadow:0 0 8px rgba(59,130,246,0.7)}
+      <div id="question-container">
+        <h2 id="question-text"></h2>
+        <div id="answer-options"></div>
+      </div>
 
-/* nav */
-.nav-row{display:flex;gap:12px;justify-content:flex-end;margin-top:16px}
-.reflection-box{margin-top:12px}
-.reflection-box textarea{width:100%;min-height:64px;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);color:#fff}
+      <footer id="nav-controls">
+        <button id="prev-btn" class="nav-btn">◀ Back</button>
+        <button id="next-btn" class="nav-btn">Next ▶</button>
+      </footer>
+    </main>
 
-/* results */
-.results-body{margin-top:12px;color:var(--muted)}
-.result-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:16px}
+    <!-- RESULTS PHASE -->
+    <section id="results" class="hidden">
+      <h2>Your Cognitive Reflection Summary</h2>
+      <div id="results-content"></div>
+      <button id="restart-btn" class="primary-btn">Restart Test</button>
+    </section>
+  </div>
 
-/* footer */
-footer{text-align:center;padding:18px;color:var(--muted);font-size:13px;}
+  <!-- Background Flow Layer -->
+  <canvas id="flow-field"></canvas>
 
-/* responsive */
-@media (max-width:880px){main{flex-direction:column;padding:18px}.top-controls{flex-wrap:wrap}}
+  <!-- Script Load Order -->
+  <script defer src="app.js"></script>
+
+  <!-- Initialize After DOM Load -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.documentElement.style.visibility = "visible";
+      document.documentElement.style.opacity = "1";
+    });
+  </script>
+</body>
+</html>
