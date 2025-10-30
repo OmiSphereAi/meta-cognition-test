@@ -1,79 +1,172 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <!-- META CORE -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Meta Cognition Interactive Framework (MCIF) Test Interface – Built for high-precision cognitive synthesis, adaptive learning, and seamless schema flow.">
-  <meta name="theme-color" content="#0d0d0d">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  <title>Meta-Cognition Test | OmnisphereAI</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>MCIF v5 — Mind Core (Lucid Flow)</title>
 
-  <!-- FAVICON -->
-  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <!-- Primary stylesheet -->
+  <link rel="stylesheet" href="style.css" />
 
-  <!-- FONTS & STYLE -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- MAIN STYLESHEET -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- STRUCTURAL SAFEGUARD -->
-  <script>
-    // Prevent phase errors during initial load
-    window.addEventListener('error', e => {
-      console.error('Runtime Error Captured:', e.message);
-      const errDisplay = document.getElementById('error-display');
-      if (errDisplay) errDisplay.textContent = `⚠️ ${e.message}`;
-    });
-  </script>
+  <!-- Minimal inline safety for fonts & immediate paint -->
+  <style>
+    html,body{height:100%;margin:0;-webkit-font-smoothing:antialiased;}
+    /* reduce FOIT while external loads */
+    .no-flash { opacity: 0; transform: translateY(4px); transition: opacity .55s ease, transform .55s ease; }
+    .ready { opacity: 1; transform: translateY(0); }
+  </style>
 </head>
+<body class="no-flash" aria-live="polite">
 
-<body>
-  <div id="app-root">
+  <div id="app-shell" class="app-shell" role="application" aria-label="Meta-Cognition Framework">
     <!-- HEADER -->
-    <header class="app-header">
-      <h1 class="logo">🧠 Meta-Cognition Test</h1>
-      <p class="subtitle">by OmnisphereAI | v6 Neural Mentor Standard</p>
+    <header class="topbar" role="banner" aria-hidden="false">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" aria-hidden="true" aria-label="MCIF logo"></div>
+        <div>
+          <div class="title">MCIF v5 — Mind Core</div>
+          <div class="subtitle">Meta-Cognitive Intelligence Framework</div>
+        </div>
+      </div>
+
+      <div class="top-actions" role="toolbar" aria-label="session actions">
+        <label for="frequency-selector" class="freq-label">Frequency</label>
+        <select id="frequency-selector" aria-label="Ambient frequency selector" title="Ambient Frequency">
+          <option value="">Off</option>
+          <option value="432">432 Hz</option>
+          <option value="528">528 Hz</option>
+          <option value="852">852 Hz</option>
+          <option value="963">963 Hz</option>
+        </select>
+
+        <button id="saveButton" title="Save session" class="secondary-btn" aria-label="Save session">Save</button>
+        <button id="restoreButton" title="Restore session" class="secondary-btn" aria-label="Restore session">Restore</button>
+      </div>
     </header>
 
-    <!-- MAIN TEST AREA -->
-    <main id="test-container" class="flow-container">
-      <!-- Dynamic MCIF schema injection -->
-      <section id="intro-phase" class="phase visible">
-        <h2>Welcome to the Meta-Cognition Test</h2>
-        <p>This interactive system evaluates synthesis, focus, and cognitive coherence through adaptive schema layers.</p>
-        <button id="begin-test" class="cta-button">Begin Assessment</button>
-      </section>
+    <!-- MAIN -->
+    <main class="main" role="main">
+      <div class="container">
 
-      <!-- Dynamic phase zones -->
-      <section id="question-phase" class="phase hidden">
-        <div id="question-display"></div>
-        <div id="response-options"></div>
-      </section>
+        <!-- INTRO / LANDING -->
+        <section id="introScreen" class="card intro-hero" role="region" aria-labelledby="introHead">
+          <h1 id="introHead">Welcome — MCIF v5 “Mind Core”</h1>
+          <p class="lead">This assessment maps <strong>how you think</strong> — perception, reasoning, creativity, emotion, and reflection. It's a mirror, not a diagnosis. Take a breath and when ready, begin.</p>
 
-      <!-- Results & Feedback -->
-      <section id="results-phase" class="phase hidden">
-        <h2>Test Complete</h2>
-        <div id="results-summary"></div>
-        <button id="restart-test" class="cta-button secondary">Restart</button>
-      </section>
+          <div class="controls-row">
+            <div class="tier-select">
+              <label for="tierSelect" class="small-label">Choose tier</label>
+              <select id="tierSelect" aria-label="Choose difficulty tier">
+                <option value="Explorer">Explorer — 15–25 min</option>
+                <option value="Architect">Architect — 30–45 min</option>
+                <option value="Visionary">Visionary — 60–90 min</option>
+              </select>
+            </div>
 
-      <!-- Error feedback -->
-      <div id="error-display" class="error-zone"></div>
+            <!-- canonical begin IDs for maximum compatibility -->
+            <button id="startBtn" class="lucid-btn" aria-label="Begin test">Begin</button>
+            <button id="begin-btn" class="lucid-btn hidden" aria-hidden="true">Begin (alias)</button>
+            <button id="beginButton" class="lucid-btn hidden" aria-hidden="true">Begin (legacy)</button>
+
+            <button id="tutorialButton" class="secondary-btn" aria-label="Open tutorial">Tutorial</button>
+            <button id="demoButton" class="secondary-btn" aria-label="2-question demo">Demo</button>
+          </div>
+
+          <p class="muted small">You can pause at any time. If you feel distressed, the test shows safety resources.</p>
+        </section>
+
+        <!-- TEST AREA (rendered by app.js) -->
+        <section id="test-section" class="card hidden" role="region" aria-live="polite">
+          <div class="phase-header" role="group" aria-label="phase header">
+            <div>
+              <h2 id="phase-title" class="phase-title">Phase</h2>
+              <div id="phaseSub" class="phase-description">Phase description</div>
+            </div>
+
+            <div class="meta-controls">
+              <div class="progress-wrap" aria-hidden="false">
+                <div class="progress-label small muted">Progress</div>
+                <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                  <div id="progressFill" class="progress-fill" style="width:0%"></div>
+                </div>
+              </div>
+
+              <div class="nav-quick">
+                <button id="pause-btn" class="secondary-btn" aria-label="Pause">Pause</button>
+                <button id="restart-btn" class="secondary-btn" aria-label="Restart">Restart</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="questionContainer" class="question-container" role="form" aria-describedby="phaseSub"></div>
+
+          <div class="nav-row">
+            <button id="prev-btn" class="secondary-btn" aria-label="Previous">Back</button>
+            <button id="next-btn" class="lucid-btn" aria-label="Next">Next</button>
+          </div>
+
+          <div class="flow-meter" aria-hidden="true">
+            <div id="flowFill" class="flow-fill" style="width:0%"></div>
+          </div>
+        </section>
+
+        <!-- RESULTS -->
+        <section id="results-section" class="card hidden" role="region" aria-live="polite" aria-labelledby="resultsTitle">
+          <h2 id="resultsTitle">Your MCIF Report</h2>
+          <div id="resultsBody" class="results-body"></div>
+
+          <div class="result-actions">
+            <button id="exportJsonBtn" class="secondary-btn" aria-label="Export results JSON">Export JSON</button>
+            <button id="exportTxtBtn" class="secondary-btn" aria-label="Export results TXT">Export TXT</button>
+            <button id="openMentorBtn" class="lucid-btn" aria-label="Open Mentor Mode">Open Mentor</button>
+          </div>
+        </section>
+
+      </div> <!-- container -->
     </main>
 
-    <!-- FOOTER -->
-    <footer class="app-footer">
-      <p>© 2025 OmnisphereAI | MCIF Neural Mentor Protocol v6</p>
-      <small>Adaptive Flow Engine | Schema Sync: Active</small>
+    <footer class="footer" role="contentinfo">
+      <div>MCIF v5 — Open for research & education • No medical claims</div>
     </footer>
   </div>
 
-  <!-- APP.JS CORE LOGIC -->
-  <script type="module" src="app.js" defer></script>
+  <!-- Hidden alias elements for backwards compatibility (app.js also forwards events) -->
+  <div class="aliases" aria-hidden="true">
+    <button id="beginButtonLegacy"></button>
+    <button id="acknowledgeBtn"></button>
+    <button id="ackPause"></button>
+
+    <button id="pauseBtn"></button>
+    <button id="pause-button"></button>
+
+    <div id="app"></div>
+    <div id="appContainer"></div>
+    <div id="testContainer"></div>
+    <div id="intro-screen"></div>
+    <div id="question-container"></div>
+    <div id="questionContainerAlt"></div>
+    <div id="result-container"></div>
+    <div id="resultContainerAlt"></div>
+
+    <select id="frequencySelector"><option>432</option></select>
+    <select id="frequency-selector-legacy"><option>432</option></select>
+
+    <button id="save_btn"></button>
+    <button id="restore_btn"></button>
+    <button id="exportJson"></button>
+    <button id="restart"></button>
+  </div>
+
+  <!-- Defensive small script: ensures body visible class toggled after CSS loads -->
+  <script>
+    // Make body visible once CSS has a chance to paint
+    window.addEventListener('load', () => {
+      document.body.classList.remove('no-flash');
+      document.body.classList.add('ready');
+    });
+  </script>
+
+  <!-- Main app script (defer recommended in app.js but kept normal for GitHub Pages compatibility) -->
+  <script src="app.js" defer></script>
 </body>
 </html>
