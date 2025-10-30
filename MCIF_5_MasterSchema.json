@@ -10,15 +10,23 @@
     "total_score": 700
   },
 
+ {
   "phases": [
     {
-      "id": "phase1",
-      "title": "Perceptual Awareness",
-      "description": "Measures sensory precision, emotional linkage, and perceptual originality.",
-      "objectives": [
-        "Observe an object as if for the first time.",
-        "Describe what you perceive without labeling.",
-        "Identify how perception links to emotion."
+      "id": 0,
+      "title": "Phase 1: Initialization",
+      "description": "Establishing baseline synchronization between cognitive and emotional centers.",
+      "questions": [
+        {
+          "id": 0,
+          "prompt": "Take a deep breath and center your attention. Do you feel ready to begin the cognitive synchronization sequence?",
+          "type": "choice",
+          "options": ["Yes, begin", "Not yet"],
+          "next": 1
+        }
+      ]
+    },
+
       ],
       "prompts": [
         {
@@ -396,3 +404,4 @@
     }
   }
 }
+
