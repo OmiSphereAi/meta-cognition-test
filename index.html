@@ -1,100 +1,316 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCIF Cognitive Flow Test</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>MCIF v5 — Mind Core (Lucid Flow)</title>
 
+  <!-- Link your style.css (keeps visuals separate) -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-
+  <!-- Inline minimal style fallback for safety (keeps iOS layout stable) -->
   <style>
-    /* Quick sanity fallback in case style.css doesn’t load */
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(ellipse at top left, #0e0f1a, #1b1c27);
-      color: #f0f0f0;
-      overflow-x: hidden;
+    :root {
+      --bg1: #071021;
+      --bg2: #0f1630;
+      --accent1: #6ee7d6;
+      --accent2: #7a6bff;
+      --muted: rgba(255,255,255,0.72);
+      --glass: rgba(255,255,255,0.04);
     }
-    .lucid-btn {
-      padding: 12px 28px;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #4a80f0, #6ef1c9);
-      color: #fff;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(78, 255, 219, 0.2);
-    }
-    .lucid-btn:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 25px rgba(78, 255, 219, 0.4);
-    }
-    #frequency-selector {
-      margin: 10px;
-      padding: 6px;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      font-weight: 500;
-    }
-    .fade-in {
-      animation: fadeIn 0.6s ease forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{background:linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 100%);color:#fff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    .app-shell{min-height:100vh;display:flex;flex-direction:column;}
+    header.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(6px)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 8px 30px rgba(122,107,255,0.12)}
+    .brand .title{font-weight:700;font-size:1rem}
+    main{flex:1;display:flex;gap:24px;padding:24px;align-items:flex-start;justify-content:center}
+    .left-col{width:100%;max-width:880px}
+    .card{background:var(--glass);border-radius:14px;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,0.45);backdrop-filter:blur(8px)}
+    .intro-hero{padding:36px;text-align:center}
+    h1{margin:0 0 12px;font-size:1.6rem}
+    p.lead{color:var(--muted);margin:0 0 18px}
+    .controls-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+    .lucid-btn{appearance:none;border:0;padding:12px 20px;border-radius:10px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#022; font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(122,107,255,0.12)}
+    .secondary-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:10px 14px;border-radius:10px;cursor:pointer}
+    select,input,textarea{font-size:1rem;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff;padding:10px}
+    #test-area{display:none;margin-top:18px}
+    .question-card{margin-bottom:18px}
+    .progress-wrap{display:flex;align-items:center;gap:12px}
+    .progress-track{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden}
+    .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent2),var(--accent1));transition:width 500ms ease}
+    .flow-meter{height:6px;background:rgba(255,255,255,0.04);border-radius:4px;margin-top:8px;overflow:hidden}
+    .flow-fill{height:100%;width:0%;background:linear-gradient(90deg,#ffd57a,#ff86b0);transition:width 600ms ease}
+    /* Responsive */
+    @media (max-width:720px){main{padding:18px;flex-direction:column} .left-col{max-width:100%}}
+    /* Hidden aliases: keep them present to allow legacy app.js to attach listeners */
+    .aliases{position:fixed;left:-9999px;top:auto;height:1px;width:1px;overflow:hidden;opacity:0}
   </style>
 </head>
-
 <body>
-  <div id="app">
-    <!-- Lucid Flow Background Layer -->
-    <div class="lucid-background"></div>
+  <div class="app-shell">
 
-    <!-- Control Bar -->
-    <header id="control-bar">
-      <div class="title">MCIF Cognitive Flow Test</div>
-      <div class="controls">
-        <label for="frequency-selector">Frequency:</label>
-        <select id="frequency-selector">
+    <!-- TOP BAR -->
+    <header class="topbar" role="banner">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">MCIF v5 — Mind Core</div>
+          <div style="font-size:12px;color:var(--muted)">Meta-Cognitive Intelligence Framework</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center">
+        <label for="frequency-selector" style="font-size:13px;color:var(--muted)">Frequency</label>
+        <select id="frequency-selector" aria-label="Frequency" title="Ambient Frequency">
           <option value="432">432 Hz</option>
           <option value="528">528 Hz</option>
           <option value="852">852 Hz</option>
           <option value="963">963 Hz</option>
         </select>
+
+        <button id="saveButton" class="secondary-btn" title="Save session">Save</button>
+        <button id="restoreButton" class="secondary-btn" title="Restore session">Restore</button>
       </div>
     </header>
 
-    <!-- Start Screen -->
-    <section id="intro-screen" class="fade-in">
-      <div class="intro-content">
-        <h1>Welcome to the MCIF Cognitive Flow Test</h1>
-        <p>
-          This interactive experience is designed to map your unique cognitive signature —
-          your strengths, synthesis patterns, and growth edges. Each phase reveals another layer
-          of how your mind integrates logic, emotion, intuition, and structure.
-        </p>
-        <button id="begin-btn" class="lucid-btn">Begin</button>
-      </div>
-    </section>
+    <!-- MAIN -->
+    <main>
+      <div class="left-col">
 
-    <!-- Dynamic Content Area -->
-    <main id="test-area"></main>
+        <!-- INTRO CARD -->
+        <section class="card intro-hero" id="introScreen" aria-labelledby="introHead" role="region">
+          <h1 id="introHead">Welcome — MCIF v5 “Mind Core”</h1>
+          <p class="lead">This test maps <strong>how</strong> you think — perception, reasoning, emotion, creativity, and reflection. It's a mirror not a diagnosis. Find a quiet spot, breathe deeply, and when you're ready — begin.</p>
 
-    <!-- Progress + Flow UI -->
-    <div class="progress-meter"></div>
-    <div class="flow-meter"></div>
+          <div style="display:flex;gap:12px;justify-content:center;align-items:center;margin-top:8px">
+            <div>
+              <label style="display:block;font-size:13px;color:var(--muted);margin-bottom:6px">Choose tier</label>
+              <select id="tierSelect" aria-label="Choose tier">
+                <option value="Explorer">Explorer — 15–25 min</option>
+                <option value="Architect">Architect — 30–45 min</option>
+                <option value="Visionary">Visionary — 60–90 min</option>
+              </select>
+            </div>
+          </div>
 
-    <audio id="audio-player"></audio>
+          <div class="controls-row" style="margin-top:20px">
+            <!-- Visible canonical Begin button -->
+            <button id="begin-btn" class="lucid-btn" aria-label="Begin test">Begin</button>
+
+            <!-- Other visible helpful actions -->
+            <button id="tutorialButton" class="secondary-btn" aria-label="Open tutorial">Tutorial</button>
+            <button id="demoButton" class="secondary-btn" aria-label="Demo">2-question Demo</button>
+          </div>
+
+          <p style="font-size:12px;color:var(--muted);margin-top:16px">You can pause anytime. If you feel distressed, the test will present safety resources.</p>
+        </section>
+
+        <!-- TEST AREA (populated by app.js) -->
+        <section id="test-area" class="card" aria-live="polite">
+          <div id="phaseHeader" style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <h2 id="phaseTitle" style="margin:0;font-size:1.1rem">Phase</h2>
+              <div id="phaseSub" style="font-size:12px;color:var(--muted)">Phase description</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+              <div class="progress-wrap" style="width:260px">
+                <div style="font-size:12px;color:var(--muted)">Progress</div>
+                <div class="progress-track" style="width:100%;height:10px;background:rgba(255,255,255,0.04);border-radius:8px">
+                  <div id="progressFill" class="progress-fill" style="width:0%"></div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <button id="pause-btn" class="secondary-btn" aria-label="Pause">Pause</button>
+                <button id="restart-btn" class="secondary-btn" aria-label="Restart">Restart</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="questionContainer" style="margin-top:18px"></div>
+
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
+            <button id="prev-btn" class="secondary-btn" aria-label="Previous">Back</button>
+            <button id="next-btn" class="lucid-btn" aria-label="Next">Next</button>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="flow-meter" aria-hidden="true"><div id="flowFill" class="flow-fill" style="width:0%"></div></div>
+          </div>
+        </section>
+
+        <!-- RESULTS container -->
+        <section id="resultContainer" class="card" style="display:none;margin-top:18px">
+          <h2 id="resultsTitle">Your MCIF Report</h2>
+          <div id="resultsBody" style="margin-top:12px;color:var(--muted)"></div>
+          <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
+            <button id="exportJsonBtn" class="secondary-btn">Export JSON</button>
+            <button id="exportTxtBtn" class="secondary-btn">Export TXT</button>
+          </div>
+        </section>
+
+      </div> <!-- left-col -->
+
+      <!-- RIGHT column — reflection, quick controls -->
+      <aside style="width:320px;display:flex;flex-direction:column;gap:16px">
+        <div class="card" role="complementary" aria-labelledby="reflectionTitle">
+          <h3 id="reflectionTitle" style="margin:0 0 8px 0">Reflection</h3>
+          <div id="reflectionContent" style="color:var(--muted);font-size:14px">Short reflective tips and interim insights will appear here while you progress.</div>
+        </div>
+
+        <div class="card" aria-label="Quick controls">
+          <h4 style="margin:0 0 8px 0">Quick Controls</h4>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button id="saveBtn" class="secondary-btn">Save Session</button>
+            <button id="restoreBtn" class="secondary-btn">Restore Session</button>
+            <button id="openMentorBtn" class="lucid-btn">Open Mentor Mode</button>
+          </div>
+        </div>
+
+        <div class="card" aria-label="Frequency control (always visible)">
+          <h4 style="margin:0 0 8px 0">Ambient</h4>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select id="freqControl" aria-label="Ambient frequency">
+              <option value="432">432 Hz</option>
+              <option value="528">528 Hz</option>
+              <option value="852">852 Hz</option>
+              <option value="963">963 Hz</option>
+            </select>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button id="playAmbience" class="secondary-btn">Play</button>
+              <button id="stopAmbience" class="secondary-btn">Stop</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="padding:14px 20px;border-top:1px solid rgba(255,255,255,0.03);text-align:center;color:var(--muted);font-size:13px">MCIF v5 — Open for research & education • No medical claims</footer>
   </div>
 
-  <script src="app.js"></script>
+  <!-- Hidden alias elements — present so any app.js expecting legacy IDs attaches correctly.
+       These are intentionally off-screen but available to DOM queries (getElementById). -->
+  <div class="aliases" aria-hidden="true">
+    <!-- Begin aliases -->
+    <button id="beginButton"></button>
+    <button id="begin-button"></button>
+    <button id="beginButtonLegacy"></button>
+    <!-- Pause / control aliases -->
+    <button id="pauseBtn"></button>
+    <button id="pause-button"></button>
+    <button id="pauseBtnLegacy"></button>
+
+    <!-- Containers aliases -->
+    <div id="app"></div>
+    <div id="appContainer"></div>
+    <div id="testContainer"></div>
+    <div id="intro-screen"></div>
+    <div id="intro-screen-alt"></div>
+    <div id="question-container"></div>
+    <div id="questionContainerAlt"></div>
+    <div id="result-container"></div>
+    <div id="resultContainerAlt"></div>
+
+    <!-- Frequency aliases -->
+    <select id="frequencySelector"><option>432</option></select>
+    <select id="frequency-selector-legacy"><option>432</option></select>
+
+    <!-- Other legacy control ids -->
+    <button id="save_btn"></button>
+    <button id="restore_btn"></button>
+    <button id="exportJson"></button>
+    <button id="restart"></button>
+  </div>
+
+  <!-- Compatibility bridge: forward events from visible controls to all known aliases
+       This ensures older/newer app.js variants that attach listeners to legacy ids will receive events.
+       The bridge is intentionally small and safe. -->
+  <script>
+    (function(){
+      // map canonical -> alias IDs (array)
+      const mapping = {
+        begin: { canonical: 'begin-btn', aliases: ['beginButton','begin-button','beginButtonLegacy'] },
+        pause: { canonical: 'pause-btn', aliases: ['pauseBtn','pause-button','pauseBtnLegacy'] },
+        frequency: { canonical: 'frequency-selector', aliases: ['frequencySelector','frequency-selector-legacy','freqControl','frequencyControl'] },
+        playAmbience: { canonical: 'playAmbience', aliases: ['playAmbienceLegacy'] },
+        stopAmbience: { canonical: 'stopAmbience', aliases: ['stopAmbienceLegacy'] },
+        save: { canonical: 'saveBtn', aliases: ['save_btn','saveButton'] },
+        restore: { canonical: 'restoreBtn', aliases: ['restore_btn','restoreButton'] },
+        next: { canonical: 'next-btn', aliases: ['nextBtn','nextButton'] },
+        prev: { canonical: 'prev-btn', aliases: ['prevBtn','prevButton'] }
+      };
+
+      // When canonical is clicked/changed, dispatch same event to aliases
+      function forwardEvent(canonId, eventType, extraData) {
+        const canon = document.getElementById(canonId);
+        if (!canon) return;
+        canon.addEventListener(eventType, (ev) => {
+          const map = Object.values(mapping).find(m => m.canonical === canonId);
+          if (!map) return;
+          (map.aliases||[]).forEach(aid => {
+            const ali = document.getElementById(aid);
+            if (!ali) return;
+            // Create a simple event and dispatch
+            let evt;
+            try {
+              evt = new Event(eventType, {bubbles:true, cancelable:true});
+              ali.dispatchEvent(evt);
+            } catch(e) {
+              // fallback for older browsers
+              ali.click && ali.click();
+            }
+          });
+        });
+      }
+
+      // wire common controls
+      forwardEvent('begin-btn','click');
+      forwardEvent('pause-btn','click');
+      forwardEvent('next-btn','click');
+      forwardEvent('prev-btn','click');
+      forwardEvent('saveBtn','click');
+      forwardEvent('restoreBtn','click');
+
+      // frequency change forwarding (change event)
+      const freqCanon = document.getElementById('frequency-selector');
+      if (freqCanon) {
+        freqCanon.addEventListener('change', function(e){
+          const val = e.target.value;
+          ['frequencySelector','frequency-selector-legacy','freqControl','frequencyControl'].forEach(id=>{
+            const el = document.getElementById(id);
+            if (!el) return;
+            try {
+              el.value = val;
+              const ev = new Event('change',{bubbles:true,cancelable:true});
+              el.dispatchEvent(ev);
+            } catch(err){ /* ignore */ }
+          });
+        });
+      }
+
+      // Play / Stop ambience forwarding
+      const play = document.getElementById('playAmbience');
+      const stop = document.getElementById('stopAmbience');
+      if (play) forwardEvent('playAmbience','click');
+      if (stop) forwardEvent('stopAmbience','click');
+
+      // Also expose a small API so legacy scripts can find canonical elements easily
+      window.MCIF = window.MCIF || {};
+      window.MCIF.alias = function(name){
+        const map = mapping[name];
+        if (!map) return null;
+        return document.getElementById(map.canonical) || map.aliases.map(id=>document.getElementById(id)).find(Boolean) || null;
+      };
+    })();
+  </script>
+
+  <!-- Provide a very small ambient audio element (app.js may override / use WebAudio) -->
+  <audio id="ambient-audio" preload="auto"></audio>
+
+  <!-- Finally, load the app script (deferred loading via script tag ensures DOM exists) -->
+  <script src="app.js" defer></script>
 </body>
 </html>
