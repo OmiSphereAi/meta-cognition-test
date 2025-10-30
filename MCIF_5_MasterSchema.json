@@ -11,21 +11,27 @@
   },
 
  {
-  "phases": [
-    {
-      "id": 0,
-      "title": "Phase 1: Initialization",
-      "description": "Establishing baseline synchronization between cognitive and emotional centers.",
-      "questions": [
-        {
-          "id": 0,
-          "prompt": "Take a deep breath and center your attention. Do you feel ready to begin the cognitive synchronization sequence?",
-          "type": "choice",
-          "options": ["Yes, begin", "Not yet"],
-          "next": 1
-        }
-      ]
-    },
+"phases": [
+  {
+    "id": "phase_1",
+    "name": "Perception",
+    "description": "Assessing your ability to identify, differentiate, and synthesize sensory or conceptual patterns.",
+    "questions": [
+      {
+        "id": "p1_q1",
+        "type": "choice",
+        "prompt": "When you see a series of changing colors, what stands out to you first?",
+        "options": ["Brightness", "Contrast", "Shape", "Movement"]
+      },
+      {
+        "id": "p1_q2",
+        "type": "input",
+        "prompt": "Describe how you process new information visually."
+      }
+    ]
+  }
+]
+
 
       ],
       "prompts": [
@@ -404,4 +410,5 @@
     }
   }
 }
+
 
