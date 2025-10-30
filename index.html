@@ -1,64 +1,292 @@
-const startBtn = document.getElementById("startBtn");
-const nextBtn = document.getElementById("nextBtn");
-const resetBtn = document.getElementById("resetBtn");
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>MCIF v5 — Mind Core (Lucid Flow)</title>
 
-const phaseTitle = document.getElementById("phase-title");
-const phaseDesc = document.getElementById("phase-description");
+  <!-- link external polished CSS -->
+  <link rel="stylesheet" href="style.css" />
 
-let phase = 1;
-const phases = [
-  {
-    title: "Phase 1: Initialization",
-    desc: "Establishing baseline synchronization between cognitive and emotional centers.",
-  },
-  {
-    title: "Phase 2: Resonance",
-    desc: "Calibrating frequency alignment and internal coherence.",
-  },
-  {
-    title: "Phase 3: Reflection",
-    desc: "Engaging pattern recall through neural resonance and memory pairing.",
-  },
-  {
-    title: "Phase 4: Synthesis",
-    desc: "Integrating insight, intention, and reflection into unified focus.",
-  },
-  {
-    title: "Phase 5: Activation",
-    desc: "Flow sequence complete. Transitioning to higher cognitive stability.",
-  },
-];
+  <!-- Inline fallback and transitions to guarantee smooth entry before external CSS loads -->
+  <style>
+    :root {
+      --bg-a: #071021;
+      --bg-b: #0f1630;
+      --accent-a: #6ee7d6;
+      --accent-b: #7a6bff;
+      --muted: rgba(255,255,255,0.72);
+      --glass: rgba(255,255,255,0.04);
+      --card-glow: rgba(122,107,255,0.12);
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{background:linear-gradient(160deg,var(--bg-a) 0%,var(--bg-b) 100%);color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    .app-shell{min-height:100vh;display:flex;flex-direction:column;}
+    header.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(6px)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent-a),var(--accent-b));box-shadow:0 8px 30px var(--card-glow)}
+    .brand .title{font-weight:700;font-size:1rem}
+    main{flex:1;display:flex;gap:24px;padding:24px;align-items:flex-start;justify-content:center}
+    .left-col{width:100%;max-width:880px}
+    .card{background:var(--glass);border-radius:14px;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,0.45);backdrop-filter:blur(8px)}
+    .intro-hero{padding:36px;text-align:center}
+    h1{margin:0 0 12px;font-size:1.6rem}
+    p.lead{color:var(--muted);margin:0 0 18px}
+    .controls-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+    .lucid-btn{appearance:none;border:0;padding:12px 20px;border-radius:10px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#022; font-weight:700;cursor:pointer;box-shadow:0 8px 24px var(--card-glow);transition:transform .28s cubic-bezier(.2,.9,.2,1),box-shadow .28s}
+    .secondary-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:10px 14px;border-radius:10px;cursor:pointer}
+    select,input,textarea{font-size:1rem;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff;padding:10px}
+    #test-area{display:none;margin-top:18px;opacity:0;transform:translateY(12px)}
+    .question-card{margin-bottom:18px}
+    .progress-wrap{display:flex;align-items:center;gap:12px}
+    .progress-track{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden}
+    .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent-b),var(--accent-a));transition:width .5s ease}
+    .flow-meter{height:6px;background:rgba(255,255,255,0.04);border-radius:4px;margin-top:8px;overflow:hidden}
+    .flow-fill{height:100%;width:0%;background:linear-gradient(90deg,#ffd57a,#ff86b0);transition:width .6s ease}
+    footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,0.03);text-align:center;color:var(--muted);font-size:13px}
+    /* Smooth show/hide helpers */
+    .show { display:block !important; animation: fadeInSlide .42s cubic-bezier(.2,.9,.2,1) forwards; }
+    .hide { animation: fadeOutSlide .28s ease forwards; }
+    @keyframes fadeInSlide { from { opacity:0; transform:translateY(12px);} to { opacity:1; transform:translateY(0);} }
+    @keyframes fadeOutSlide { from { opacity:1; transform:translateY(0);} to { opacity:0; transform:translateY(8px);} }
+    /* responsive */
+    @media (max-width:720px){main{padding:18px;flex-direction:column} .left-col{max-width:100%}}
+    /* Aliases container off-screen */
+    .aliases{position:fixed;left:-9999px;top:auto;height:1px;width:1px;overflow:hidden;opacity:0}
+  </style>
+</head>
+<body>
+  <div class="app-shell">
 
-startBtn.addEventListener("click", () => {
-  startBtn.classList.add("hidden");
-  nextBtn.classList.remove("hidden");
-  updatePhase();
-});
+    <!-- TOP BAR -->
+    <header class="topbar" role="banner">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">MCIF v5 — Mind Core</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.72)">Meta-Cognitive Intelligence Framework</div>
+        </div>
+      </div>
 
-nextBtn.addEventListener("click", () => {
-  if (phase < phases.length) {
-    phase++;
-    updatePhase();
-  } else {
-    nextBtn.classList.add("hidden");
-    resetBtn.classList.remove("hidden");
-    phaseTitle.textContent = "System Complete";
-    phaseDesc.textContent =
-      "You have reached full cognitive synchronization. Press Reset to restart.";
-  }
-});
+      <div style="display:flex;gap:10px;align-items:center">
+        <label for="frequency-selector" style="font-size:13px;color:rgba(255,255,255,0.72)">Frequency</label>
+        <select id="frequency-selector" aria-label="Frequency" title="Ambient Frequency">
+          <option value="432">432 Hz</option>
+          <option value="528">528 Hz</option>
+          <option value="852">852 Hz</option>
+          <option value="963">963 Hz</option>
+        </select>
 
-resetBtn.addEventListener("click", () => {
-  phase = 1;
-  resetBtn.classList.add("hidden");
-  startBtn.classList.remove("hidden");
-  phaseTitle.textContent = "Phase 1: Initialization";
-  phaseDesc.textContent =
-    "Tap below to begin the cognitive alignment sequence.";
-});
+        <button id="saveButton" class="secondary-btn" title="Save session">Save</button>
+        <button id="restoreButton" class="secondary-btn" title="Restore session">Restore</button>
+      </div>
+    </header>
 
-function updatePhase() {
-  const current = phases[phase - 1];
-  phaseTitle.textContent = current.title;
-  phaseDesc.textContent = current.desc;
-}
+    <!-- MAIN -->
+    <main>
+      <div class="left-col">
+
+        <!-- INTRO CARD -->
+        <section id="introScreen" class="card intro-hero show" aria-labelledby="introHead" role="region">
+          <h1 id="introHead">Welcome — MCIF v5 “Mind Core”</h1>
+          <p class="lead">This assessment maps <strong>how you think</strong> — your perception, reasoning, creativity, emotion and reflection. It's a mirror, not a diagnosis. Take a breath and when ready, begin.</p>
+
+          <div style="display:flex;gap:12px;justify-content:center;align-items:center;margin-top:8px">
+            <div>
+              <label style="display:block;font-size:13px;color:rgba(255,255,255,0.72);margin-bottom:6px">Choose tier</label>
+              <select id="tierSelect" aria-label="Choose tier">
+                <option value="Explorer">Explorer — 15–25 min</option>
+                <option value="Architect">Architect — 30–45 min</option>
+                <option value="Visionary">Visionary — 60–90 min</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="controls-row" style="margin-top:20px">
+            <!-- Canonical visible Begin -->
+            <button id="begin-btn" class="lucid-btn" aria-label="Begin test">Begin</button>
+
+            <!-- Visible helpful actions -->
+            <button id="tutorialButton" class="secondary-btn" aria-label="Open tutorial">Tutorial</button>
+            <button id="demoButton" class="secondary-btn" aria-label="2-question demo">Demo</button>
+          </div>
+
+          <p style="font-size:12px;color:rgba(255,255,255,0.72);margin-top:16px">You can pause at any time. If you feel distressed, the test shows safety resources.</p>
+        </section>
+
+        <!-- TEST AREA (populated by app.js) -->
+        <section id="test-area" class="card" aria-live="polite" style="display:none">
+          <div id="phaseHeader" style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <h2 id="phaseTitle" class="phase-title" style="margin:0;font-size:1.1rem">Phase</h2>
+              <div id="phaseSub" class="phase-description" style="font-size:12px;color:rgba(255,255,255,0.72)">Phase description</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+              <div class="progress-wrap" style="width:260px">
+                <div style="font-size:12px;color:rgba(255,255,255,0.72)">Progress</div>
+                <div class="progress-track" style="width:100%;height:10px;background:rgba(255,255,255,0.04);border-radius:8px">
+                  <div id="progressFill" class="progress-fill" style="width:0%"></div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <button id="pause-btn" class="secondary-btn" aria-label="Pause">Pause</button>
+                <button id="restart-btn" class="secondary-btn" aria-label="Restart">Restart</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="questionContainer" style="margin-top:18px"></div>
+
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
+            <button id="prev-btn" class="secondary-btn" aria-label="Previous">Back</button>
+            <button id="next-btn" class="lucid-btn" aria-label="Next">Next</button>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="flow-meter" aria-hidden="true"><div id="flowFill" class="flow-fill" style="width:0%"></div></div>
+          </div>
+        </section>
+
+        <!-- RESULTS container -->
+        <section id="resultContainer" class="card" style="display:none;margin-top:18px">
+          <h2 id="resultsTitle">Your MCIF Report</h2>
+          <div id="resultsBody" style="margin-top:12px;color:rgba(255,255,255,0.72)"></div>
+          <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
+            <button id="exportJsonBtn" class="secondary-btn">Export JSON</button>
+            <button id="exportTxtBtn" class="secondary-btn">Export TXT</button>
+          </div>
+        </section>
+
+      </div> <!-- left-col -->
+
+      <!-- RIGHT column — reflection & quick controls -->
+      <aside style="width:320px;display:flex;flex-direction:column;gap:16px">
+        <div class="card" role="complementary" aria-labelledby="reflectionTitle">
+          <h3 id="reflectionTitle" style="margin:0 0 8px 0">Reflection</h3>
+          <div id="reflectionContent" style="color:rgba(255,255,255,0.72);font-size:14px">Short reflective tips and interim insights will appear here while you progress.</div>
+        </div>
+
+        <div class="card" aria-label="Quick controls">
+          <h4 style="margin:0 0 8px 0">Quick Controls</h4>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button id="saveBtn" class="secondary-btn">Save Session</button>
+            <button id="restoreBtn" class="secondary-btn">Restore Session</button>
+            <button id="openMentorBtn" class="lucid-btn">Open Mentor Mode</button>
+          </div>
+        </div>
+
+        <div class="card" aria-label="Ambient controls">
+          <h4 style="margin:0 0 8px 0">Ambient</h4>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select id="freqControl" aria-label="Ambient frequency">
+              <option value="432">432 Hz</option>
+              <option value="528">528 Hz</option>
+              <option value="852">852 Hz</option>
+              <option value="963">963 Hz</option>
+            </select>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button id="playAmbience" class="secondary-btn">Play</button>
+              <button id="stopAmbience" class="secondary-btn">Stop</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>MCIF v5 — Open for research & education • No medical claims</footer>
+  </div>
+
+  <!-- Hidden alias elements for compatibility with different app.js versions -->
+  <div class="aliases" aria-hidden="true">
+    <button id="beginButton"></button>
+    <button id="begin-button"></button>
+    <button id="beginButtonLegacy"></button>
+    <button id="acknowledgeBtn"></button>
+    <button id="ackPause"></button>
+
+    <button id="pauseBtn"></button>
+    <button id="pause-button"></button>
+
+    <div id="app"></div>
+    <div id="appContainer"></div>
+    <div id="testContainer"></div>
+    <div id="intro-screen"></div>
+    <div id="question-container"></div>
+    <div id="questionContainerAlt"></div>
+    <div id="result-container"></div>
+    <div id="resultContainerAlt"></div>
+
+    <select id="frequencySelector"><option>432</option></select>
+    <select id="frequency-selector-legacy"><option>432</option></select>
+
+    <button id="save_btn"></button>
+    <button id="restore_btn"></button>
+    <button id="exportJson"></button>
+    <button id="restart"></button>
+  </div>
+
+  <!-- Compatibility bridge: forwards canonical control events to legacy IDs and ensures clicks are registered -->
+  <script>
+    (function(){
+      const forwardMap = {
+        'begin-btn': ['beginButton','begin-button','beginButtonLegacy','acknowledgeBtn','ackPause'],
+        'pause-btn': ['pauseBtn','pause-button'],
+        'next-btn': ['nextBtn','nextButton'],
+        'prev-btn': ['prevBtn','prevButton'],
+        'saveBtn': ['save_btn','saveButton'],
+        'restoreBtn': ['restore_btn','restoreButton'],
+        'exportJsonBtn': ['exportJson'],
+        'restart-btn': ['restart']
+      };
+
+      function forwardClick(canonicalId) {
+        const el = document.getElementById(canonicalId);
+        if (!el) return;
+        el.addEventListener('click', (e) => {
+          (forwardMap[canonicalId] || []).forEach(aid => {
+            const ali = document.getElementById(aid);
+            if (!ali) return;
+            try {
+              const evt = new MouseEvent('click', {bubbles:true, cancelable:true});
+              ali.dispatchEvent(evt);
+            } catch(err) {
+              try { ali.click && ali.click(); } catch(e) {}
+            }
+          });
+        });
+      }
+
+      Object.keys(forwardMap).forEach(forwardClick);
+
+      // Frequency selector forwarding
+      const freqCanon = document.getElementById('frequency-selector');
+      function propagateFreq(val){
+        ['frequencySelector','frequency-selector-legacy','freqControl','frequencyControl'].forEach(id=>{
+          const el = document.getElementById(id);
+          if (!el) return;
+          try {
+            el.value = val;
+            const ev = new Event('change',{bubbles:true,cancelable:true});
+            el.dispatchEvent(ev);
+          } catch(e){ /* ignore */ }
+        });
+      }
+      if (freqCanon) freqCanon.addEventListener('change', (e)=>propagateFreq(e.target.value));
+
+      // Also expose small global alias lookup
+      window.MCIF = window.MCIF || {};
+      window.MCIF.get = (name) => {
+        const map = Object.entries(forwardMap).find(([k,v]) => k===name || v.includes(name));
+        if (!map) return document.getElementById(name) || null;
+        const canon = map[0];
+        return document.getElementById(canon) || map[1].map(id=>document.getElementById(id)).find(Boolean) || null;
+      };
+    })();
+  </script>
+
+  <!-- load app script (defer ensures DOM ready) -->
+  <script src="app.js" defer></script>
+</body>
+</html>
