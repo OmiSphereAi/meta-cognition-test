@@ -1,301 +1,253 @@
-/* -----------------------------------------------------------
-   MCIF 5.0 "Mind Core" — Lucid Flow UI Standard
-   Version: Final Polished Build
-   ----------------------------------------------------------- */
+/* =========================================================
+   MCIF 5.0 - LUCID FLOW INTERFACE
+   Industry-Grade CSS for iOS/Browser - Fully Responsive
+   ========================================================= */
 
-:root {
-  --color-bg-primary: #0e101a;
-  --color-bg-secondary: #1a1b25;
-  --color-accent: #64d8cb;
-  --color-accent-2: #6b8cff;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: rgba(255, 255, 255, 0.75);
-  --color-glow: rgba(100, 216, 203, 0.5);
-
-  --font-primary: 'Inter', sans-serif;
-
-  --transition-fast: 0.3s ease;
-  --transition-medium: 0.5s ease;
-}
-
-/* -----------------------------------------------------------
-   GLOBAL STRUCTURE
-   ----------------------------------------------------------- */
+/* ---------- FONT & BASE RESET ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html, body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at center, #0a0a0f, #000000 90%);
+  color: #f5f5f5;
   height: 100%;
   width: 100%;
-  font-family: var(--font-primary);
-  background: radial-gradient(ellipse at top left, var(--color-bg-primary), var(--color-bg-secondary));
-  color: var(--color-text-primary);
   overflow-x: hidden;
+  scroll-behavior: smooth;
+  user-select: none;
 }
 
-/* Lucid animated background */
-.lucid-background {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 25% 25%, #1b1d2d, #0d0e15);
-  background-size: 400% 400%;
-  animation: backgroundShift 20s ease infinite;
-  z-index: -1;
-  filter: blur(80px) brightness(1.05);
+h1, h2, h3, h4 {
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 8px rgba(255,255,255,0.15);
 }
 
-@keyframes backgroundShift {
+/* ---------- MAIN CONTAINER ---------- */
+#app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  width: 100%;
+  padding: 2rem;
+  background: linear-gradient(120deg, rgba(15,15,30,0.95), rgba(10,10,25,0.85));
+  backdrop-filter: blur(20px);
+  transition: all 0.6s ease-in-out;
+}
+
+/* ---------- BUTTONS ---------- */
+button {
+  background: linear-gradient(145deg, #2e2e7d, #3c3c9e);
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  padding: 0.9rem 2rem;
+  margin: 1rem;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 0 12px rgba(150,150,255,0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(145deg, #3d3da5, #4a4ac2);
+  box-shadow: 0 0 16px rgba(100,100,255,0.6);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: scale(0.97);
+  box-shadow: 0 0 8px rgba(120,120,255,0.4);
+}
+
+/* ---------- INPUTS & SLIDERS ---------- */
+input[type="text"], textarea {
+  width: 90%;
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, textarea:focus {
+  border-color: rgba(100,150,255,0.7);
+  box-shadow: 0 0 10px rgba(100,150,255,0.5);
+}
+
+textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+input[type="range"] {
+  width: 80%;
+  -webkit-appearance: none;
+  height: 8px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #3b82f6, #9333ea);
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #3b82f6;
+  box-shadow: 0 0 8px rgba(59,130,246,0.8);
+  cursor: pointer;
+}
+
+/* ---------- CARD CONTAINERS ---------- */
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 1.5rem auto;
+  max-width: 700px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  backdrop-filter: blur(12px);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(80,80,255,0.25);
+}
+
+/* ---------- PHASE DISPLAY ---------- */
+.phase-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: #93c5fd;
+}
+
+.phase-description {
+  font-size: 1rem;
+  color: #d1d5db;
+  margin-bottom: 1.8rem;
+}
+
+/* ---------- SCORE + RESULTS ---------- */
+.score-display {
+  font-size: 2rem;
+  color: #22d3ee;
+  margin-top: 1.5rem;
+}
+
+.result-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.07);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 20px rgba(0,255,255,0.1);
+}
+
+/* ---------- RESPONSIVENESS ---------- */
+@media (max-width: 768px) {
+  #app {
+    padding: 1rem;
+  }
+  button {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+  textarea, input[type="text"] {
+    font-size: 0.95rem;
+  }
+}
+
+/* ---------- FREQUENCY BACKGROUND ANIMATION ---------- */
+@keyframes auroraFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* -----------------------------------------------------------
-   HEADER / CONTROL BAR
-   ----------------------------------------------------------- */
-#control-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 32px;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-#control-bar .title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--color-accent);
-  letter-spacing: 0.5px;
-}
-
-#control-bar .controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-#frequency-selector {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--color-text-primary);
-  border: none;
-  border-radius: 6px;
-  padding: 6px 10px;
-  font-size: 0.9rem;
-  transition: var(--transition-fast);
-}
-
-#frequency-selector:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* -----------------------------------------------------------
-   INTRO SCREEN
-   ----------------------------------------------------------- */
-#intro-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 80px);
-  text-align: center;
-  padding: 2rem;
-  animation: fadeIn 1s ease forwards;
-}
-
-.intro-content {
-  max-width: 650px;
-}
-
-.intro-content h1 {
-  font-size: 2rem;
-  color: var(--color-accent-2);
-  margin-bottom: 1rem;
-  letter-spacing: 1px;
-}
-
-.intro-content p {
-  color: var(--color-text-secondary);
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-}
-
-/* -----------------------------------------------------------
-   BUTTONS
-   ----------------------------------------------------------- */
-.lucid-btn {
-  padding: 12px 28px;
-  border: none;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--color-accent-2), var(--color-accent));
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(100, 216, 203, 0.3);
-}
-
-.lucid-btn:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 25px rgba(100, 216, 203, 0.5);
-}
-
-/* -----------------------------------------------------------
-   TEST AREA
-   ----------------------------------------------------------- */
-#test-area {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-  min-height: 60vh;
-  display: none;
-  animation: fadeIn 0.8s ease forwards;
-}
-
-.question-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-}
-
-.question-card h2 {
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-}
-
-.question-card p {
-  color: var(--color-text-secondary);
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-/* Input area styling */
-.response-input {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.08);
-  border: none;
-  border-radius: 8px;
-  color: var(--color-text-primary);
-  padding: 12px;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  resize: none;
-  transition: var(--transition-fast);
-}
-
-.response-input:focus {
-  outline: none;
-  background: rgba(255, 255, 255, 0.12);
-}
-
-/* -----------------------------------------------------------
-   PROGRESS + FLOW METERS
-   ----------------------------------------------------------- */
-.progress-meter, .flow-meter {
+body::before {
+  content: '';
   position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background: linear-gradient(270deg, #4a00e0, #8e2de2, #22d3ee, #14b8a6);
+  background-size: 800% 800%;
+  opacity: 0.08;
+  animation: auroraFlow 20s ease infinite;
+  transition: opacity 0.5s ease;
 }
 
-.progress-meter::after {
-  content: '';
-  display: block;
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--color-accent-2), var(--color-accent));
-  transition: width var(--transition-medium);
+/* ---------- FREQUENCY BUTTON STYLE ---------- */
+.freq-button {
+  background: linear-gradient(145deg, #14b8a6, #22d3ee);
+  border-radius: 50px;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  margin: 0.5rem;
+  font-size: 0.95rem;
+  border: none;
+  transition: all 0.3s ease;
 }
 
-.flow-meter {
-  bottom: 40px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.08);
+.freq-button:hover {
+  background: linear-gradient(145deg, #22d3ee, #60a5fa);
+  box-shadow: 0 0 10px rgba(34,211,238,0.6);
 }
 
-.flow-meter::after {
-  content: '';
-  display: block;
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #ffe67a, #ff80ab);
-  transition: width var(--transition-medium);
-}
-
-/* -----------------------------------------------------------
-   FEEDBACK + RESULT CARDS
-   ----------------------------------------------------------- */
-.feedback-card, .result-card {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-top: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  text-align: left;
-}
-
-.feedback-card h3, .result-card h3 {
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-}
-
-/* -----------------------------------------------------------
-   ANIMATIONS
-   ----------------------------------------------------------- */
+/* ---------- LOADING + TRANSITIONS ---------- */
 .fade-in {
   opacity: 0;
-  animation: fadeIn 0.8s ease forwards;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
+@keyframes fadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* -----------------------------------------------------------
-   RESPONSIVE DESIGN
-   ----------------------------------------------------------- */
-@media (max-width: 768px) {
-  #control-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
+/* ---------- MENTOR MODE CARDS ---------- */
+.mentor-card {
+  background: rgba(255,255,255,0.06);
+  border-left: 4px solid #60a5fa;
+  padding: 1rem;
+  margin: 1rem auto;
+  max-width: 650px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #d1fae5;
+}
 
-  #test-area {
-    padding: 2rem 1rem;
-  }
-
-  .lucid-btn {
-    width: 100%;
-  }
-
-  .progress-meter, .flow-meter {
-    width: 85%;
-  }
+/* ---------- FOOTER ---------- */
+footer {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.85rem;
+  padding: 1rem 0;
+  letter-spacing: 0.4px;
+  margin-top: 3rem;
 }
