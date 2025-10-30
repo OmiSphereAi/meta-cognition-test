@@ -3,198 +3,110 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>MCIF v5 — Mind Core (Lucid Flow)</title>
-
+  <title>MCIF v5 — Mind Core</title>
   <link rel="stylesheet" href="style.css" />
-
-  <style>
-    :root {
-      --bg-a: #070c1f;
-      --bg-b: #0d122c;
-      --accent-a: #6ee7d6;
-      --accent-b: #7a6bff;
-      --muted: rgba(255,255,255,0.72);
-      --glass: rgba(255,255,255,0.05);
-      --card-glow: rgba(122,107,255,0.15);
-    }
-    html,body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial;
-      background: linear-gradient(160deg, var(--bg-a), var(--bg-b));
-      color: #fff;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Smooth fade/slide transitions */
-    .fade-slide-enter {
-      opacity: 0;
-      transform: translateY(15px);
-      animation: fadeSlideIn .6s ease forwards;
-    }
-    .fade-slide-exit {
-      opacity: 1;
-      transform: translateY(0);
-      animation: fadeSlideOut .4s ease forwards;
-    }
-
-    @keyframes fadeSlideIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeSlideOut {
-      from { opacity: 1; transform: translateY(0); }
-      to { opacity: 0; transform: translateY(-20px); }
-    }
-
-    .card {
-      background: var(--glass);
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
-      padding: 24px;
-      backdrop-filter: blur(12px);
-      transition: transform .4s ease, box-shadow .4s ease, opacity .4s ease;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 40px rgba(80,80,255,0.25);
-    }
-
-    button.lucid-btn {
-      appearance: none;
-      border: none;
-      background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
-      color: #021;
-      font-weight: 700;
-      padding: 12px 20px;
-      border-radius: 10px;
-      box-shadow: 0 6px 20px var(--card-glow);
-      cursor: pointer;
-      transition: all .3s ease;
-    }
-    button.lucid-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(122,107,255,0.25);
-    }
-
-    .secondary-btn {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: var(--muted);
-      padding: 10px 14px;
-      border-radius: 10px;
-      transition: all .3s ease;
-    }
-    .secondary-btn:hover {
-      background: rgba(255,255,255,0.08);
-      transform: translateY(-2px);
-    }
-
-    /* Show/hide with animation */
-    .show { display:block !important; animation: fadeSlideIn .6s ease forwards; }
-    .hide { animation: fadeSlideOut .4s ease forwards; opacity:0; pointer-events:none; }
-
-    @media (max-width: 720px) {
-      main { flex-direction: column; }
-    }
-  </style>
 </head>
-
 <body>
-  <div class="app-shell fade-slide-enter">
-
+  <div class="app-shell">
     <header class="topbar">
       <div class="brand">
-        <div class="logo" style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent-a),var(--accent-b));box-shadow:0 8px 30px var(--card-glow)"></div>
-        <div>
-          <div class="title" style="font-weight:700">MCIF v5 — Mind Core</div>
-          <div style="font-size:12px;color:var(--muted)">Meta-Cognitive Intelligence Framework</div>
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title-block">
+          <div class="title">MCIF v5 — Mind Core</div>
+          <div class="subtitle">Meta-Cognitive Intelligence Framework</div>
         </div>
       </div>
 
-      <div style="display:flex;gap:10px;align-items:center">
-        <label for="frequency-selector" style="font-size:13px;color:var(--muted)">Frequency</label>
-        <select id="frequency-selector">
+      <div class="top-controls">
+        <label for="frequency-selector" class="freq-label">Ambient</label>
+        <select id="frequency-selector" aria-label="Ambient Frequency">
           <option value="432">432 Hz</option>
           <option value="528">528 Hz</option>
           <option value="852">852 Hz</option>
           <option value="963">963 Hz</option>
         </select>
+
+        <button id="playAmbience" class="secondary-btn">Play</button>
+        <button id="stopAmbience" class="secondary-btn">Stop</button>
+
         <button id="saveButton" class="secondary-btn">Save</button>
         <button id="restoreButton" class="secondary-btn">Restore</button>
       </div>
     </header>
 
-    <main style="display:flex;gap:24px;padding:24px;justify-content:center;align-items:flex-start;">
-      <div class="left-col" style="max-width:880px;width:100%">
+    <main>
+      <section id="introScreen" class="card show" aria-labelledby="introHead">
+        <h1 id="introHead">Welcome — MCIF v5 “Mind Core”</h1>
+        <p class="lead">A reflective, interactive test that maps <strong>how</strong> you think — perception, reasoning, creativity, emotion, and meta-awareness. It’s a mirror, not a diagnosis.</p>
 
-        <section id="introScreen" class="card show">
-          <h1>Welcome — MCIF v5 “Mind Core”</h1>
-          <p class="lead" style="color:var(--muted)">This assessment maps <strong>how you think</strong> — your perception, reasoning, creativity, emotion, and reflection.</p>
-
-          <div class="controls-row" style="display:flex;gap:12px;justify-content:center;margin-top:20px">
-            <button id="begin-btn" class="lucid-btn">Begin</button>
-            <button id="tutorialButton" class="secondary-btn">Tutorial</button>
-            <button id="demoButton" class="secondary-btn">Demo</button>
-          </div>
-        </section>
-
-        <section id="test-area" class="card hide" style="margin-top:18px">
-          <h2 id="phaseTitle" class="phase-title">Phase</h2>
-          <div id="phaseSub" class="phase-description">Phase description</div>
-
-          <div id="questionContainer"></div>
-
-          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
-            <button id="prev-btn" class="secondary-btn">Back</button>
-            <button id="next-btn" class="lucid-btn">Next</button>
-          </div>
-        </section>
-
-        <section id="resultContainer" class="card hide" style="margin-top:18px">
-          <h2>Your MCIF Report</h2>
-          <div id="resultsBody" style="color:var(--muted);margin-top:12px"></div>
-          <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
-            <button id="exportJsonBtn" class="secondary-btn">Export JSON</button>
-            <button id="exportTxtBtn" class="secondary-btn">Export TXT</button>
-          </div>
-        </section>
-      </div>
-
-      <aside style="width:320px;display:flex;flex-direction:column;gap:16px">
-        <div class="card fade-slide-enter">
-          <h3>Reflection</h3>
-          <div style="color:var(--muted);font-size:14px">Reflective tips will appear here while you progress.</div>
+        <div class="tier-row">
+          <label for="tierSelect">Choose tier</label>
+          <select id="tierSelect" aria-label="Choose tier">
+            <option value="Explorer">Explorer — 15–25 min</option>
+            <option value="Architect">Architect — 30–45 min</option>
+            <option value="Visionary">Visionary — 60–90 min</option>
+          </select>
         </div>
-        <div class="card fade-slide-enter">
-          <h4>Quick Controls</h4>
-          <button id="saveBtn" class="secondary-btn">Save Session</button>
-          <button id="restoreBtn" class="secondary-btn">Restore Session</button>
-          <button id="openMentorBtn" class="lucid-btn">Open Mentor Mode</button>
+
+        <div class="controls-row">
+          <button id="begin-btn" class="primary-btn">Begin</button>
+          <button id="demoButton" class="secondary-btn">2-question Demo</button>
+          <button id="tutorialButton" class="secondary-btn">Tutorial</button>
         </div>
-      </aside>
+        <p class="muted">You can pause or restore your session anytime. If you feel distressed, stop and seek support.</p>
+      </section>
+
+      <section id="test-area" class="card hide" aria-live="polite">
+        <div class="phase-header">
+          <div>
+            <h2 id="phaseTitle">Phase</h2>
+            <div id="phaseSub" class="phase-sub muted">Phase description</div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-text muted" id="progressText">0 / 0</div>
+            <div class="progress-track" aria-hidden="true">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="questionContainer" class="question-container"></div>
+
+        <div class="nav-row">
+          <button id="prev-btn" class="secondary-btn" aria-label="Previous">Back</button>
+          <button id="pause-btn" class="secondary-btn" aria-label="Pause">Pause</button>
+          <button id="next-btn" class="primary-btn" aria-label="Next">Next</button>
+        </div>
+
+        <div id="reflectionBox" class="reflection-box muted" style="display:none;">
+          <label>Reflection note (optional)</label>
+          <textarea id="reflectionNote" placeholder="Short thought..."></textarea>
+        </div>
+      </section>
+
+      <section id="resultContainer" class="card hide">
+        <h2>Your MCIF Report</h2>
+        <div id="resultsBody" class="results-body muted"></div>
+        <div class="result-actions">
+          <button id="exportJsonBtn" class="secondary-btn">Export JSON</button>
+          <button id="exportTxtBtn" class="secondary-btn">Export TXT</button>
+          <button id="restart-btn" class="primary-btn">Restart</button>
+        </div>
+      </section>
     </main>
 
-    <footer style="text-align:center;padding:16px;color:var(--muted);font-size:13px">
-      MCIF v5 — Open for research & education • No medical claims
-    </footer>
+    <footer>MCIF v5 — Open for research & education • No medical claims</footer>
   </div>
 
-  <script>
-    // Simple transition logic for switching screens
-    const beginBtn = document.getElementById('begin-btn');
-    const intro = document.getElementById('introScreen');
-    const test = document.getElementById('test-area');
+  <!-- Hidden aliases for legacy compatibility -->
+  <div style="position:fixed;left:-9999px;opacity:0" aria-hidden="true">
+    <button id="beginButton"></button>
+    <button id="begin-button"></button>
+    <button id="acknowledgeBtn"></button>
+    <div id="appContainer"></div>
+  </div>
 
-    beginBtn.addEventListener('click', () => {
-      intro.classList.replace('show', 'hide');
-      setTimeout(() => {
-        intro.style.display = 'none';
-        test.style.display = 'block';
-        test.classList.replace('hide', 'show');
-      }, 400);
-    });
-  </script>
+  <script src="app.js" defer></script>
 </body>
 </html>
