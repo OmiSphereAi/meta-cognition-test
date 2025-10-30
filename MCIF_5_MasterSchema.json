@@ -1,25 +1,52 @@
 {
   "test": {
     "meta": {
-      "name": "Meta-Cognitive Intelligence Framework v5 (MCIF-5) - Mind Core",
-      "version": "5.0",
-      "author": "Andrew Carr",
-      "purpose": "Measure how a person perceives, reasons, integrates emotion, and synthesizes insight (meta-cognitive signature).",
-      "license": "Open for research and education; credit MCIF-5 for derived works.",
-      "notes": "This schema drives a standalone, non-AI test application. All rules, scoring, and narratives are static and deterministic."
+      "id": "MCIF-5.0-MIND-CORE",
+      "title": "Meta-Cognitive Intelligence Framework v5 (MCIF 5.0 \"Mind Core\") - Master Schema",
+      "version": "5.0.0",
+      "release_date": "2025-10-29",
+      "author": "Andrew Carr + MCIF Standard Engine",
+      "description": "Master schema for MCIF 5.0 \"Mind Core\" - full production schema including phases, scoring, archetypes, feedback rules, prototype vectors, and UX settings. Self-contained, deterministic, and ready for client-side execution without external AI.",
+      "license": "Open for research and education; derived works must credit MCIF.",
+      "notes": "This schema implements the white paper and the extended MCIF generation standard, including archetype mappings, scoring heuristics, adaptive branching, safety rules, and export templates."
     },
+
     "ui": {
-      "theme": "lucid",
-      "color_scheme": "blue-gold",
-      "font_stack": "Inter, system-ui, sans-serif",
-      "showProgressBar": true,
-      "feedbackAfterEachPhase": true,
-      "finalSummary": true,
-      "autoSaveLocal": true,
-      "soundOptions": [432, 528, 852, 963],
-      "allowFrequencyLayering": true,
-      "ambientOptions": ["ocean", "space", "wind", "pure_tone"]
+      "theme": "lucid-flow",
+      "color_scheme": {
+        "primary": "#0A78FF",
+        "accent": "#FFD166",
+        "background": "linear-gradient(180deg,#08112A 0%,#0f1726 100%)",
+        "glass": "rgba(255,255,255,0.04)"
+      },
+      "font_stack": "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
+      "display": {
+        "progressBar": true,
+        "showPhaseIndex": true,
+        "showEstimatedTime": true,
+        "ambientSoundOptions": [
+          "ocean",
+          "wind",
+          "space",
+          "pure_tone"
+        ],
+        "soundFrequencies": [
+          432,
+          528,
+          852,
+          963
+        ],
+        "allowFrequencyLayering": true,
+        "defaultVolume": 0.03,
+        "accessibility": {
+          "highContrastToggle": true,
+          "fontSizeControls": true,
+          "keyboardNav": true,
+          "ariaLabels": true
+        }
+      }
     },
+
     "metrics": {
       "axes": [
         "Perception",
@@ -39,155 +66,512 @@
         "Meta_Awareness": 0.15,
         "Philosophical_Depth": 0.15
       },
-      "scale": {
-        "perPhaseSubscoreRange": [0, 100],
-        "compositeMaxPoints": 700
+      "composite_scale": {
+        "max_points": 700,
+        "meta_score_scale": 1000,
+        "adaptability_method": "stddev_normalized"
       }
     },
+
     "tierThresholds": {
       "Explorer": [0, 350],
       "Architect": [351, 525],
       "Visionary": [526, 700]
     },
-    "archetypes": [
-      {
-        "id": "reflective_architect",
-        "name": "Reflective Architect",
-        "prototype_vector": {
-          "Perception": 70,
-          "Logic_and_Reasoning": 85,
-          "Creativity": 65,
-          "Emotional_Regulation": 70,
-          "Adaptability": 60,
-          "Meta_Awareness": 90,
-          "Philosophical_Depth": 75
+
+    "archetypeProfiles": {
+      "description": "Primary archetype definitions, gifts, shadows, frequency bands, career alignments, and cross-model correlations (MBTI / Enneagram / Big Five). These are used for archetype matching and detailed narrative report generation.",
+      "archetypes": [
+        {
+          "id": "synthesist",
+          "name": "The Synthesist",
+          "essence": "The Pattern Weaver — brings disparate ideas into unified insight.",
+          "core_function": "High-level abstraction and pattern synthesis across domains.",
+          "gifts": [
+            "Sees connecting threads between unrelated ideas",
+            "Synthesizes symbolic and conceptual meaning",
+            "Generates systemic metaphors that guide invention"
+          ],
+          "shadows": [
+            "Over-complexity and difficulty refining",
+            "Tendency to start many projects without completing them"
+          ],
+          "frequency_band": 963,
+          "symbol": "Interlocking Rings",
+          "career_paths": [
+            "Futurist / Systems Designer",
+            "AI Researcher",
+            "Cognitive Scientist",
+            "Strategic Consultant",
+            "Data Architect",
+            "Think Tank Analyst",
+            "Innovation Lead",
+            "Conceptual Designer",
+            "Philosopher of Science",
+            "Pattern Analyst"
+          ],
+          "correlations": {
+            "MBTI": ["INTP","ENTP"],
+            "enneagram": ["5w4","4w5"],
+            "big5": {"openness": "high", "conscientiousness": "medium", "extraversion": "low", "agreeableness": "medium", "neuroticism": "medium"}
+          },
+          "prototype_vector": {
+            "Perception": 78,
+            "Logic_and_Reasoning": 82,
+            "Creativity": 94,
+            "Emotional_Regulation": 68,
+            "Adaptability": 80,
+            "Meta_Awareness": 88,
+            "Philosophical_Depth": 84
+          }
         },
-        "description": "High meta-awareness and strong logic. Excels at analyzing structures of mind and building clear conceptual architectures.",
-        "strengths": ["System mapping", "Analytic clarity", "Reflective synthesis"],
-        "growth": ["Turn analysis into consistent action", "Simplify concepts into steps"]
-      },
-      {
-        "id": "empathic_inventor",
-        "name": "Empathic Inventor",
-        "prototype_vector": {
-          "Perception": 75,
-          "Logic_and_Reasoning": 65,
-          "Creativity": 90,
-          "Emotional_Regulation": 85,
-          "Adaptability": 70,
-          "Meta_Awareness": 70,
-          "Philosophical_Depth": 60
+        {
+          "id": "architect",
+          "name": "The Architect",
+          "essence": "The Builder of Order — manifests structure from vision.",
+          "core_function": "Designing scalable systems and frameworks.",
+          "gifts": [
+            "Constructs robust systems and processes",
+            "Brings ideas into practical, repeatable form",
+            "Has strong long-range planning and discipline"
+          ],
+          "shadows": [
+            "Rigidity or perfectionism",
+            "Reluctance to accept emergent changes"
+          ],
+          "frequency_band": 528,
+          "symbol": "Compass & Cube",
+          "career_paths": [
+            "Software Architect",
+            "Civil or Systems Engineer",
+            "Operations Director",
+            "Product Design Lead",
+            "City Planner",
+            "Organizational Consultant",
+            "UX / UI Architect",
+            "Infrastructure Planner",
+            "Project Management Office (PMO) Lead",
+            "Robotics Engineer"
+          ],
+          "correlations": {
+            "MBTI": ["INTJ","ISTJ"],
+            "enneagram": ["1w9","5w6"],
+            "big5": {"openness": "medium","conscientiousness":"high","extraversion":"low","agreeableness":"medium","neuroticism":"low"}
+          },
+          "prototype_vector": {
+            "Perception": 72,
+            "Logic_and_Reasoning": 92,
+            "Creativity": 66,
+            "Emotional_Regulation": 74,
+            "Adaptability": 66,
+            "Meta_Awareness": 70,
+            "Philosophical_Depth": 68
+          }
         },
-        "description": "Builds with heart and insight; synthesizes emotional intelligence and creative design.",
-        "strengths": ["Empathy-led innovation", "Human-centered concepts", "Insight-driven prototyping"],
-        "growth": ["Add structural rigor", "Translate empathy into reproducible processes"]
-      },
-      {
-        "id": "visionary_synthesist",
-        "name": "Visionary Synthesist",
-        "prototype_vector": {
-          "Perception": 80,
-          "Logic_and_Reasoning": 88,
-          "Creativity": 92,
-          "Emotional_Regulation": 75,
-          "Adaptability": 78,
-          "Meta_Awareness": 80,
-          "Philosophical_Depth": 90
+        {
+          "id": "empath",
+          "name": "The Empath",
+          "essence": "The Harmonizer — turns empathy into configured relational insight.",
+          "core_function": "Emotion-based synthesis and relational intelligence.",
+          "gifts": [
+            "Deep interpersonal awareness",
+            "Natural listening and resonance with others’ states",
+            "Translates emotional nuance into constructive action"
+          ],
+          "shadows": [
+            "Absorbs others' pain or loses self-boundaries",
+            "May avoid conflict to keep harmony"
+          ],
+          "frequency_band": 639,
+          "symbol": "Open Hand with Heart",
+          "career_paths": [
+            "Therapist / Counselor",
+            "Mediator / Conflict Specialist",
+            "Humanitarian Program Leader",
+            "Nurse / Clinician",
+            "Teacher / Educator",
+            "Spiritual Guide",
+            "Emotional Intelligence Facilitator",
+            "Social Worker",
+            "Relationship Coach",
+            "Community Organizer"
+          ],
+          "correlations": {
+            "MBTI": ["INFJ","ENFJ","ISFJ"],
+            "enneagram": ["2w1","9w1"],
+            "big5": {"openness":"medium","conscientiousness":"medium","extraversion":"medium","agreeableness":"high","neuroticism":"medium"}
+          },
+          "prototype_vector": {
+            "Perception": 80,
+            "Logic_and_Reasoning": 68,
+            "Creativity": 76,
+            "Emotional_Regulation": 92,
+            "Adaptability": 78,
+            "Meta_Awareness": 74,
+            "Philosophical_Depth": 72
+          }
         },
-        "description": "Unifies systems, philosophy, and creativity into broad, actionable visions.",
-        "strengths": ["Systemic innovation", "Long-view synthesis", "Ideational leadership"],
-        "growth": ["Channel broad vision into focused execution", "Maintain tactical follow-through"]
-      },
-      {
-        "id": "grounded_operator",
-        "name": "Grounded Operator",
-        "prototype_vector": {
-          "Perception": 70,
-          "Logic_and_Reasoning": 90,
-          "Creativity": 55,
-          "Emotional_Regulation": 60,
-          "Adaptability": 65,
-          "Meta_Awareness": 40,
-          "Philosophical_Depth": 45
+        {
+          "id": "innovator",
+          "name": "The Innovator",
+          "essence": "The Boundary Breaker — births new forms and novel experiments.",
+          "core_function": "Divergent ideation and experimental creativity.",
+          "gifts": [
+            "Rapid ideation and bold experimentation",
+            "Comfort with ambiguity and risk",
+            "Capacity to prototype radical alternatives"
+          ],
+          "shadows": [
+            "Impulsivity; difficulty with sustained follow-through",
+            "May undervalue established constraints"
+          ],
+          "frequency_band": 852,
+          "symbol": "Spark & Spiral",
+          "career_paths": [
+            "Entrepreneur / Founder",
+            "Product Designer",
+            "Creative Director",
+            "Startup Founder",
+            "Music Producer",
+            "Game Designer",
+            "Trend Forecaster",
+            "Innovation Strategist",
+            "Industrial Designer",
+            "Cultural Futurist"
+          ],
+          "correlations": {
+            "MBTI": ["ENTP","ENFP"],
+            "enneagram": ["7w8","3w4"],
+            "big5": {"openness":"very_high","conscientiousness":"low","extraversion":"high","agreeableness":"medium","neuroticism":"medium"}
+          },
+          "prototype_vector": {
+            "Perception": 82,
+            "Logic_and_Reasoning": 72,
+            "Creativity": 96,
+            "Emotional_Regulation": 70,
+            "Adaptability": 90,
+            "Meta_Awareness": 76,
+            "Philosophical_Depth": 68
+          }
         },
-        "description": "Highly pragmatic and reliable; excels at execution and practical system-building.",
-        "strengths": ["Execution", "Process orientation", "Dependability"],
-        "growth": ["Develop reflective awareness", "Cultivate creative flexibility"]
-      },
-      {
-        "id": "dreaming_idealist",
-        "name": "Dreaming Idealist",
-        "prototype_vector": {
-          "Perception": 78,
-          "Logic_and_Reasoning": 45,
-          "Creativity": 88,
-          "Emotional_Regulation": 82,
-          "Adaptability": 68,
-          "Meta_Awareness": 60,
-          "Philosophical_Depth": 80
+        {
+          "id": "philosopher",
+          "name": "The Philosopher",
+          "essence": "The Seeker of Meaning — probes foundations of truth.",
+          "core_function": "Reflective, ethical, and symbolic reasoning.",
+          "gifts": [
+            "Depth of thought and moral reasoning",
+            "Ability to integrate paradox and ambiguity",
+            "Systems of meaning-making"
+          ],
+          "shadows": [
+            "Excessive rumination or existential paralysis",
+            "Difficulty translating thought into action at times"
+          ],
+          "frequency_band": 741,
+          "symbol": "Open Book & Lamp",
+          "career_paths": [
+            "Philosopher / Academic",
+            "Ethicist",
+            "Writer / Essayist",
+            "Theologian",
+            "Consciousness Researcher",
+            "Documentarian",
+            "Public Intellectual",
+            "Historian of Ideas",
+            "Jungian Analyst",
+            "Existential Psychologist"
+          ],
+          "correlations": {
+            "MBTI": ["INFP","INFJ","INTP"],
+            "enneagram": ["4w5","5w4"],
+            "big5": {"openness":"very_high","conscientiousness":"medium","extraversion":"low","agreeableness":"medium","neuroticism":"medium_high"}
+          },
+          "prototype_vector": {
+            "Perception": 78,
+            "Logic_and_Reasoning": 80,
+            "Creativity": 84,
+            "Emotional_Regulation": 72,
+            "Adaptability": 74,
+            "Meta_Awareness": 86,
+            "Philosophical_Depth": 94
+          }
         },
-        "description": "Meaning-driven, emotionally rich, and visionary in values and ideals.",
-        "strengths": ["Meaning creation", "Value-driven design", "Rich inner life"],
-        "growth": ["Balance feeling with systematic critique", "Develop pragmatic scaffolding"]
-      },
-      {
-        "id": "balanced_strategist",
-        "name": "Balanced Strategist",
-        "prototype_vector": {
-          "Perception": 75,
-          "Logic_and_Reasoning": 75,
-          "Creativity": 75,
-          "Emotional_Regulation": 75,
-          "Adaptability": 75,
-          "Meta_Awareness": 75,
-          "Philosophical_Depth": 75
+        {
+          "id": "strategist",
+          "name": "The Strategist",
+          "essence": "The Orchestrator — plans with timing and leverage.",
+          "core_function": "Temporal foresight and decision sequencing.",
+          "gifts": [
+            "Anticipatory planning and scenario mapping",
+            "Leadership in coordination and timing",
+            "Optimization of resources for long-term impact"
+          ],
+          "shadows": [
+            "Over-control or manipulative tendencies if undervalued ethically",
+            "May under-prioritize emotional nuance"
+          ],
+          "frequency_band": 432,
+          "symbol": "Clock & Chess Knight",
+          "career_paths": [
+            "Executive Leadership",
+            "Strategic Consultant",
+            "Policy & Governance Strategist",
+            "Military or Crisis Planner",
+            "Financial Strategist",
+            "Operations Lead",
+            "Project Portfolio Manager",
+            "Logistics & Supply Chain Director",
+            "Product Strategy Lead",
+            "Campaign Strategist"
+          ],
+          "correlations": {
+            "MBTI": ["ENTJ","ESTJ"],
+            "enneagram": ["8w7","3w4"],
+            "big5": {"openness":"medium","conscientiousness":"very_high","extraversion":"high","agreeableness":"low_medium","neuroticism":"low"}
+          },
+          "prototype_vector": {
+            "Perception": 74,
+            "Logic_and_Reasoning": 90,
+            "Creativity": 70,
+            "Emotional_Regulation": 78,
+            "Adaptability": 82,
+            "Meta_Awareness": 68,
+            "Philosophical_Depth": 66
+          }
         },
-        "description": "Well-rounded across axes; dynamic equilibrium of thought, feeling and action.",
-        "strengths": ["Versatility", "Balanced judgment", "Adaptive strategy"],
-        "growth": ["Sharpen a domain for mastery", "Push creative edges when safe"]
-      }
-    ],
-    "prototypeMatching": {
-      "distanceMetric": "euclidean_cosine", 
-      "euclideanWeight": 0.5,
-      "cosineWeight": 0.5,
-      "softmaxTemperature": 0.7,
-      "mixtureThreshold": 0.15
+        {
+          "id": "artisan",
+          "name": "The Artisan",
+          "essence": "The Expressive Creator — makes internal feeling tangible with craft.",
+          "core_function": "Embodied, sensory-driven, and aesthetic cognition.",
+          "gifts": [
+            "High sensory discrimination and aesthetic taste",
+            "Authentic expression and craft mastery",
+            "Ability to translate feeling into form"
+          ],
+          "shadows": [
+            "Mood-dependent productivity",
+            "Perfectionist tendencies that block release"
+          ],
+          "frequency_band": 285,
+          "symbol": "Brush & Flame",
+          "career_paths": [
+            "Musician / Composer",
+            "Visual Artist / Sculptor",
+            "Filmmaker / Cinematographer",
+            "Culinary Artist / Chef",
+            "Fashion Designer",
+            "Sound Designer",
+            "Interior / Spatial Designer",
+            "Performance Artist",
+            "Photographer",
+            "Craft Master / Maker"
+          ],
+          "correlations": {
+            "MBTI": ["ISFP","INFP","ESFP"],
+            "enneagram": ["4w3","9w8"],
+            "big5": {"openness":"very_high","conscientiousness":"medium","extraversion":"medium","agreeableness":"high","neuroticism":"medium_high"}
+          },
+          "prototype_vector": {
+            "Perception": 88,
+            "Logic_and_Reasoning": 62,
+            "Creativity": 92,
+            "Emotional_Regulation": 78,
+            "Adaptability": 76,
+            "Meta_Awareness": 72,
+            "Philosophical_Depth": 70
+          }
+        },
+        {
+          "id": "analyst",
+          "name": "The Analyst",
+          "essence": "The Truth Seeker — finds clarity through evidence and method.",
+          "core_function": "Empirical analysis and methodological precision.",
+          "gifts": [
+            "Rigorous attention to detail",
+            "Systematic problem solving and verification",
+            "Deductive clarity and reliability"
+          ],
+          "shadows": [
+            "Potential emotional detachment",
+            "Risk of over-skepticism"
+          ],
+          "frequency_band": 396,
+          "symbol": "Lens & Scale",
+          "career_paths": [
+            "Data Scientist / Statistician",
+            "Research Scientist",
+            "Forensic Analyst",
+            "Economist",
+            "Quality Assurance Engineer",
+            "Technical Writer",
+            "Cybersecurity Researcher",
+            "Systems Analyst",
+            "Mechanical Engineer",
+            "Mathematician"
+          ],
+          "correlations": {
+            "MBTI": ["ISTJ","INTJ","ISTP"],
+            "enneagram": ["5w6","1w2"],
+            "big5": {"openness":"medium","conscientiousness":"very_high","extraversion":"low","agreeableness":"low_medium","neuroticism":"low"}
+          },
+          "prototype_vector": {
+            "Perception": 72,
+            "Logic_and_Reasoning": 94,
+            "Creativity": 60,
+            "Emotional_Regulation": 74,
+            "Adaptability": 68,
+            "Meta_Awareness": 70,
+            "Philosophical_Depth": 64
+          }
+        },
+        {
+          "id": "visionary",
+          "name": "The Visionary",
+          "essence": "The Inspirer — channels a purpose larger than the self.",
+          "core_function": "Moral imagination and collective inspiration.",
+          "gifts": [
+            "Charismatic articulation of future possibilities",
+            "Deep sense of purpose and mobilization",
+            "High interpersonal influence toward shared goals"
+          ],
+          "shadows": [
+            "Savior complex or burnout from carrying others’ mission",
+            "Risk of idealizing to the point of impracticality"
+          ],
+          "frequency_band": 999,
+          "symbol": "Torch & Horizon",
+          "career_paths": [
+            "Nonprofit Executive",
+            "Movement Leader",
+            "Motivational Speaker",
+            "Social Entrepreneur",
+            "Public Intellectual",
+            "Religious Leader",
+            "Community Organizer",
+            "Author / Thought Leader",
+            "Teacher / Mentor",
+            "Policy Visionary"
+          ],
+          "correlations": {
+            "MBTI": ["ENFJ","ENFP"],
+            "enneagram": ["3w4","8w7","2w3"],
+            "big5": {"openness":"high","conscientiousness":"high","extraversion":"high","agreeableness":"high","neuroticism":"medium"}
+          },
+          "prototype_vector": {
+            "Perception": 80,
+            "Logic_and_Reasoning": 84,
+            "Creativity": 90,
+            "Emotional_Regulation": 78,
+            "Adaptability": 82,
+            "Meta_Awareness": 80,
+            "Philosophical_Depth": 88
+          }
+        },
+        {
+          "id": "alchemist",
+          "name": "The Alchemist",
+          "essence": "The Transformer — remakes pain into wisdom and life into meaning.",
+          "core_function": "Regenerative synthesis and healing through paradox integration.",
+          "gifts": [
+            "Transforms struggle into creative insight",
+            "Deep integration of opposites and cycles",
+            "Capacity to hold pain and transmute it into teaching"
+          ],
+          "shadows": [
+            "Emotional intensity and fixation",
+            "Risk of over-identification with suffering"
+          ],
+          "frequency_band": 174,
+          "symbol": "Phoenix & Chalice",
+          "career_paths": [
+            "Psychotherapist / Jungian Analyst",
+            "Trauma-Informed Therapist",
+            "Spiritual Director",
+            "Transformational Coach",
+            "Shamanic or Holistic Practitioner",
+            "Author on transformative practice",
+            "Grief Counselor",
+            "Ritual Designer",
+            "Healer-Educator",
+            "Depth Psychologist"
+          ],
+          "correlations": {
+            "MBTI": ["INFJ","INFP"],
+            "enneagram": ["9w8","4w5"],
+            "big5": {"openness":"high","conscientiousness":"medium","extraversion":"low","agreeableness":"high","neuroticism":"medium_high"}
+          },
+          "prototype_vector": {
+            "Perception": 82,
+            "Logic_and_Reasoning": 72,
+            "Creativity": 88,
+            "Emotional_Regulation": 86,
+            "Adaptability": 84,
+            "Meta_Awareness": 88,
+            "Philosophical_Depth": 90
+          }
+        }
+      ]
     },
+
     "phases": [
       {
         "id": "intro",
-        "title": "Lucid Entry",
+        "title": "Welcome — Lucid Entry",
         "type": "info",
-        "content": "Welcome to MCIF-5 — Mind Core. This tool maps how you think: perception, reasoning, emotion, adaptability, meta-awareness, and philosophical depth. This is a reflective tool, not a diagnosis. Choose your environment and sound tone before starting.",
+        "content": "Welcome to MCIF 5.0 \"Mind Core\". This test maps how you think — not what you know. Breathe, relax, and answer honestly. Choose a difficulty tier when ready. This is a reflective tool, not a diagnosis.",
         "ui": {
-          "actionLabel": "Begin Calibration",
-          "allowSkip": false
+          "actionLabel": "Choose Tier",
+          "estimated_time": "1 minute"
         }
       },
+
       {
-        "id": "frequency_select",
-        "title": "Frequency Calibration",
-        "type": "multiple_choice",
-        "content": "Select the sound frequency (or combination) that supports your focus. You can layer tones for blended resonance.",
+        "id": "choose_tier",
+        "title": "Select Difficulty Tier",
+        "type": "choice",
+        "prompt": "Choose the mode you prefer. Explorer is fast and introductory, Architect is balanced, Visionary is deep and expansive.",
         "options": [
-          { "id": "f432", "label": "432 Hz — Natural Earth Resonance", "value": 432 },
-          { "id": "f528", "label": "528 Hz — Clarity / DNA Repair", "value": 528 },
-          { "id": "f852", "label": "852 Hz — Intuitive Awakening", "value": 852 },
-          { "id": "f963", "label": "963 Hz — Divine / Transcendence", "value": 963 }
+          { "id": "tier_explorer", "label": "Explorer — 15-25 min", "value": "Explorer", "multiplier": 0.9 },
+          { "id": "tier_architect", "label": "Architect — 30-45 min", "value": "Architect", "multiplier": 1.0 },
+          { "id": "tier_visionary", "label": "Visionary — 60-90 min", "value": "Visionary", "multiplier": 1.15 }
         ],
-        "ui": { "allowMultiSelect": true, "actionLabel": "Continue" }
+        "ui": { "actionLabel": "Start Calibration" }
       },
+
       {
-        "id": "orientation",
-        "title": "Orientation",
-        "type": "info",
-        "content": "Before each phase, breathe for 30 seconds. Answer honestly. You may choose multiple input styles: text offers depth, sliders provide quick numeric measures, and multiple-choice offers guided structure. After each phase you will receive brief feedback. When ready, begin Phase 1.",
-        "ui": { "actionLabel": "Start Phase 1", "timeToReadSeconds": 12 }
+        "id": "calibration",
+        "title": "Calibration & Warm-up",
+        "type": "calibration",
+        "description": "A short set of warm-up prompts to measure baseline language, response time, and tone.",
+        "questions": [
+          {
+            "id": "cal_q1",
+            "type": "text",
+            "prompt": "What's one idea you loved recently and why?",
+            "ui": { "minChars": 40, "placeholder": "Write a short paragraph..." }
+          },
+          {
+            "id": "cal_q2",
+            "type": "text",
+            "prompt": "Describe a small decision you made this week and how you made it.",
+            "ui": { "minChars": 40, "placeholder": "Briefly explain process and intuition..." }
+          },
+          {
+            "id": "cal_q3",
+            "type": "slider",
+            "prompt": "Rate your current mental clarity (0 = fuzzy, 10 = crystal clear).",
+            "min": 0,
+            "max": 10
+          }
+        ],
+        "ui": { "actionLabel": "Begin Phase 1", "estimated_time": "3 minutes" }
       },
+
       {
         "id": "phase_1",
-        "title": "Phase 1 — Perceptual Awareness (Thought Velocity & Sensory Detail)",
+        "title": "Phase 1 — Perceptual Awareness",
         "type": "question_block",
         "description": "Measures sensory acuity, detail, and concept linkage.",
         "scoring": {
@@ -202,34 +586,36 @@
           {
             "id": "p1_q1",
             "type": "text",
-            "prompt": "Choose an everyday object within reach. Describe it as if perceiving it for the first time — texture, temperature, light, edges, and the feeling it evokes. Be detailed.",
+            "prompt": "Choose an everyday object within reach. Describe it as if seeing it for the first time: texture, temperature, light, edges, and the feeling it evokes. Be vivid and concrete.",
             "ui": { "minChars": 120, "placeholder": "Describe the object in rich sensory detail..." }
           },
           {
             "id": "p1_q2",
             "type": "multiple_choice",
-            "prompt": "Which description best fits your spontaneous sensory focus?",
+            "prompt": "When you notice an object, you most often attend to:",
             "options": [
-              { "label": "I notice texture and micro-details", "score": 85 },
-              { "label": "I notice color and light first", "score": 75 },
-              { "label": "I notice function and use", "score": 55 },
-              { "label": "I notice symbolic associations", "score": 65 }
+              { "id": "p1_q2_a1", "label": "Texture & small details", "score": 85 },
+              { "id": "p1_q2_a2", "label": "Color & light", "score": 75 },
+              { "id": "p1_q2_a3", "label": "Function & purpose", "score": 60 },
+              { "id": "p1_q2_a4", "label": "Symbolic meaning", "score": 70 }
             ]
           },
           {
             "id": "p1_q3",
             "type": "slider",
-            "prompt": "Rate how vividly you feel the object's associated emotion or memory (0 = None, 10 = Vivid)",
+            "prompt": "Rate how vividly the object's associated memory or emotion comes up (0 = none, 10 = vivid).",
             "min": 0,
             "max": 10
           }
-        ]
+        ],
+        "ui": { "actionLabel": "Reflect & Continue", "estimated_time": "8-12 minutes" }
       },
+
       {
         "id": "phase_2",
-        "title": "Phase 2 — Cognitive Mechanics (Pattern Recognition & Systems Thinking)",
+        "title": "Phase 2 — Cognitive Mechanics",
         "type": "question_block",
-        "description": "Evaluates logical flow and ability to design systems that scale or self-correct.",
+        "description": "Tests logical flow, pattern recognition, and system reasoning.",
         "scoring": {
           "subscores": [
             { "id": "logic", "label": "Logic", "max": 40 },
@@ -242,8 +628,8 @@
           {
             "id": "p2_q1",
             "type": "text",
-            "prompt": "A team keeps missing deadlines. Without saying 'work harder,' design a sustainable process or system that fixes this. Explain roles, feedback loops, and measures.",
-            "ui": { "minChars": 180, "placeholder": "Outline the system and its feedback mechanisms..." }
+            "prompt": "A team keeps missing deadlines. Design a sustainable process that improves outcomes without saying 'work harder.' Include roles, feedback loops, and measures.",
+            "ui": { "minChars": 180, "placeholder": "Outline the system and feedback mechanisms..." }
           },
           {
             "id": "p2_q2",
@@ -257,19 +643,21 @@
             "type": "multiple_choice",
             "prompt": "When diagnosing a broken process, you usually:",
             "options": [
-              { "label": "Trace the sequence and find bottlenecks", "score": 90 },
-              { "label": "Ask stakeholders and surface blind spots", "score": 70 },
-              { "label": "Prototype quick fixes and iterate", "score": 80 },
-              { "label": "Rebuild from core principles", "score": 85 }
+              { "id": "p2_q3_a1", "label": "Trace sequence and find bottlenecks", "score": 90 },
+              { "id": "p2_q3_a2", "label": "Ask stakeholders and surface blind spots", "score": 70 },
+              { "id": "p2_q3_a3", "label": "Prototype quick fixes and iterate", "score": 80 },
+              { "id": "p2_q3_a4", "label": "Rebuild from core principles", "score": 85 }
             ]
           }
-        ]
+        ],
+        "ui": { "actionLabel": "Reflect & Continue", "estimated_time": "10-15 minutes" }
       },
+
       {
         "id": "phase_3",
-        "title": "Phase 3 — Emotive Intelligence (Emotion, Causality & Regulation)",
+        "title": "Phase 3 — Emotive Intelligence",
         "type": "question_block",
-        "description": "Assesses emotional literacy, causal reasoning of emotions, and compassionate self-regulation.",
+        "description": "Evaluates emotional literacy, causal reasoning of feelings, and self-compassion.",
         "scoring": {
           "subscores": [
             { "id": "emotional_identification", "label": "Emotional Identification", "max": 30 },
@@ -282,34 +670,36 @@
           {
             "id": "p3_q1",
             "type": "text",
-            "prompt": "You feel anxious before a speech and start scrolling your phone. Explain why this soothes you — identify the causal chain in your experience.",
-            "ui": { "minChars": 140, "placeholder": "Trace the emotional triggers and soothing pattern..." }
+            "prompt": "You feel anxious before a speech and start scrolling your phone. Explain why that soothes you — trace the causal chain.",
+            "ui": { "minChars": 140, "placeholder": "Trace triggers and soothing pattern..." }
           },
           {
             "id": "p3_q2",
             "type": "multiple_choice",
             "prompt": "When stressed, your go-to strategy usually is:",
             "options": [
-              { "label": "Distraction (phone, internet)", "score": 30 },
-              { "label": "Social check-in or venting", "score": 50 },
-              { "label": "Breathing / grounding", "score": 85 },
-              { "label": "Reflection & journaling", "score": 75 }
+              { "id": "p3_q2_a1", "label": "Distraction (phone)", "score": 30 },
+              { "id": "p3_q2_a2", "label": "Social check-in", "score": 50 },
+              { "id": "p3_q2_a3", "label": "Breathing / grounding", "score": 85 },
+              { "id": "p3_q2_a4", "label": "Reflection / journaling", "score": 75 }
             ]
           },
           {
             "id": "p3_q3",
             "type": "slider",
-            "prompt": "Rate your capacity to turn difficult emotion into constructive insight (0 low → 10 high).",
+            "prompt": "Rate your capacity to turn difficult feelings into constructive insight (0 = low, 10 = high).",
             "min": 0,
             "max": 10
           }
-        ]
+        ],
+        "ui": { "actionLabel": "Reflect & Continue", "estimated_time": "8-12 minutes" }
       },
+
       {
         "id": "phase_4",
-        "title": "Phase 4 — Meta-Cognitive Insight (Self-Monitoring & Process Diagnosis)",
+        "title": "Phase 4 — Meta-Cognitive Insight",
         "type": "question_block",
-        "description": "Measures capacity to observe and model one's own thought processes and design remedies.",
+        "description": "Assesses the capacity to observe, diagnose, and redesign one's own thought processes.",
         "scoring": {
           "subscores": [
             { "id": "meta_awareness", "label": "Meta-Awareness", "max": 40 },
@@ -329,27 +719,29 @@
           {
             "id": "p4_q2",
             "type": "text",
-            "prompt": "You understand your patterns but rarely act on them. What blocks conversion from insight → action for you? Describe steps that would unblock it.",
-            "ui": { "minChars": 160, "placeholder": "Identify internal and external barriers and practical steps..." }
+            "prompt": "You understand your patterns but rarely act on them. What blocks conversion from insight to action? Describe stepwise remedies.",
+            "ui": { "minChars": 160, "placeholder": "Identify internal/external barriers and practical steps..." }
           },
           {
             "id": "p4_q3",
             "type": "multiple_choice",
-            "prompt": "When monitoring your thinking, you primarily experience thoughts as:",
+            "prompt": "When monitoring your thinking, your experience is primarily:",
             "options": [
-              { "label": "Verbal narratives", "score": 60 },
-              { "label": "Visual images", "score": 70 },
-              { "label": "Somatic energy / visceral", "score": 65 },
-              { "label": "Layered patterns (mix)", "score": 85 }
+              { "id": "p4_q3_a1", "label": "Verbal narratives", "score": 60 },
+              { "id": "p4_q3_a2", "label": "Visual images", "score": 70 },
+              { "id": "p4_q3_a3", "label": "Somatic sensations", "score": 65 },
+              { "id": "p4_q3_a4", "label": "Layered pattern (mix)", "score": 85 }
             ]
           }
-        ]
+        ],
+        "ui": { "actionLabel": "Reflect & Continue", "estimated_time": "12-18 minutes" }
       },
+
       {
         "id": "phase_5",
         "title": "Phase 5 — Creative Intelligence & Integration",
         "type": "question_block",
-        "description": "Assesses originality, coherence, and the ability to translate insights into action.",
+        "description": "Assesses novelty, coherence, and the translation of insight into action.",
         "scoring": {
           "subscores": [
             { "id": "novelty", "label": "Novelty", "max": 40 },
@@ -362,23 +754,25 @@
           {
             "id": "p5_q1",
             "type": "text",
-            "prompt": "Invent a new metric for measuring intelligence that addresses IQ's limits. Explain how it works and how you'd measure success.",
-            "ui": { "minChars": 220, "placeholder": "Describe conceptual design, measures, and use-cases..." }
+            "prompt": "Invent a new metric for measuring intelligence beyond IQ. Explain how it works, how you'd measure it, and what behaviors it would predict.",
+            "ui": { "minChars": 220, "placeholder": "Describe conceptual design, measurements, and validation..." }
           },
           {
             "id": "p5_q2",
             "type": "slider",
-            "prompt": "Rate how readily you translate inner insight into tangible action or prototype (0 low → 10 high).",
+            "prompt": "Rate how readily you translate inner insight into tangible action or prototype (0 = never, 10 = readily).",
             "min": 0,
             "max": 10
           }
-        ]
+        ],
+        "ui": { "actionLabel": "Reflect & Continue", "estimated_time": "12-20 minutes" }
       },
+
       {
         "id": "phase_6",
-        "title": "Phase 6 — Philosophical Depth & Worldview Reasoning",
+        "title": "Phase 6 — Philosophical Depth",
         "type": "question_block",
-        "description": "Explores abstract reasoning, existential clarity, and coherence of values.",
+        "description": "Tests abstraction, ethical reasoning, and clarity of worldview.",
         "scoring": {
           "subscores": [
             { "id": "depth", "label": "Depth", "max": 40 },
@@ -392,79 +786,144 @@
             "id": "p6_q1",
             "type": "text",
             "prompt": "Is human potential fixed or ever-expanding? Defend your position and consider counterarguments.",
-            "ui": { "minChars": 180, "placeholder": "Make a clear argument and note at least one counterpoint..." }
+            "ui": { "minChars": 180, "placeholder": "Make a clear argument and note one counterpoint..." }
           },
           {
             "id": "p6_q2",
             "type": "slider",
-            "prompt": "Rate the degree to which your worldview is internally coherent and actionable (0 = fragmented, 10 = coherent and actionable).",
+            "prompt": "Rate how coherent and actionable your worldview is (0 = fragmented, 10 = coherent & actionable).",
             "min": 0,
             "max": 10
           }
-        ]
+        ],
+        "ui": { "actionLabel": "Finalize Responses", "estimated_time": "10-18 minutes" }
       },
+
+      {
+        "id": "micro_reflection",
+        "title": "Micro Reflection Loop",
+        "type": "reflection",
+        "description": "Mid-test micro-reflection: choose two prior responses and re-describe them with fresh perspective.",
+        "prompt_template": "Earlier you said: \"{{excerpt}}\" — With what we've explored so far, how would you re-describe that now?",
+        "ui": { "actionLabel": "Continue", "estimated_time": "3-6 minutes" }
+      },
+
+      {
+        "id": "adaptive_branching",
+        "title": "Adaptive Branching Rules (Engine)",
+        "type": "logic_block",
+        "description": "Adaptive rules that determine follow-up prompts or clarifying questions based on user responses and signal detections.",
+        "rules": [
+          {
+            "id": "clarify_high_originality_low_clarity",
+            "condition": "p5_q2 > 7 && (len(p5_q1) < 200 || text_clarity_score(p5_q1) < 0.45)",
+            "action": {
+              "type": "insert_followup",
+              "followup": { "id": "fb_clarity1", "type": "text", "prompt": "You showed strong integration. Can you give a concrete example of how this would work in practice?" }
+            },
+            "note": "High integration rating with short/low-clarity text => ask for concrete example."
+          },
+          {
+            "id": "grounding_if_stress",
+            "condition": "p3_q3 >= 0 && p3_q3 <= 4",
+            "action": {
+              "type": "insert_intervention",
+              "intervention": { "id": "grounding_breath", "type": "exercise", "prompt": "Let's do a 30-second grounding exercise. Breathe in for 4, hold 4, out 6. Then describe any physical changes." }
+            },
+            "note": "Low emotion-to-insight capacity -> grounding micro-exercise"
+          },
+          {
+            "id": "branch_to_advanced_paradox",
+            "condition": "p4_q1 >= 8",
+            "action": {
+              "type": "insert_advanced",
+              "followup": { "id": "fb_paradox1", "type": "text", "prompt": "You have advanced meta-awareness — describe a paradox where consciousness observes itself observing." }
+            },
+            "note": "High meta-awareness leads to recursion challenge."
+          },
+          {
+            "id": "short_answers",
+            "condition": "len(p1_q1) < 80 || len(p2_q1) < 120 || len(p5_q1) < 150",
+            "action": {
+              "type": "insert_prompt",
+              "followup": { "id": "fb_expand", "type": "text", "prompt": "Some answers were short. Can you expand one of them by adding specifics, a step, or a concrete example?" }
+            },
+            "note": "Nudge user to expand brief responses."
+          }
+        ],
+        "ui": { "actionLabel": "Continue Adaptive Flow" }
+      },
+
       {
         "id": "results",
         "title": "Synthesis & Feedback",
         "type": "results",
-        "description": "Aggregates per-phase scores into composite metrics, maps to archetype and tier, and provides concrete growth tasks.",
+        "description": "Aggregate per-phase results, compute composite metrics, match archetype(s), and produce narrative + growth path.",
+        "scoring": {
+          "final": {
+            "computation": "weighted_sum_normalized_to_max",
+            "max_points": 700,
+            "meta_index": {
+              "id": "MRI",
+              "label": "Mind Resonance Index",
+              "scale": 1000,
+              "components": [
+                { "name": "CompositeScore", "weight": 0.6 },
+                { "name": "AdaptabilityNormalized", "weight": 0.15 },
+                { "name": "ResonanceHarmony", "weight": 0.15 },
+                { "name": "ReflectionDepthNormalized", "weight": 0.10 }
+              ]
+            }
+          }
+        },
         "feedback_rules": [
           {
             "id": "rule_high_velocity",
-            "condition": "p1_q1 > 8",
-            "feedback": "You show very high thought velocity — grounding rituals and structured output routines will help translate your rapid cognition into clear artifacts."
+            "condition": "p1_q3 >= 9",
+            "feedback": "High thought velocity detected — practice grounding routines and structured output rituals to capture your rapid cognition into tangible artifacts."
           },
           {
             "id": "rule_system_thinker",
-            "condition": "p2_q2 > 8",
-            "feedback": "You naturally see systems and connections. Consider building explicit mapping tools (diagrams, causal loops) to share your ideas."
+            "condition": "p2_q2 >= 8",
+            "feedback": "Systems-oriented thinking is strong. Diagramming tools and causal loop mapping will magnify your impact."
           },
           {
-            "id": "rule_emotive_logic",
-            "condition": "p3_q3 > 7 && p3_q1 == 'Reflection & journaling'",
-            "feedback": "You convert emotional signals into reflective insight; formalizing your reflections with action prompts will increase impact."
+            "id": "rule_emotive_reflection",
+            "condition": "p3_q3 >= 8 && (p3_q2 == 'p3_q2_a3' || p3_q2 == 'p3_q2_a4')",
+            "feedback": "You readily convert emotion into insight. Structured journaling to convert reflections into micro-actions will be especially effective."
           },
           {
-            "id": "rule_meta_maturity",
-            "condition": "p4_q1 > 8",
-            "feedback": "Advanced meta-awareness detected — you can observe your cognition. Practice targeted re-encoding: identify one thought pattern and design an experiment to change it."
+            "id": "rule_meta_master",
+            "condition": "p4_q1 >= 9",
+            "feedback": "Exceptional meta-awareness. Try '30-day micro-experiments' to test and rewire specific thinking patterns."
           },
           {
             "id": "rule_integration_ready",
-            "condition": "p5_q2 > 7",
-            "feedback": "High integration capacity — prototypes and sprints will translate your insight into real-world outcomes quickly."
+            "condition": "p5_q2 >= 8",
+            "feedback": "High integration capacity — rapid prototyping sprints and accountability partners will turn ideas into reality."
           },
           {
             "id": "rule_philosophical_depth",
-            "condition": "p6_q2 > 7",
-            "feedback": "Your worldview is well-formed and actionable — consider mentoring or teaching to refine expression and test ideas."
+            "condition": "p6_q2 >= 8",
+            "feedback": "Your worldview is coherent and actionable — consider mentoring, writing, or public teaching to refine and share it."
           },
           {
-            "id": "rule_low_reflection",
-            "condition": "p4_q1 < 3",
-            "feedback": "Low meta-observation. Start with micro-reflection (5-minute daily logs) to build the habit of monitoring thought."
+            "id": "rule_low_meta",
+            "condition": "p4_q1 <= 2",
+            "feedback": "Low meta-observation. Begin with a simple daily micro-reflection: 'What thought did I notice today?' for 3 weeks."
           },
           {
             "id": "rule_short_answers_warning",
-            "condition": "p1_q2 == '' || p2_q1 == '' || p5_q1 == ''",
-            "feedback": "Some answers were brief. Richer responses yield more reliable feedback. Consider re-taking the test with longer responses in text prompts."
+            "condition": "len(p1_q1) < 80 || len(p2_q1) < 120 || len(p5_q1) < 150",
+            "feedback": "Some responses were brief. Longer responses allow more reliable and actionable feedback; consider retaking with expanded answers for deeper insight."
           }
         ],
-        "summary_template": "Composite scoring synthesizes Perception, Logic, Creativity, Emotional Regulation, Adaptability, Meta-Awareness, and Philosophical Depth into a 0–700 index. Tier mapping: Explorer (0–350), Architect (351–525), Visionary (526–700). Archetype is matched by prototype similarity across the 7 axes."
+        "ui": { "actionLabel": "Compute Report", "estimated_time": "10-30 seconds" }
       }
     ],
+
     "scoring": {
-      "approach": "Phase-level subscores (0–100) computed from numeric sliders, option scores, and heuristics on text responses (length & lexical markers). Subscores are weighted to axes as defined per-phase. Composite is scale-normalized to 0–700.",
-      "textHeuristics": {
-        "minCharsForReliable": 120,
-        "lengthScalingFactor": 0.6,
-        "lexicalIndicators": {
-          "metaWords": ["aware", "observe", "reflect", "meta", "notice", "monitor"],
-          "creativityWords": ["novel", "invent", "synthesize", "combine", "bridge"],
-          "logicWords": ["because", "therefore", "if", "then", "causal", "structure"]
-        },
-        "maxTextContribution": 300
-      },
+      "approach": "phase_subscores_to_axis_weights_then_composite",
       "phaseToAxisMapping": {
         "phase_1": "Perception",
         "phase_2": "Logic_and_Reasoning",
@@ -473,34 +932,219 @@
         "phase_5": "Creativity",
         "phase_6": "Philosophical_Depth"
       },
-      "archetypeMappingRules": {
-        "method": "prototype_distance_then_softmax",
-        "prototypeVectorsReference": "archetypes.prototype_vector",
-        "fallback": "balanced_strategist"
+      "textHeuristics": {
+        "minCharsForReliable": 120,
+        "lengthScalingFactor": 0.6,
+        "maxTextContribution": 300,
+        "lexicalIndicators": {
+          "metaWords": ["aware", "observe", "reflect", "meta", "monitor", "notice"],
+          "creativityWords": ["novel", "invent", "synthesize", "combine", "bridge", "imagine"],
+          "logicWords": ["because", "therefore", "if", "then", "causal", "structure", "evidence"],
+          "emotionWords": ["feel", "felt", "anxious", "calm", "angry", "joy", "sad"]
+        },
+        "noveltyIndicators": {
+          "uniqueWordRatioThreshold": 0.18,
+          "surpriseTokens": ["rarely", "never", "first time", "unlike"]
+        },
+        "semantic_coherence": {
+          "method": "shallow_semantic_features",
+          "features": ["sentence_length_variance","connective_density","logical_connectors_count"],
+          "normalization": "0-1"
+        }
+      },
+      "adaptability": {
+        "method": "stddev_of_phase_scores_normalized",
+        "notes": "Higher standard deviation signals more variability; lower SD signals stability. Adaptability index normalized 0-100 where moderate SD indicates healthy flexibility."
+      },
+      "archetypeMatching": {
+        "method": "euclidean_cosine_combination",
+        "euclideanWeight": 0.5,
+        "cosineWeight": 0.5,
+        "softmaxTemperature": 0.7,
+        "mixtureThreshold": 0.15
+      },
+      "explainability": {
+        "top_contributors_per_axis": 3,
+        "explainability_text_template": "Axis {axis}: top contributors were responses {qids} which influenced score by weights {weights}."
       }
     },
-    "export": {
-      "formats": ["JSON", "TXT"],
-      "include": ["responses", "perPhaseScores", "compositeScore", "tier", "archetype", "feedback"],
-      "privacyNotice": "Results stay local unless exported. This tool is for reflection and growth, not medical or diagnostic claims."
+
+    "prototypeMatching": {
+      "details": "Archetype prototype vectors are defined in archetypeProfiles.archetypes[].prototype_vector. Matching uses combined euclidean + cosine similarity and returns the top archetype(s) with confidence scores.",
+      "fallback": "balanced_strategist"
     },
+
+    "results_generation": {
+      "narrative": {
+        "enable_mirroring": true,
+        "max_paragraphs": 6,
+        "use_user_phrases": true,
+        "mirrored_excerpt_count": 2,
+        "tone": "gentle, validating, insightful"
+      },
+      "exports": {
+        "json": true,
+        "txt": true,
+        "include": ["responses","phase_subscores","axis_scores","composite_score","tier","archetype_match","MRI","feedback_lines"],
+        "privacyNotice": "Results are local by default. Export explicitly to download. This tool is not a medical or clinical diagnostic instrument."
+      }
+    },
+
+    "feedback_engine": {
+      "evaluator": "safe_token_replace_and_restricted_eval",
+      "safety": {
+        "allowed_chars_pattern": "^[0-9\\s<>=!&|()\\\"'.,:+\\-*/%a-zA-Z\\[\\]]*$",
+        "reject_on_unknown_tokens": true
+      },
+      "utility_functions": {
+        "len": "character_length_of_string",
+        "text_clarity_score": "heuristic_shallow_coherence_value_0_1",
+        "contains_keywords": "boolean_if_any_keyword_present",
+        "count_occurrences": "count_of_keyword_matches"
+      }
+    },
+
     "safety": {
       "distressDetection": {
         "enabled": true,
-        "keywords": ["suicide", "harm", "kill myself", "end my life", "self-harm"],
-        "action": "If distress language is detected in text responses, show immediate safety resources and pause the assessment. Flag results as 'low-confidence' and suggest seeking professional support."
+        "keywords": [
+          "suicide",
+          "kill myself",
+          "end my life",
+          "hurt myself",
+          "want to die",
+          "self-harm"
+        ],
+        "action": {
+          "type": "immediate_modal",
+          "message": "Your response included language that suggests distress. If you are in immediate danger, please call local emergency services. If you are in the U.S., call or text 988 for the Suicide & Crisis Lifeline. Consider pausing the test and seeking professional support.",
+          "pauseTest": true,
+          "offerResources": true
+        }
       },
-      "dataRetention": {
+      "privacy": {
+        "autoSaveLocal": true,
         "localStorageKey": "MCIF_5_RESULTS",
-        "autoSave": true,
-        "clearOnRestart": false
+        "clearOnRestart": false,
+        "dataRetentionNotes": "Data saved locally only; export requires user approval. No telemetry by default."
       }
     },
+
+    "adaptiveMentor": {
+      "enabled": true,
+      "description": "Optional mentor mode (not active by default) to convert results into daily micro-tasks aligned with archetype and growth areas.",
+      "templates": {
+        "Perception": [
+          "Describe five ordinary objects using new metaphors today.",
+          "Spend 10 minutes photographing small textures and write a line about each."
+        ],
+        "Logic_and_Reasoning": [
+          "Reverse-engineer a process you use daily and write the top 3 improvement steps.",
+          "Create a small flowchart capturing a decision you make often."
+        ],
+        "Creativity": [
+          "Fuse two unrelated concepts into a micro-prototype.",
+          "Write a 200-word micro-story combining two unrelated ideas."
+        ],
+        "Emotional_Regulation": [
+          "Track body signals before reacting for three days.",
+          "Practice a 5-minute naming-of-feelings routine before decisions."
+        ],
+        "Meta_Awareness": [
+          "Write a 'thought about a thought' daily for a week.",
+          "Do a micro-experiment: change one small habit and observe the effect for 3 days."
+        ],
+        "Philosophical_Depth": [
+          "State one core belief and argue against it in writing.",
+          "Read a short philosophical essay and summarize its core claims."
+        ]
+      }
+    },
+
+    "exports": {
+      "json_template": {
+        "fields": ["meta","responses","phase_subscores","axis_scores","composite_score","MRI","tier","archetype_match","feedback_lines","timestamp"],
+        "filename_pattern": "mcif_results_{timestamp}.json"
+      },
+      "txt_template": {
+        "fields": ["narrative_summary","archetype_summary","recommended_actions","export_notes"],
+        "filename_pattern": "mcif_report_{timestamp}.txt"
+      }
+    },
+
     "developer": {
-      "notes": "This schema is verbose by design. The frontend should check for missing fields and apply sensible defaults. All numeric comparisons in feedback rules should assume slider values are numeric. Text heuristics are optional but recommended for richer scores.",
+      "debug_api": {
+        "expose": true,
+        "window_name": "MCIF",
+        "functions": [
+          "computeCompositeScore",
+          "evaluateCondition",
+          "getResponses",
+          "loadSchema",
+          "exportSampleResult"
+        ]
+      },
       "versionHistory": [
-        { "v": "5.0", "date": "2025-10-29", "changes": "Full MCIF-5 master schema; final vision mapping." }
+        { "version": "5.0.0", "date": "2025-10-29", "notes": "Full unified schema incorporating white paper + generation standard + archetype suite." }
+      ],
+      "notes": "This schema is intended to be thorough and explicit. Front-end must sanitize any user text before injecting it into DOM. Feedback rules are executed with strict token replacement and restricted evaluation."
+    },
+
+    "sample_rule_library": {
+      "purpose": "A set of additional example rules to provide rich feedback coverage. These are illustrative and can be extended in `results.feedback_rules`.",
+      "rules": [
+        {
+          "id": "sr_high_creativity_low_clarity",
+          "condition": "p5_q2 >= 8 && (len(p5_q1) < 200 || text_clarity_score(p5_q1) < 0.45)",
+          "feedback": "High creativity with low clarity. Try pairing a detailed example with your idea to make it actionable."
+        },
+        {
+          "id": "sr_low_adaptability",
+          "condition": "stddev(p1_q3,p2_q2,p3_q3,p4_q1,p5_q2,p6_q2) < 1.2",
+          "feedback": "Very consistent across phases—this may indicate strong stability or rigidity. Consider 'intentional variability' exercises to expand adaptability."
+        },
+        {
+          "id": "sr_high_empathy_low_action",
+          "condition": "p3_q3 >= 8 && (p4_q2 == '' || len(p4_q2) < 60)",
+          "feedback": "You feel and process emotion powerfully but struggle to convert insight into action. Try micro-accountability steps (1 small action after each reflection)."
+        },
+        {
+          "id": "sr_demonstrated_team_systems",
+          "condition": "p2_q3 == 'p2_q3_a1' || p2_q3 == 'p2_q3_a4'",
+          "feedback": "You tend to trace bottlenecks and rebuild systems. Leadership and operations roles may suit you well."
+        },
+        {
+          "id": "sr_philosophical_maturity",
+          "condition": "p6_q2 >= 8 && len(p6_q1) > 220",
+          "feedback": "Your philosophical views are both deep and actionable. Consider publishing short essays or starting a teaching circle."
+        }
       ]
+    },
+
+    "testing_and_qc": {
+      "schema_validation": {
+        "required_top_level_keys": ["meta","ui","metrics","phases","archetypeProfiles","scoring"],
+        "phase_structure_requirements": "Each phase must have id, title, type, and questions (if type is question_block)",
+        "rule_evaluator_tests": "Feedback rules must be tested against a simulated responses object before activation"
+      },
+      "recommended_tests": [
+        "Start button activates and loads schema (file or fallback)",
+        "Each phase renders correctly for text/multiple_choice/slider",
+        "Adaptive branching inserts followups as expected",
+        "Feedback rules fire for simulated responses",
+        "Distress detection triggers safety modal",
+        "Exports produce valid JSON and TXT files"
+      ]
+    },
+
+    "appendix": {
+      "helper_functions_documentation": {
+        "len": "Returns integer length of provided string (0 if null).",
+        "stddev": "Computes sample standard deviation of a numeric list.",
+        "text_clarity_score": "A heuristic 0..1 measure combining sentence_length_variance, connective_density, and lexical indicator presence.",
+        "safe_eval": "Replaces tokens with sanitized values and evaluates only if matched to allowed pattern."
+      },
+      "example_feedback_rule_format": "Replace tokens with question IDs (e.g., p1_q3 >= 8). Use len(qid) for text length. Use text_clarity_score(qid) for clarity."
     }
   }
 }
