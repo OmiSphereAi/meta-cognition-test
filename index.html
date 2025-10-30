@@ -3,23 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCIF-5 Lucid Flow Assessment</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>MCIF v5 Cognitive Archetype Test</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="frequency-control" class="freq-control"></div>
+  <!-- Background Audio Layer -->
+  <audio id="backgroundAudio" loop>
+    <source src="432hz.mp3" type="audio/mpeg" />
+  </audio>
 
-  <div id="app-container">
-    <div id="intro" class="intro lucid-glow">
-      <h1 class="title">MCIF-5 Meta-Cognition Test</h1>
-      <p class="subtitle">A lucid assessment of your cognitive synthesis and personality matrix.</p>
-      <button id="start-btn" class="start-btn">Begin</button>
+  <!-- Lucid Flow Background Canvas -->
+  <canvas id="frequencyVisualizer"></canvas>
+
+  <!-- Header -->
+  <header>
+    <h1>MCIF v5: Cognitive Archetype Assessment</h1>
+    <p>Discover your archetype, resonance, and cognitive design.</p>
+  </header>
+
+  <!-- Begin Section -->
+  <section id="beginSection">
+    <button id="beginButton" class="lucid-button">Begin Assessment</button>
+    <div id="frequencyControlContainer">
+      <label for="frequencyControl">Frequency Mode:</label>
+      <select id="frequencyControl">
+        <option value="432">432 Hz (Natural Resonance)</option>
+        <option value="528">528 Hz (Transformation)</option>
+        <option value="852">852 Hz (Intuition)</option>
+        <option value="963">963 Hz (Divine Connection)</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Test Container -->
+  <section id="testContainer">
+    <div id="progressWrapper">
+      <div id="progressBar"></div>
     </div>
 
-    <div id="app"></div>
-  </div>
+    <div id="questionContainer"></div>
+
+    <div id="resonanceWrapper">
+      <h4>Resonance Meter</h4>
+      <div id="resonanceMeter"></div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section id="resultContainer"></section>
+
+  <!-- Reflection Panel (hidden by default, shown dynamically) -->
+  <div id="reflectionPanel" class="reflection-panel"></div>
 
   <script src="app.js"></script>
 </body>
 </html>
-
